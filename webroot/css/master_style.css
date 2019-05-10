@@ -16225,4 +16225,5 @@ span.btn.dropdown-toggle::after {
 
 .permission .box-body {
     display: inline-block;
+    width: 100%;
 }

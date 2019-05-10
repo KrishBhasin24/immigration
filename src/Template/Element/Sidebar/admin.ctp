@@ -1,25 +1,9 @@
 <?php 
-
-
 foreach ($user['permissions'] as $first) {
      $tmp[$first['menu']['name']][] = array('page_name'=>$first['page_name'],'handle'=>$first['handle']);
 }
 
-/*
 
-
-foreach ($tmp as $key => $value) {
-	
-	echo $key."<br>";
-
-	
-	foreach ($value as $data) {
-		echo "--".$data['page_name']."<br>";
-	}
-
-
-}
-*/
 //pr($tmp);
 
 //pr($user['permissions'] );
@@ -116,12 +100,12 @@ foreach ($tmp as $key => $value) {
           			<i class="fa fa-angle-right pull-right"></i>
           		</span>
         		</a>
-	          		<ul class="treeview-menu">
-	          			<?php foreach ($value as $data) { ?>
-	          				<li ><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>'.$data['page_name'],['controller' => 'Admins', 'action' => $data['handle']],['escape' => false]); ?> 
-	          			</li>
-	          			<?php } ?>
-	          		</ul>
+        		<ul class="treeview-menu">
+        			<?php foreach ($value as $data) { ?>
+        				<li ><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>'.$data['page_name'],['controller' => 'Admins', 'action' => $data['handle']],['escape' => false]); ?> 
+        			</li>
+        			<?php } ?>
+        		</ul>
 				</li>
 				<?php } } ?>
       		

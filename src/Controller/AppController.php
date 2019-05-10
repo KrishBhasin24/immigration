@@ -14,8 +14,13 @@
  */
 namespace App\Controller;
 
+
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Routing\Router;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Text;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * Application Controller
