@@ -67,7 +67,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
-    
+
+
+    //$routes->connect('/get-sub-cat-by-id', ['controller' => 'Users', 'action' => 'getSubCatById']);
+
+
     $routes->connect('/addCompany', ['controller' => 'Admins', 'action' => 'addCompany']);
     $routes->connect('/dashboard', ['controller' => 'Admins', 'action' => 'dashboard']);
     $routes->connect('/getAllStaff', ['controller' => 'Admins', 'action' => 'getAllStaff']);

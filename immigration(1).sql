@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2019 at 11:26 PM
+-- Generation Time: May 13, 2019 at 11:09 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -83,14 +83,14 @@ INSERT INTO `companies` (`id`, `parent_id`, `name`, `telephone`, `email`, `websi
 
 CREATE TABLE `countries` (
   `id` int(11) NOT NULL,
-  `country` varchar(222) NOT NULL
+  `name` varchar(222) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `countries`
 --
 
-INSERT INTO `countries` (`id`, `country`) VALUES
+INSERT INTO `countries` (`id`, `name`) VALUES
 (0, 'Albania'),
 (1, 'India'),
 (2, 'Canada'),
@@ -135,7 +135,6 @@ INSERT INTO `countries` (`id`, `country`) VALUES
 (41, 'Somalia'),
 (42, 'Nigeria'),
 (43, 'Hongkong'),
-(44, '--na--'),
 (45, 'Srilanka'),
 (46, 'Mauritius'),
 (47, 'Combodia'),
@@ -176,7 +175,6 @@ INSERT INTO `countries` (`id`, `country`) VALUES
 (83, 'Burundi'),
 (84, 'Cambodia'),
 (85, 'Cameroon'),
-(86, 'Canada — Applicants for Permanent Residence'),
 (87, 'Canary Islands'),
 (88, 'Cape Verde'),
 (89, 'Caroline Islands'),
@@ -417,6 +415,34 @@ INSERT INTO `departments` (`id`, `name`, `handle`, `created_at`) VALUES
 (4, 'Accounts', 'accounts', '2019-04-26 20:19:39'),
 (5, 'Assessment', 'assessment', '2019-04-26 20:19:39'),
 (6, 'Marketing', 'marketing', '2019-04-30 16:02:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `leads`
+--
+
+CREATE TABLE `leads` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(250) NOT NULL,
+  `last_name` varchar(250) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `telephone` varchar(200) NOT NULL,
+  `address` text NOT NULL,
+  `city` varchar(200) NOT NULL,
+  `province` varchar(200) NOT NULL,
+  `postal_code` varchar(200) NOT NULL,
+  `country` varchar(150) NOT NULL,
+  `marital_status` varchar(200) NOT NULL,
+  `dob` varchar(200) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `sub_category_id` int(11) NOT NULL,
+  `reason_of_qualify` text NOT NULL,
+  `special_instruction` text NOT NULL,
+  `submission_deadline` varchar(250) NOT NULL,
+  `source_of_lead` varchar(250) NOT NULL,
+  `status` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -666,6 +692,12 @@ ALTER TABLE `departments`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `leads`
+--
+ALTER TABLE `leads`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `lead_status`
 --
 ALTER TABLE `lead_status`
@@ -732,6 +764,12 @@ ALTER TABLE `companies`
 --
 ALTER TABLE `departments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `leads`
+--
+ALTER TABLE `leads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `lead_status`

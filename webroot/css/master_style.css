@@ -15957,7 +15957,7 @@ hr {
     font-size: 1rem;
     margin-top: 0.5em;
     text-align: center;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
     font-weight: 400;
 }
 
@@ -16226,4 +16226,21 @@ span.btn.dropdown-toggle::after {
 .permission .box-body {
     display: inline-block;
     width: 100%;
+}
+
+
+.email {
+    margin-top: 0.5em;
+    font-size: 1rem;
+    text-align: center;
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+
+.textarea {
+    margin-top: 0.5em;
+    font-size: 1rem;
+    text-align: center;
+    letter-spacing: 2px;
+    font-weight: 400;   
 }

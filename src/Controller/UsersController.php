@@ -182,22 +182,19 @@ class UsersController extends AppController
         return $data;
     }
 
-    /*public function addCat($userData = array()){
-        $catTable = TableRegistry::get('Categories');
-        $cat = $catTable->newEntity();
-        $cat = $catTable->patchEntity($cat, $userData);
-        $result = $catTable->save($cat);
-        return $result;
-    }
+    public function getSubCatById(){
+        if($this->Auth->user()){
+            if($this->request->is('ajax')){
+                $this->loadModel('SubCategories');
+                $userData = $this->request->data();
+                $data = $this->SubCategories->find('all')->Where(['category_id'=> $userData['cat_id']])->toArray();
+                echo json_encode($data);
+            }
+        }
+         die;
 
-    public function addSubCat($userData = array()){
-        $subcatTable = TableRegistry::get('SubCategories');
-        $subcat = $subcatTable->newEntity();
-        $subcat = $subcatTable->patchEntity($subcat, $userData);
-        $result = $subcatTable->save($subcat);
-        return $result;
-    }*/
-   
+    }
+  
 
 }
 

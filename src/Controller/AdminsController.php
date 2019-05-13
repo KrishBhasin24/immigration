@@ -37,7 +37,7 @@ class AdminsController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->viewBuilder()->layout('admin');
+        $this->viewBuilder()->setlayout('admin');
         $key_data = array();
         
     }
@@ -357,6 +357,16 @@ class AdminsController extends AppController
         $key_data['agent_count'] = count($result);
         $key_data['agent_list'] = $result;
         $this->set('key_data',$key_data);
+    }
+
+
+    public function addLead(){
+        $this->loadModel('Categories');
+        $key_data['category'] = $this->Categories->find('all')->toArray(); 
+        $this->loadModel('Countries');
+        $key_data['Countries'] = $this->Countries->find('all')->order(['name'=>'ASC'])->toArray(); 
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $this->set('key_data',$key_data);   
     }
 
 
