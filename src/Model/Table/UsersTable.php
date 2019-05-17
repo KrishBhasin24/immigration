@@ -17,6 +17,23 @@ class UsersTable extends Table
         $this->belongsTo('Companies');
         //$this->hasMany('Permissions');
         $this->hasMany('Permissions');
+
+        //$this->hasMany('Leads')->setForeignKey(['processingAgent_id']);
+
+        $this->hasMany('Filling', [
+            'foreignKey' => 'processingAgent_id',
+            'className' => 'Leads'
+        ]);
+
+        $this->hasMany('Lead', [
+            'foreignKey' => 'agent_id',
+            'className' => 'Leads'
+        ]);
+
+        $this->hasMany('Retain', [
+            'foreignKey' => 'retainer_id',
+            'className' => 'Leads'
+        ]);
            
     }
 
@@ -30,4 +47,4 @@ class UsersTable extends Table
     }
 	
 	
-}
+}/*Intel Smart Sound Technology driver*/

@@ -23,7 +23,9 @@
 		
 			
   	</head>
-  	<body class="hold-transition skin-blue sidebar-mini">
+  	
+  	<!-- hold-transition skin-blue sidebar-mini -->
+  	<body class="skin-blue fixed sidebar-mini sidebar-mini-expand-feature">
   		<div class="wrapper">
   			<?php echo $this->element('Header/header', array('user' => $key_data['loggedInUser']));  ?>
 			<?php

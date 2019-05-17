@@ -10143,8 +10143,8 @@ button.btn.dropdown-toggle::after, .wysihtml5-toolbar .btn.dropdown-toggle::afte
 
 .btn-group-lg > .btn,
 .btn-lg {
-  font-size: 15px;
-  padding: 7px 20px;
+  font-size: 18px;
+  padding: 7px 50px;
   line-height: 32px;
 }
 
@@ -16229,18 +16229,18 @@ span.btn.dropdown-toggle::after {
 }
 
 
-.email {
+.email,.textarea,.tel {
     margin-top: 0.5em;
     font-size: 1rem;
     text-align: center;
     letter-spacing: 2px;
     font-weight: 400;
 }
-
-.textarea {
-    margin-top: 0.5em;
-    font-size: 1rem;
+.centre {
     text-align: center;
-    letter-spacing: 2px;
-    font-weight: 400;   
+}
+
+.custome_box {
+    height: 400px;
+    overflow-y: auto;
 }

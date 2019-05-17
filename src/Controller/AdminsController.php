@@ -22,8 +22,7 @@ use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
 use Cake\Utility\Security;
 use Cake\Event\Event;
-
-
+use Cake\View\Helper;
 
 
 class AdminsController extends AppController
@@ -353,7 +352,7 @@ class AdminsController extends AppController
     {
         $key_data['loggedInUser'] = $this->Auth->user();
         $lead = new LeadsController();
-        $result = $lead->getStaff(2);
+        $result = $lead->getStaff();
         $key_data['agent_count'] = count($result);
         $key_data['agent_list'] = $result;
         $this->set('key_data',$key_data);
@@ -361,6 +360,25 @@ class AdminsController extends AppController
 
 
     public function addLead(){
+        $key_data['loggedInUser'] = $this->Auth->user();
+
+        /*if($key_data['loggedInUser']['role'] == 'admin'){
+              $lead = new LeadsController();
+              $result = $lead->getStaff();
+              $key_data['agent_list'] = $result;
+        }*/
+
+
+        if ($this->request->is('post')) {
+            $data = $this->request->data();
+            $lead = new LeadsController();
+            if($added = $lead->addLead($data,1)){
+                $this->Flash->success(__('Lead Added Sucessfully'));
+                return $this->redirect(['controller'=>'Admins','action' => 'getLead']);
+            }
+        }
+        
+
         $this->loadModel('Categories');
         $key_data['category'] = $this->Categories->find('all')->toArray(); 
         $this->loadModel('Countries');
@@ -369,7 +387,88 @@ class AdminsController extends AppController
         $this->set('key_data',$key_data);   
     }
 
+    public function getLead(){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $lead = new LeadsController();
+        $result = $lead->getInitLeadByUserId($key_data['loggedInUser']['id']);
 
+       // pr($result);die;
+
+        $key_data['my_lead_count'] = count($result);
+        $key_data['lead_list'] = $result;
+        $this->set('key_data',$key_data); 
+    }
+
+    public function editLead($id=null){
+
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $lead = new LeadsController();
+        $result = $lead->getLeadById($id);
+
+        $this->loadModel('Leads');
+        $key_data['lead_data'] = $result[0]; 
+
+        $key_data['Remarks'] = $lead->getRemarksByLeadId($id);
+        
+        $this->loadModel('Categories');
+        $key_data['category'] = $this->Categories->find('all')->toArray(); 
+
+        $this->loadModel('SubCategories');
+        $key_data['subcat'] = $this->SubCategories->find('all')->toArray(); 
+
+        $this->loadModel('Countries');
+        $key_data['Countries'] = $this->Countries->find('all')->order(['name'=>'ASC'])->toArray(); 
+        
+        $staff_list = $lead->getStaff();
+        $key_data['staff_list'] = $staff_list;
+
+        if ($this->request->is(['post','put'])) {
+            $data = $this->request->data();
+            if (array_key_exists('contract_signed',$data)){
+                if($data['contract_signed'] == 1){
+                    $data['lead_status_id'] = 2;
+                    $file['lead_id'] = $id;
+                    $file['retainer_id'] = $data['retainer_id'];
+                    $filedetail = $lead->retainLead($file); 
+                }
+            }
+
+            if($added = $lead->editLead($data,$id)){
+                $this->Flash->success(__('Lead Updated Sucessfully'));
+                return $this->redirect(['controller'=>'Admins','action' => 'getLead']);
+            }
+        }   
+        $this->set('key_data',$key_data); 
+    }
+
+    public function caseAssign($id = null){
+        $key_data['loggedInUser'] = $this->Auth->user();
+            
+        $lead = new LeadsController();
+        $result = $lead->getLeadById($id);
+        $key_data['lead_info'] = $result[0]; 
+
+        $this->loadModel('Users');
+        $this->loadModel('Leads');
+        $key_data['user_list'] = $this->Users->find('all',)->Where(['department_id'=>'2'])->toArray(); 
+
+/*
+        $query = $articles->find();
+$query->select(['count' => $query->func()->count('*')]);
+
+*/
+        foreach ($key_data['user_list'] as $user) {
+            $user['assigned']  = count ($this->Leads->find('all')->where(['processingAgent_id'=>$user['id'],'lead_status_id '=>3])->toArray() );
+            $user['in_progress'] = count ( $this->Leads->find('all')->where(['processingAgent_id'=>$user['id'],'lead_status_id '=>11])->toArray() );
+        }
+
+        //pr($user);
+        //pr($key_data['user_list']);
+        //die;
+
+        
+        $this->set('key_data',$key_data); 
+    }
 
 
 }

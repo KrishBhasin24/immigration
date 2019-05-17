@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2019 at 11:09 PM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.1
+-- Generation Time: May 17, 2019 at 10:31 PM
+-- Server version: 10.1.39-MariaDB
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `immigration`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_leads`
+--
+
+CREATE TABLE `account_leads` (
+  `id` int(11) NOT NULL,
+  `lead_id` int(11) NOT NULL,
+  `retainer_id` int(11) NOT NULL,
+  `retain_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `account_leads`
+--
+
+INSERT INTO `account_leads` (`id`, `lead_id`, `retainer_id`, `retain_date`) VALUES
+(3, 3, 3, '2019-05-16 20:33:28'),
+(4, 2, 13, '2019-05-16 21:11:16'),
+(5, 4, 3, '2019-05-17 14:59:04'),
+(6, 1, 13, '2019-05-17 20:29:20');
 
 -- --------------------------------------------------------
 
@@ -441,7 +464,39 @@ CREATE TABLE `leads` (
   `special_instruction` text NOT NULL,
   `submission_deadline` varchar(250) NOT NULL,
   `source_of_lead` varchar(250) NOT NULL,
-  `status` varchar(100) NOT NULL
+  `lead_status_id` varchar(100) NOT NULL,
+  `amount_payable` int(11) NOT NULL,
+  `contract_signed` int(11) NOT NULL,
+  `agent_id` int(11) NOT NULL,
+  `retainer_id` int(11) NOT NULL,
+  `processingAgent_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `leads`
+--
+
+INSERT INTO `leads` (`id`, `first_name`, `last_name`, `email`, `telephone`, `address`, `city`, `province`, `postal_code`, `country`, `marital_status`, `dob`, `category_id`, `sub_category_id`, `reason_of_qualify`, `special_instruction`, `submission_deadline`, `source_of_lead`, `lead_status_id`, `amount_payable`, `contract_signed`, `agent_id`, `retainer_id`, `processingAgent_id`) VALUES
+(1, 'Sachin', 'Sharma', 'sachine@sharma.com', '98653265986', '85 Sky drive North', 'Toronto', 'Ontario', 'L3T4M7', 'Canada', 'Married', '1991-06-19', 1, 2, 'All ready on work permit and have 4 years of experience', 'concern with me first', '2019-07-17', '1', '3', 8500, 1, 1, 13, 2),
+(2, 'Rahul', 'kumar', 'rahul@kumar.com', '4379842124', '85 drive way ', 'Toronto', 'Ontario', 'L3T4M7', 'Canada', 'Engaged', '2010-05-27', 3, 7, 'No reason ', 'Client needs special treatment. lol!!!', '2019-05-31', '1', '3', 8500, 1, 1, 13, 12),
+(3, 'sidhu', 'moosewala', 'sidhu@brownboy.com', '98653265986', 'Skymark drive', 'brampton', 'Ontario', 'L3T4M7', 'Canada', 'Never Married', '1991-09-11', 5, 12, 'Singer already', 'Do with the flow', '2019-06-12', '1', '3', 10000, 1, 12, 3, 12),
+(4, 'Partap', 'Singh', 'partap@singh.com', '4379842124', 'hamilton road', 'Toronto', 'Ontario', 'L3T4M7', 'Canada', 'Married', '1991-02-15', 4, 10, 'normal case', 'no need', '2019-05-31', '1', '3', 5000, 1, 1, 3, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lead_payments`
+--
+
+CREATE TABLE `lead_payments` (
+  `id` int(11) NOT NULL,
+  `lead_id` int(11) NOT NULL,
+  `account_lead_id` int(11) NOT NULL COMMENT 'file no.',
+  `current_payment` int(11) NOT NULL DEFAULT '0',
+  `payment_mode` varchar(200) NOT NULL,
+  `authorization_number` int(11) NOT NULL,
+  `issued_by` varchar(250) NOT NULL,
+  `payment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -453,9 +508,9 @@ CREATE TABLE `leads` (
 CREATE TABLE `lead_status` (
   `id` int(11) NOT NULL,
   `lead_status` varchar(250) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `status_message` text NOT NULL,
-  `next_step_message` text NOT NULL
+  `department_id` int(11) DEFAULT NULL,
+  `status_message` text,
+  `next_step_message` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -464,7 +519,16 @@ CREATE TABLE `lead_status` (
 
 INSERT INTO `lead_status` (`id`, `lead_status`, `department_id`, `status_message`, `next_step_message`) VALUES
 (1, 'L', 4, 'Case with processing Dept for initial assessment', 'You may be contacted by our staff within a week'),
-(2, 'Additional Information Required', 2, 'We require some additional infomation regarding your case. We sent you an  email and will also contcat via phone regarding this.', 'On receipt of your required information, we will forward the case to next level.');
+(2, 'R', 2, 'We require some additional infomation regarding your case. We sent you an  email and will also contcat via phone regarding this.', 'On receipt of your required information, we will forward the case to next level.'),
+(3, 'Imm Package Released', NULL, NULL, NULL),
+(4, 'Case Ready For Filling', NULL, NULL, NULL),
+(5, 'Case Reviewed', NULL, NULL, NULL),
+(6, 'Case Filed', NULL, NULL, NULL),
+(7, 'Case Rejected', NULL, NULL, NULL),
+(8, 'Case Closed', NULL, NULL, NULL),
+(9, 'Additional Information Required', NULL, NULL, NULL),
+(10, 'Case Approved', NULL, NULL, NULL),
+(11, 'In Process', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -486,6 +550,26 @@ CREATE TABLE `links` (
 INSERT INTO `links` (`id`, `name`, `url`, `display_to`) VALUES
 (1, 'Canadian Job Bank', 'http://www.jobbank.gc.ca/home-eng.do?lang=eng', 'All'),
 (2, 'IELTS Information', 'http://www.ielts.org', 'Client');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `medias`
+--
+
+CREATE TABLE `medias` (
+  `id` int(11) NOT NULL,
+  `name` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `medias`
+--
+
+INSERT INTO `medias` (`id`, `name`) VALUES
+(1, 'Internet Search'),
+(2, 'Newspaper'),
+(3, 'Reference');
 
 -- --------------------------------------------------------
 
@@ -576,9 +660,6 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `user_id`, `page_name`, `handle`, `menu_id`, `parent`, `department_id`) VALUES
-(38, 2, 'Task Managment', 'addTask', 0, 'addTask', 1),
-(39, 2, 'Leads Managment', 'addLead', 0, 'addLead', 1),
-(40, 2, 'Case Processing', 'addCase', 0, 'addCase', 1),
 (41, 3, 'Case Processing', 'addCase', 0, 'addCase', 6),
 (76, 4, 'Newsletter', 'manageNewsletter', 8, '8', 1),
 (77, 4, 'Agents', 'getAgent', 3, '3', 1),
@@ -589,7 +670,38 @@ INSERT INTO `permissions` (`id`, `user_id`, `page_name`, `handle`, `menu_id`, `p
 (82, 4, 'Link Setup', 'getLink', 2, '2', 1),
 (83, 4, 'Immigration Category', 'getCategory', 2, '2', 1),
 (84, 12, 'View Leads', 'getLead', 3, '3', 2),
-(85, 12, 'Manage Case', 'manageCase', 5, '5', 2);
+(85, 12, 'Manage Case', 'manageCase', 5, '5', 2),
+(86, 2, 'Add New Leads', 'addLead', 3, '3', 1),
+(87, 2, 'Manage Lead', 'accountLead', 4, '4', 1),
+(88, 2, 'Staff', 'getAllStaff', 1, '1', 1),
+(89, 2, 'Link Setup', 'getLink', 2, '2', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `remarks`
+--
+
+CREATE TABLE `remarks` (
+  `id` int(11) NOT NULL,
+  `lead_id` int(11) NOT NULL,
+  `remarks` text NOT NULL,
+  `follow_up` varchar(250) DEFAULT NULL,
+  `contacted_mode` varchar(150) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `remarks_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `remarks`
+--
+
+INSERT INTO `remarks` (`id`, `lead_id`, `remarks`, `follow_up`, `contacted_mode`, `user_id`, `remarks_date`) VALUES
+(1, 1, 'Paper ready and needs to files case', NULL, NULL, 1, '2019-05-16 18:40:32'),
+(2, 1, 'Case Filed', NULL, NULL, 1, '2019-05-16 18:41:16'),
+(3, 1, 'Need paper', NULL, NULL, 1, '2019-05-16 18:41:35'),
+(4, 3, 'Manjit Sir Retained it.', NULL, NULL, 12, '2019-05-16 20:33:22'),
+(5, 4, 'Sanjay Sir Case. Need extra care', NULL, NULL, 1, '2019-05-17 14:58:33');
 
 -- --------------------------------------------------------
 
@@ -656,16 +768,23 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `address`, `city`, `province`, `postal_code`, `country`, `role`, `department_id`, `company_id`, `in_time`, `out_time`, `saturday`, `sunday`, `created_at`) VALUES
 (1, 'test', '$2y$10$VDdpaZiVcjbCu8En/gey2uvU7rZVSnNSmlXi60USeNmIC0VDUcx/u', 'Admin', 'Admin', 'ted@test.com', '9865323232', 'fsdcvxcvx', '', '', '', '', 'admin', 1, 0, '', '', 0, 0, '2019-04-26 18:46:16'),
-(2, 'check', '$2y$10$MuPsgALqsdREpCP.vlH40uY7s9XoIOZ4zs3sjrtAp.Asi3K0Mmmoi', 'admin rep', 'sdfg', 'admin@new.com', 'cvx', 'dfasdf', 'sadfas', 'sadf', 'dfgsd', 'fgdfg', 'staff', 1, 1, '23', '32', 1, 0, '2019-04-29 19:26:57'),
+(2, 'check', '$2y$10$MuPsgALqsdREpCP.vlH40uY7s9XoIOZ4zs3sjrtAp.Asi3K0Mmmoi', 'admin rep', 'sdfg', 'case@new.com', 'cvx', 'dfasdf', 'sadfas', 'sadf', 'dfgsd', 'fgdfg', 'staff', 2, 1, '23', '32', 1, 0, '2019-04-29 19:26:57'),
 (3, 'hello', '$2y$10$VDdpaZiVcjbCu8En/gey2uvU7rZVSnNSmlXi60USeNmIC0VDUcx/u', 'marketing person', 'sdfg', '123@123.com', '9865323232', 'cvxzcvzx', 'dsfg', 'sadf', 'dfgsd', 'dfasdf', 'staff', 6, 2, '23', '32', 0, 1, '2019-04-29 19:35:15'),
 (4, 'new', '$2y$10$4GG7pg1KWT5XYNr/8Xp2w.722quHFZSqn2BeFx7ZeIbUNlPjdq5nm', 'processing staff', 'sdfg', 'qwerty@test.com', 'dsfg', 'dfgsdfg', 'er t', 'ert', '345g', 'dfasdf', 'staff', 1, 2, '23', '32', 1, 1, '2019-04-29 20:15:34'),
-(12, '', '$2y$10$VDdpaZiVcjbCu8En/gey2uvU7rZVSnNSmlXi60USeNmIC0VDUcx/u', 'customer', 'rep', 'customer@care.com', '9865323232', '148 main street', 'toronto', 'ontario', '345g', 'canada', 'staff', 2, 2, '', '', 0, 1, '2019-05-06 17:57:48'),
-(13, '', '$2y$10$cgpalMtTeinMyzNL5MQaaefalYGjpNLYAxyr69rImtMNu3Z3cs512', 'customer care', 'person', 'care@care.com', '865895326', 'brampton', 'brampton', 'ontario', 'L95X1', 'canada', 'staff', 3, 1, '10', '5', 0, 0, '2019-05-10 16:31:31'),
-(14, '', '$2y$10$P9VHIzngIrg93pqOA0iuh.HcQukeQ55DPJt1Qd6OJrhyOI.QjMAR2', 'account', 'parson', 'account@immdesk.com', '986635656988', 'dixie road', 'missisuaga', 'ontario', 'L9d321', 'canada', 'staff', 4, 2, '10', '5', 0, 1, '2019-05-10 16:37:05');
+(12, '', '$2y$10$VDdpaZiVcjbCu8En/gey2uvU7rZVSnNSmlXi60USeNmIC0VDUcx/u', 'case', 'processing ', 'customer@care.com', '9865323232', '148 main street', 'toronto', 'ontario', '345g', 'canada', 'staff', 2, 2, '', '', 0, 1, '2019-05-06 17:57:48'),
+(13, '', 'cc03e747a6afbbcbf8be7668acfebee5', 'customer care', 'person', 'care@care.com', '865895326', 'brampton', 'brampton', 'ontario', 'L95X1', 'canada', 'staff', 3, 1, '10', '5', 0, 0, '2019-05-10 16:31:31'),
+(14, '', '$2y$10$P9VHIzngIrg93pqOA0iuh.HcQukeQ55DPJt1Qd6OJrhyOI.QjMAR2', 'account', 'parson', 'account@immdesk.com', '986635656988', 'dixie road', 'missisuaga', 'ontario', 'L9d321', 'canada', 'staff', 1, 2, '10', '5', 0, 1, '2019-05-10 16:37:05'),
+(15, '', '$2y$10$4x.Af/ym6/V0zN7sdPfZkO41CMyTBQaN1pYV2oEBdDZyMiOf6CCWC', 'express', 'name', 'ted@new.com', '45645064506', 'xcvc vv', 'Toronto', 'Ontario', 'L3T4M7', 'canada', 'staff', 4, 6, '10', '6.00', 0, 1, '2019-05-14 20:51:28');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `account_leads`
+--
+ALTER TABLE `account_leads`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `categories`
@@ -698,6 +817,12 @@ ALTER TABLE `leads`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `lead_payments`
+--
+ALTER TABLE `lead_payments`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `lead_status`
 --
 ALTER TABLE `lead_status`
@@ -707,6 +832,12 @@ ALTER TABLE `lead_status`
 -- Indexes for table `links`
 --
 ALTER TABLE `links`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `medias`
+--
+ALTER TABLE `medias`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -729,6 +860,12 @@ ALTER TABLE `permissions`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `remarks`
+--
+ALTER TABLE `remarks`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
@@ -746,6 +883,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `account_leads`
+--
+ALTER TABLE `account_leads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -769,19 +912,31 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `leads`
 --
 ALTER TABLE `leads`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `lead_payments`
+--
+ALTER TABLE `lead_payments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `lead_status`
 --
 ALTER TABLE `lead_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `links`
 --
 ALTER TABLE `links`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `medias`
+--
+ALTER TABLE `medias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -799,7 +954,13 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+
+--
+-- AUTO_INCREMENT for table `remarks`
+--
+ALTER TABLE `remarks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `sub_categories`
@@ -811,7 +972,7 @@ ALTER TABLE `sub_categories`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
