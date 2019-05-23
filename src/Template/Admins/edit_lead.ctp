@@ -19,6 +19,21 @@ foreach ($key_data['staff_list'] as $val){
 $marital_status  = array('Never Married'=>'Never Married','Engaged'=>'Engaged','Married'=>'Married','Widowed'=>'Widowed','Separated'=>'Separated','Divorced'=>'Divorced','Comman Law Partner'=>'Comman Law Partner');
 $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Reference');
  ?>
+
+<div class="content-header">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto w-p50">
+            <h3 class="page-title">Edit Lead</h3>
+            <div class="d-inline-block align-items-center">
+				<nav>
+					<ol class="breadcrumb">
+						<li class=><?php echo $this->Html->link('<i class="fa fa-mail-reply"></i> Back',['controller' => 'Admins', 'action' => 'getLead'],['class'=>'btn btn-danger','escape' => false]); ?></li>
+					</ol>
+				</nav>
+			</div>
+        </div>
+	</div>
+</div>
 <div class="reverse-mode">
 	<section class="left-block content fixed-left-block">
 		<div class="scrollable" style="height: 100%;">
@@ -36,7 +51,7 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 									if(count($key_data['Remarks']) != 0){
 
 									foreach ($key_data['Remarks'] as $remarks_list) { ?>
-									<li class="bg-light p-0 mb-15">
+									<li class="bg-light p-0 mb-15 bl-5 rounded border-success">
 									  	<div class="position-relative p-20">
 								  			<span class="text-line font-size-16"><?php echo $remarks_list['user']['first_name']." ".$remarks_list['user']['first_name']; ?></span>
 									  		<div class="mt-5 ml-0 pl-5">
@@ -85,7 +100,7 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
     	<div class="col-lg-12 col-12">
 			<div class="box">
 				<div class="box-header with-border">
-					<h4 class="box-title">Edit Lead</h4>	
+					
 					<?php echo $this->Form->create($key_data['lead_data'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'editLead']]); ?>
 					<?php echo $this->Form->input('agent_id',array('type'=>'hidden','value'=>$key_data['loggedInUser']['id'])); ?>
 					<div class="box-body">
@@ -354,6 +369,8 @@ $(document).ready(function() {
           	}
       	});	
 	});
+
+
 });
 
 </script>

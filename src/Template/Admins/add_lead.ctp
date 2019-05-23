@@ -15,7 +15,13 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
  ?>
 <?php use Cake\Routing\Router; ?>
 
-
+<div class="content-header">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<?php echo $this->Html->link('<i class="fa fa-mail-reply"></i> Back',['controller' => 'Admins', 'action' => 'getLead'],['class'=>'btn btn-danger','escape' => false]); ?>
+		</div>
+	</div>
+</div>
 <section class="content">       
     <div class="row">
     	<div class="col-lg-12 col-12">

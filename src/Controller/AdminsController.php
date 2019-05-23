@@ -452,22 +452,124 @@ class AdminsController extends AppController
         $this->loadModel('Leads');
         $key_data['user_list'] = $this->Users->find('all',)->Where(['department_id'=>'2'])->toArray(); 
 
-/*
-        $query = $articles->find();
-$query->select(['count' => $query->func()->count('*')]);
 
-*/
         foreach ($key_data['user_list'] as $user) {
             $user['assigned']  = count ($this->Leads->find('all')->where(['processingAgent_id'=>$user['id'],'lead_status_id '=>3])->toArray() );
             $user['in_progress'] = count ( $this->Leads->find('all')->where(['processingAgent_id'=>$user['id'],'lead_status_id '=>11])->toArray() );
         }
 
-        //pr($user);
-        //pr($key_data['user_list']);
-        //die;
 
         
         $this->set('key_data',$key_data); 
+    }
+    public function accountLead(){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $this->loadModel('Leads');
+        $key_data['accountLeads'] = $this->Leads->find('all')->where(['NOT'=> ['Leads.lead_status_id' =>'1']])->order(['Leads.id'=> 'DESC'])->contain(['LeadStatus','Categories','SubCategories','AccountLeads','Retain'])->toArray();
+
+        //pr($key_data['accountLeads']);die;
+        $this->set('key_data',$key_data); 
+    }
+
+
+    public function manageReceipt($id=null){
+        $this->loadModel('Leads');
+        $this->loadModel('LeadPayments');
+        $this->loadModel('LeadRefunds');
+
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $leadDetail = $this->Leads->find('all')->where(['Leads.id' => $id ])->order(['Leads.id'=> 'DESC'])->contain(['LeadStatus','Categories','SubCategories','AccountLeads','Retain','LeadPayments'])->toArray();       
+        $key_data['leadDetail'] = $leadDetail[0]->toArray();
+
+        $key_data['leadPayment'] = $this->LeadPayments->find('all')->where(['lead_id'=>$id])->toArray();
+        $key_data['leadRefund'] = $this->LeadRefunds->find('all')->where(['lead_id'=>$id])->toArray();
+
+        $lead = new LeadsController();
+        $key_data['balance'] = $lead->leadPaymentBalance($id);
+        $this->set('key_data',$key_data);  
+        /*pr($key_data['leadDetail']);
+        die;*/
+    }
+
+    
+
+
+    public function changeReceipt($id=null){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $paymentTable = TableRegistry::get('LeadPayments');
+        $lead_id = $this->request->data('lead_id');
+        if ($id == null){
+            $receipt = $paymentTable->newEntity();
+        }
+        else{
+            $receipt = $paymentTable->get($id);
+            $key_data['receipt'] = $receipt;
+        }
+
+        if ($this->request->is(['post','put'])) {
+            $paymentTable->patchEntity($receipt, $this->request->data);
+            if($paymentTable->save($receipt)){
+                $this->Flash->success(__('Receipt Added or Modified'));
+                return $this->redirect(['controller' => 'Admins', 'action' => 'manageReceipt',$lead_id]);
+            }
+        }
+        //pr($this->request->data());die;
+        $this->set('key_data',$key_data);  
+    }
+
+    public function changeRefund($id=null){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $paymentTable = TableRegistry::get('LeadRefunds');
+        $lead_id = $this->request->data('lead_id');
+        if ($id == null){
+            $receipt = $paymentTable->newEntity();
+        }
+        else{
+            $receipt = $paymentTable->get($id);
+            $key_data['refund'] = $receipt;
+        }
+
+        if ($this->request->is(['post','put'])) {
+            $paymentTable->patchEntity($receipt, $this->request->data);
+            if($paymentTable->save($receipt)){
+                $this->Flash->success(__('Refund Added or Modified'));
+                return $this->redirect(['controller' => 'Admins', 'action' => 'manageReceipt',$lead_id]);
+            }
+        }
+        //pr($this->request->data());die;
+        $this->set('key_data',$key_data);  
+    }
+
+    public function manageCase(){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $this->loadModel('Leads');
+        $key_data['leadDetail'] = $this->Leads->find('all')->contain(['Retain','Lead','Filling','Categories','SubCategories','AccountLeads','LeadStatus'])->toArray();    
+        
+       // pr($key_data['leadDetail']);die;
+        $this->set('key_data',$key_data);  
+    }
+
+    public function manageRemarks($id=null){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $key_data['lead_id'] = $id;
+        $lead = new LeadsController();
+        $key_data['Remarks'] = $lead->getRemarksByLeadId($id);
+        $this->set('key_data',$key_data);     
+    }
+
+    public function editCase($id=null){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $this->loadModel('Leads');
+        $this->loadModel('LeadStatus');
+        $key_data['leadStatus'] = $this->LeadStatus->find('all')->toArray(); 
+        $leadDetail = $this->Leads->find('all')->where(['Leads.id'=> $id])->contain(['Retain','Lead','Filling','Categories','SubCategories','AccountLeads','LeadStatus','LeadDocuments'])->toArray();    
+        
+        $lead = new LeadsController();
+        $key_data['Remarks'] = $lead->getRemarksByLeadId($id);
+
+        $key_data['leadDetail'] = $leadDetail[0];
+        $key_data['balance'] = $lead->leadPaymentBalance($id);
+        $this->set('key_data',$key_data);        
     }
 
 

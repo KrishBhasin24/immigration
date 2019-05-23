@@ -13,11 +13,39 @@ class LeadsTable extends Table
 {
     public function initialize(array $config)
     {       
-          $this->hasOne('AccountLeads');
-          $this->belongsTo('LeadStatus');
-          $this->belongsTo('Categories');
-          $this->belongsTo('SubCategories');
-          $this->hasOne('LeadPayments');
+            $this->hasOne('AccountLeads');
+            $this->belongsTo('LeadStatus');
+            $this->belongsTo('Categories');
+            $this->belongsTo('SubCategories');
+            $this->hasOne('LeadPayments');
+            /*$this->belongsTo('Retainer', [
+                'foreignKey' => 'retainer_id',
+                'className' => 'Users'
+            ]);*/
+            //$this->belongsTo('Users',['foreignKey' => ['retainer_id']]);
+
+
+            $this->belongsTo('Lead', [
+                'foreignKey' => 'agent_id',
+                'joinType' => 'INNER',
+                'className' => 'Users'
+            ]);
+
+            $this->belongsTo('Retain', [
+                'foreignKey' => 'retainer_id',
+                'joinType' => 'INNER',
+                'className' => 'Users'
+            ]);
+
+            $this->belongsTo('Filling', [
+                'foreignKey' => 'processingAgent_id',
+                'joinType' => 'INNER',
+                'className' => 'Users'
+            ]);
+
+            $this->hasOne('LeadDocuments');
+
+
     }
     public function beforeSave(){
       

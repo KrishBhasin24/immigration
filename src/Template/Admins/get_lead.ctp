@@ -51,10 +51,10 @@
                                                 <span  class="btn btn-info dropdown-toggle" data-toggle="dropdown">Action</span>
                                                 <div class="dropdown-menu">
                                                     <?php echo $this->Html->link('Edit',['controller' => 'Admins', 'action' => 'editLead',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
-                                                    <div class="dropdown-divider"></div>
-                                                    <?php echo $this->Html->link('Case Assign',['controller' => 'Admins', 'action' => 'caseAssign',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
-                                                    <div class="dropdown-divider"></div>
-                                                    <?php //echo $this->Html->link('Delete',['controller' => 'Admins', 'action' => 'deleteStaff',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
+                                                    
+                                                    <?php if($lead->lead_status->lead_status == 'R'){ ?>
+                                                        <div class="dropdown-divider"></div>
+                                                    <?php echo $this->Html->link('Case Assign',['controller' => 'Admins', 'action' => 'caseAssign',$lead->id],['class'=>'dropdown-item','escape' => false]);}?>
                                                 </div>
                                             </div>
                                         </td> 

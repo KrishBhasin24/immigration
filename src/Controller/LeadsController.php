@@ -143,5 +143,28 @@ class LeadsController extends AppController
       die;
     }
 
+    public function leadPaymentBalance($id = null){
+      
+          $this->loadModel('Leads');
+          $leadDetail = $this->Leads->find('all')->where(['id'=> $id])->toArray();
+
+          $this->loadModel('LeadPayments');
+          $totalPaid = 0;
+          $payment_val = $this->LeadPayments->find('all',['fields'=>['current_payment']])->where(['Lead_id'=> $id])->toArray();
+          foreach ($payment_val as $value) {
+              $totalPaid = $totalPaid + $value['current_payment']; 
+          }
+          
+          $this->loadModel('LeadRefunds');
+          $totalRefund = 0;
+          $payment_ref = $this->LeadRefunds->find('all',['fields'=>['refund_payment']])->where(['Lead_id'=> $id])->toArray();
+          foreach ($payment_ref as $value) {
+              $totalRefund = $totalRefund + $value['refund_payment']; 
+          }
+          
+          $balance = ( $leadDetail[0]['amount_payable'] - $totalPaid ) + $totalRefund ;
+          return $balance;
+    }
+
 
 }

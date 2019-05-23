@@ -1,17 +1,21 @@
 <?php //pr($key_data['user_list']); ?>
 <?php use Cake\Routing\Router; ?>
 <?= $this->Html->css('sweetalert.css'); ?>
-<div class="content-header">
-		<div class="d-flex align-items-center">
-			<div class="mr-auto">
-				<?php echo $this->Html->link('<i class="fa fa-mail-reply"></i> Back',['controller' => 'Admins', 'action' => 'getLead'],['class'=>'btn btn-danger','escape' => false]); ?>
-			</div>
-			<div class="right-title">
-				
-			</div>
-		</div>
-	</div>
 
+<div class="content-header">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto w-p50">
+            <h3 class="page-title">Case Assignment</h3>
+            <div class="d-inline-block align-items-center">
+				<nav>
+					<ol class="breadcrumb">
+						<li class=><?php echo $this->Html->link('<i class="fa fa-mail-reply"></i> Back',['controller' => 'Admins', 'action' => 'getLead'],['class'=>'btn btn-danger','escape' => false]); ?></li>
+					</ol>
+				</nav>
+			</div>
+        </div>
+	</div>
+</div>
 
 
 
@@ -33,13 +37,13 @@
 							<div class="row bb-1 pb-10">
 								<div class="col-4">							  
 									<div>
-										<p class="mb-0"><small>Immigration Category</small></p> 
+										<p class="mb-0"><small>Immigration Class</small></p> 
 										<h5 class="text-black mb-0"><strong><?php echo $key_data['lead_info']->category->name; ?></strong></h5>
 									</div>
 								</div>
 								<div class="col-4 bl-1 br-1">							  
 									<div>
-										<p class="mb-0"><small>Sub Category</small></p> 
+										<p class="mb-0"><small>Sub Class</small></p> 
 										<h5 class="text-black mb-0"><strong><?php echo $key_data['lead_info']->sub_category->name; ?></strong></h5>
 									</div>
 								</div>

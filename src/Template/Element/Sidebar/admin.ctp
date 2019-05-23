@@ -81,7 +81,7 @@ foreach ($user['permissions'] as $first) {
       		<li class="treeview">
 	         	<a href="#">
 	         		<i class="mdi mdi-notification-clear-all "></i>
-					    <span>CustomerCare</span>
+					    <span>Case Processing</span>
           		<span class="pull-right-container">
           			<i class="fa fa-angle-right pull-right"></i>
           		</span>

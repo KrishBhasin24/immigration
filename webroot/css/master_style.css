@@ -16244,3 +16244,12 @@ span.btn.dropdown-toggle::after {
     height: 400px;
     overflow-y: auto;
 }
+.remarks_box {
+    height: 450px;
+    overflow-y: auto;
+}
+
+.client_remarks_box {
+    height: 250px;
+    overflow-y: auto;
+}
