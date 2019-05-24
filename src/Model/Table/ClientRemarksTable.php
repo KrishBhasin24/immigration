@@ -9,11 +9,12 @@ use Cake\Validation\Validator;
 //use Cake\ORM\Entity;
 //use Cake\Auth\DefaultPasswordHasher;
 
-class LeadDocumentsTable extends Table
+class ClientRemarksTable extends Table
 {
     public function initialize(array $config)
-    {   
- 	}
+    {
+        $this->belongsto('Users');       
+    }
     public function beforeSave(){
       
     }
@@ -21,4 +22,6 @@ class LeadDocumentsTable extends Table
     {
 	     return $validator;
     }
+	
+	
 }

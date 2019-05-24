@@ -22,21 +22,21 @@ foreach ($key_data['department'] as $val) {
 		                        <div class="box">
 		                            <div class="box-body">
 		                                <div class="row">
-				                            <div class="col-md-6">
+				                            <div class="col-md-12">
 				                                <div class="form-group">
 				                                   <?php echo $this->Form->input('lead_status',array('class'=>'form-control')); ?>
 				                                </div>
 				                            </div>
-		                                  	<div class="col-md-6">
+		                                  	<!-- <div class="col-md-6">
 		                                    	<div class="form-group">
 		                                        	<div class="input text">
 		                                        		<label>Department</label>
 		                                       			<?php echo $this->Form->select('department_id',$department,['empty' => ' ','class'=>'form-control']); ?>
 		                                    		</div>
 		                                    	</div>
-		                                  	</div>
+		                                  	</div> -->
 		                                </div>
-		                                <div class="row">
+		                                <!-- <div class="row">
 		                                	<div class="col-md-6">
 			                                    <div class="form-group">
 			                                        <?php echo $this->Form->input('status_message',array('class'=>'form-control','type'=>'textarea')); ?>
@@ -47,7 +47,7 @@ foreach ($key_data['department'] as $val) {
 		                                           <?php echo $this->Form->input('next_step_message',array('class'=>'form-control','type'=>'textarea')); ?>
 		                                        </div>
 		                                    </div>
-		                                </div>
+		                                </div> -->
 									</div>
 		                        </div>
 		                    </div>

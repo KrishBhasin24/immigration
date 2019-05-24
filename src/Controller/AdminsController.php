@@ -543,7 +543,7 @@ class AdminsController extends AppController
     public function manageCase(){
         $key_data['loggedInUser'] = $this->Auth->user();
         $this->loadModel('Leads');
-        $key_data['leadDetail'] = $this->Leads->find('all')->contain(['Retain','Lead','Filling','Categories','SubCategories','AccountLeads','LeadStatus'])->toArray();    
+        $key_data['leadDetail'] = $this->Leads->find('all')->order(['Leads.id' => 'DESC'])->contain(['Retain','Lead','Filling','Categories','SubCategories','AccountLeads','LeadStatus'])->toArray();    
         
        // pr($key_data['leadDetail']);die;
         $this->set('key_data',$key_data);  
@@ -566,6 +566,8 @@ class AdminsController extends AppController
         
         $lead = new LeadsController();
         $key_data['Remarks'] = $lead->getRemarksByLeadId($id);
+
+        $key_data['ClientRemarks'] = $lead->getClientRemarksByLeadId($id);        
 
         $key_data['leadDetail'] = $leadDetail[0];
         $key_data['balance'] = $lead->leadPaymentBalance($id);

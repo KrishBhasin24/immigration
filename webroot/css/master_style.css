@@ -16253,3 +16253,13 @@ span.btn.dropdown-toggle::after {
     height: 250px;
     overflow-y: auto;
 }
+
+.myadmin-alert {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none !important;
+}

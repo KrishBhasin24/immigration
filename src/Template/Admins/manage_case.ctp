@@ -23,6 +23,7 @@
                                     <th>Sub Category</th>
                                     <th>Name</th>
                                     <th>Status</th>
+                                    <th>Cic File No.</th>
                                     <th>Case Processed By</th>
                                     <th>Action</th>
                                 </tr>
@@ -38,20 +39,32 @@
                                         <td><?php echo $lead->sub_category->name; ?></td>
                                         <td><?php echo $lead->first_name." ".$lead->last_name; ?></td>
                                         <td><?php echo $lead->lead_status->lead_status; ?></td>
+                                        <td><?php echo $lead->account_lead->cic_file_id; ?></td>
                                         <td><?php echo $lead->filling->first_name." ".$lead->filling->last_name; ?></td>
                                         <td>
                                         	<div class="btn-group mb-5">
                                                 <span  class="btn btn-info dropdown-toggle" data-toggle="dropdown">Action</span>
                                                 <div class="dropdown-menu">
                                                     <?php echo $this->Html->link('View',['controller' => 'Admins', 'action' => 'editCase',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
-                                                    <div class="dropdown-divider"></div>
-                                                    <?php echo $this->Html->link('Manage Remarks',['controller' => 'Admins', 'action' => 'manageRemarks',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
                                                 </div>
                                             </div>
                                         </td> 
                                     </tr>   
                                 <?php } ?>
                             </tbody>
+                            <tfoot>
+                            	<th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>Category</th>
+                                <th>Sub Category</th>
+                                <th></th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

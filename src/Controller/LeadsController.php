@@ -26,9 +26,9 @@ use Cake\Event\Event;
 class LeadsController extends AppController
 {
 	public function initialize()
-    {
-        parent::initialize();
-    }
+  {
+      parent::initialize();
+  }
 
     public function beforeFilter(Event $event)
     {
@@ -103,6 +103,12 @@ class LeadsController extends AppController
         return($remarks);
     }
 
+    public function getClientRemarksByLeadId($id = null){
+        $this->loadModel('ClientRemarks');
+        $remarks = $this->ClientRemarks->find('all')->where(['lead_id'=>$id])->order(['ClientRemarks.id' => 'DESC'])->contain('Users')->toArray(); 
+        return($remarks);
+    }
+
     public function addRemarks(){
       if($this->Auth->user()){
         if($this->request->is('ajax')){
@@ -119,6 +125,25 @@ class LeadsController extends AppController
             echo json_encode($all_remarks);
             
             
+        }
+      }
+      die;
+    }
+
+    public function addClientRemarks(){
+      if($this->Auth->user()){
+        if($this->request->is('ajax')){
+            
+            $remarksData = $this->request->data();
+            
+            $RemarkTable = TableRegistry::get('ClientRemarks');
+            $remarks = $RemarkTable->newEntity();
+            $RemarkTable->patchEntity($remarks, $remarksData);
+            $result = $RemarkTable->save($remarks);
+
+            
+            $all_remarks = $this->getClientRemarksByLeadId($remarksData['lead_id']);
+            echo json_encode($all_remarks);
         }
       }
       die;
@@ -164,6 +189,92 @@ class LeadsController extends AppController
           
           $balance = ( $leadDetail[0]['amount_payable'] - $totalPaid ) + $totalRefund ;
           return $balance;
+    }
+
+    public function changeLeadStatus(){
+      if($this->Auth->user()){
+        if($this->request->is('ajax')){
+          try{
+            $rawData = $this->request->data();
+            $leadTable = TableRegistry::get('Leads');
+            $lead = $leadTable->get($rawData['lead_id']);
+            $assignData = $lead->toArray();
+            $assignData['lead_status_id'] = $rawData['lead_status_id'];
+            $leadTable->patchEntity($lead, $assignData);
+            $leadTable->save($lead);
+          }
+          catch (Exception $e) {
+            echo $e->getMessage();
+          }
+        }
+      }
+      die;
+    }
+
+    public function addCicDetail(){
+      if($this->Auth->user()){
+        if($this->request->is('ajax')){
+          try{
+            $rawData = $this->request->data();
+            $AccountleadTable = TableRegistry::get('AccountLeads');
+            $account = $AccountleadTable->get($rawData['file_id']);
+            $assignData = $account->toArray();
+            $assignData['cic_file_id'] = $rawData['file_no'];
+            $assignData['cic_file_date'] = $rawData['date'];
+            $AccountleadTable->patchEntity($account, $assignData);
+            $AccountleadTable->save($account);
+          }
+          catch (Exception $e) {
+            echo $e->getMessage();
+          }
+        }
+      }
+      die;
+    }
+
+    public function addClientDocument(){
+      if($this->Auth->user()){
+        if($this->request->is('ajax')){
+          try{
+            $rawData = $this->request->data();
+            $LeadDocumentsTable = TableRegistry::get('LeadDocuments');
+            $leadDocument = $LeadDocumentsTable->find('all')->where(['lead_id'=>$rawData['lead_id']])->toArray();
+            
+            if (count($leadDocument) < 1){
+              $document = $LeadDocumentsTable->newEntity();
+            }
+            else{
+              $document = $leadDocument[0]; /*array('id'=>$leadDocument[0]->id,'lead_id'=>$leadDocument[0]->lead_id,'document_need'=>$rawData['document_need']);*/
+            }
+
+            if ($this->request->is(['post','put'])) {
+              $LeadDocumentsTable->patchEntity($document, $this->request->data);
+              $LeadDocumentsTable->save($document);
+            }
+          }
+          catch (Exception $e) {
+            echo $e->getMessage();
+          }
+        }
+      }
+      die;
+    }
+
+    public function delClientDocument(){
+      if($this->Auth->user()){
+        if($this->request->is('ajax')){
+          try{
+            $rawData = $this->request->data();
+            $LeadDocumentsTable = TableRegistry::get('LeadDocuments');
+            $leadDocument = $LeadDocumentsTable->find('all')->where(['lead_id'=>$rawData['lead_id']])->toArray();
+            $LeadDocumentsTable->delete($leadDocument[0]);
+          }
+          catch (Exception $e) {
+            echo $e->getMessage();
+          }
+        }
+      }
+      die;
     }
 
 

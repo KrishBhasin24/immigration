@@ -1,5 +1,5 @@
-<?php //pr($key_data['leadDetail']); 
-
+<?php //pr($key_data['loggedInUser']['id']); 
+use Cake\Routing\Router;
 	foreach ($key_data['leadStatus'] as $val){
 		if($val->lead_status != 'L' && $val->lead_status != 'R'){
 			$leadStatus[$val->id] = $val->lead_status;	
@@ -31,10 +31,11 @@
 		  		<div class="box-body">
 					<div class="flexbox bb-1 mb-10">
 						<div><p><span class="text-light">Lead No:</span> 
-							<?php echo $this->Html->link('<h5 id="lead_id" class="text-black mb-0"><strong>'.$key_data['leadDetail']['id'].'</strong></h5>',['controller' => 'Admins', 'action' => 'editLead',$key_data['leadDetail']['id']],['class'=>'bb-3 border-success text-success','escape' => false]); ?>
+							<?php echo $this->Html->link('<h5  class="text-black mb-0"><strong id="lead_id">'.$key_data['leadDetail']['id'].'</strong></h5>',['controller' => 'Admins', 'action' => 'editLead',$key_data['leadDetail']['id']],['class'=>'bb-3 border-success text-success','escape' => false]); ?>
 							<!-- <h5 id="lead_id" class="text-black mb-0"><strong ><?php //echo $key_data['leadDetail']['id']; ?></strong></h5> -->
+
 						</p></div>
-						<div><p><span class="text-light">File No:</span> <h5 class="text-black mb-0"><strong><?php echo $key_data['leadDetail']['account_lead']['id']; ?></strong></h5></p></div>
+						<div><p><span class="text-light">File No:</span> <h5 class="text-black mb-0"><strong id="file_id"><?php echo $key_data['leadDetail']['account_lead']['id']; ?></strong></h5></p></div>
 					</div>
 					<div class="row">						
 						<div class="col-12">
@@ -62,7 +63,7 @@
 								<div class="col-3 bl-1 br-1">							  
 									<div>
 										<p class="mb-0"><small>Submission Deadline</small></p> 
-										<h5 class="text-black mb-0"><strong><?php echo $key_data['leadDetail']['submission_deadline']; ?></strong></h5>
+										<h5 class="text-black mb-0"><strong class="text-pink"><?php echo $key_data['leadDetail']['submission_deadline']; ?></strong></h5>
 									</div>
 								</div>
 								<div class="col-2 bl-1 ">							  
@@ -138,14 +139,14 @@
 							<div class="col-12">
 								<div class="input text">
 									<label>Lead Status</label>
-									<?php echo $this->Form->select('lead_status_id',$leadStatus,['empty' => ' ','class'=>'form-control']);?>	
+									<?php echo $this->Form->select('lead_status_id',$leadStatus,['empty' => ' ','class'=>'form-control','id'=>'lead_status_id' ]);?>	
 								</div>
 							</div>
 
 						</div>
 						<div class="form-group row mb-0">
 							<div class="col-12">
-								<?php echo $this->Form->button('<i class="fa fa-check-square-o mr-5"></i>Update', array('type' => 'button','class' => 'btn bg-success-gradient btn-sm text-white','id'=>'remarks','escape' => false)); ?>
+								<?php echo $this->Form->button('<i class="fa fa-check-square-o mr-5"></i>Update', array('type' => 'button','class' => 'btn bg-success-gradient btn-sm text-white','id'=>'lead_status_submit','escape' => false)); ?>
 							</div>
 						</div>
 						<?php echo $this->Form->end(); ?>
@@ -160,19 +161,20 @@
 						<?php echo $this->Form->create($key_data['leadDetail']['account_lead'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-md-6">
-								<?php echo $this->Form->input('cic_file_id',array('class'=>'form-control','type'=>'text','label'=>'Cic File No.')); ?>
+								<?php echo $this->Form->input('cic_file_id',array('class'=>'form-control','type'=>'text','label'=>'Cic File No.','id'=>'cic_file_id')); ?>
+								<?php echo $this->Form->hidden('user_id',array('class'=>'form-control','id'=>'user_id','value'=> $key_data['loggedInUser']['id'])); ?>
 							</div>
 							<div class="col-md-6">
 								<div class="input text">
 									<label>Date of cic file no. received</label>
-									<input class="form-control" type="date" name="cic_file_date" value=<?php echo $key_data['leadDetail']['account_lead']['cic_file_date'];  ?> >
+									<input class="form-control" type="date" name="cic_file_date" id="cic_file_date" value=<?php echo $key_data['leadDetail']['account_lead']['cic_file_date'];  ?> >
 								</div>
 							</div>
 						</div>
 						
 						<div class="form-group row mb-0">
 							<div class="col-12">
-								<?php echo $this->Form->button('<i class="fa fa-check-square-o mr-5"></i>Update', array('type' => 'button','class' => 'btn bg-success-gradient btn-sm text-white','id'=>'remarks','escape' => false)); ?>
+								<?php echo $this->Form->button('<i class="fa fa-check-square-o mr-5"></i>Update', array('type' => 'button','class' => 'btn bg-success-gradient btn-sm text-white','id'=>'cic_file_button','escape' => false)); ?>
 							</div>
 						</div>
 						<?php echo $this->Form->end(); ?>
@@ -187,12 +189,18 @@
 						<?php echo $this->Form->create($key_data['leadDetail']['lead_document'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-md-12">
-								<?php echo $this->Form->input('document_need',array('class'=>'form-control','type'=>'textarea','label'=>'Document Required From Client')); ?>
+								<?php echo $this->Form->input('document_need',array('class'=>'form-control','id'=>'document_need','type'=>'textarea','label'=>'Document Required From Client')); ?>
 							</div>
 						</div>
 						<div class="form-group row mb-0">
 							<div class="col-12">
-								<?php echo $this->Form->button('<i class="fa fa-check-square-o mr-5"></i>Update', array('type' => 'button','class' => 'btn bg-success-gradient btn-sm text-white','id'=>'remarks','escape' => false)); ?>
+								
+								<?php echo $this->Form->button('<i class="fa fa-check-square-o mr-5"></i>Update', array('type' => 'button','class' => 'btn bg-success-gradient btn-sm text-white','id'=>'document_button','escape' => false)); ?>
+								<?php
+									if(!empty($key_data['leadDetail']['lead_document']['document_need'])){
+								 		echo $this->Form->button('<i class="fa fa-times mr-5"></i>Delete', array('type' => 'button','class' => 'btn bg-danger btn-sm text-white','id'=>'document_button_delete','escape' => false)); 
+							 		}
+						 		?>
 							</div>
 						</div>
 						<?php echo $this->Form->end(); ?>
@@ -204,9 +212,9 @@
               		<h5 class="box-title">Recent Remarks For Client</h5>
 				</div>
 				<div class="box-body p-0 client_remarks_box">
-				  	<div id="remarks_list" class="media-list media-list-hover">
-						<?php if(!empty($key_data['Remarks'])){
-							foreach ($key_data['Remarks'] as $remarks) { ?>
+				  	<div id="client_remarks_list" class="media-list media-list-hover">
+						<?php if(!empty($key_data['ClientRemarks'])){
+							foreach ($key_data['ClientRemarks'] as $remarks) { ?>
 								<span class="media media-single" >
 								  <h4 class="w-100 text-gray font-weight-500"><?php echo date("d-m-Y", strtotime($remarks['remarks_date'])); ?></h4>
 								  <div class="media-body pl-15 bl-5 rounded border-success">
@@ -227,12 +235,12 @@
 						<?php echo $this->Form->create('remarks', ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-12">
-								<?php echo $this->Form->input('remarks',array('class'=>'form-control','id'=>'remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
+								<?php echo $this->Form->input('remarks',array('class'=>'form-control','id'=>'client_remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
 							</div>
 						</div>
 						<div class="form-group row mb-0">
 							<div class="col-12">
-								<?php echo $this->Form->button('<i class="fa fa-arrow-right mr-5"></i>Submit', array('type' => 'button','class' => 'btn btn-danger btn-sm','id'=>'remarks','escape' => false)); ?>
+								<?php echo $this->Form->button('<i class="fa fa-arrow-right mr-5"></i>Submit', array('type' => 'button','class' => 'btn btn-danger btn-sm','id'=>'client_remarks_button','escape' => false)); ?>
 							</div>
 						</div>
 						<?php echo $this->Form->end(); ?>
@@ -245,7 +253,7 @@
 				<div class="box-header with-border">
               		<h5 class="box-title">Recent Remarks For Office</h5>
 				</div>
-				<div class="box-body p-0 remarks_box	">
+				<div class="box-body p-0 remarks_box">
 				  	<div id="remarks_list" class="media-list media-list-hover">
 						<?php if(!empty($key_data['Remarks'])){
 							foreach ($key_data['Remarks'] as $remarks) { ?>
@@ -269,12 +277,12 @@
 						<?php echo $this->Form->create('remarks', ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-12">
-								<?php echo $this->Form->input('remarks',array('class'=>'form-control','id'=>'remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
+								<?php echo $this->Form->input('remarks',array('class'=>'form-control','id'=>'office_remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
 							</div>
 						</div>
 						<div class="form-group row mb-0">
 							<div class="col-12">
-								<?php echo $this->Form->button('<i class="fa fa-arrow-right mr-5"></i>Submit', array('type' => 'button','class' => 'btn btn-danger btn-sm','id'=>'remarks','escape' => false)); ?>
+								<?php echo $this->Form->button('<i class="fa fa-arrow-right mr-5"></i>Submit', array('type' => 'button','class' => 'btn btn-danger btn-sm','id'=>'remarks_button','escape' => false)); ?>
 							</div>
 						</div>
 						<?php echo $this->Form->end(); ?>
@@ -286,3 +294,193 @@
 			
 	</div>
 </section>
+
+
+<script>
+
+$(document).ready(function() {	
+
+	function formatDate(date) {
+	     var d = new Date(date),
+	         month = '' + (d.getMonth() + 1),
+	         day = '' + d.getDate(),
+	         year = d.getFullYear();
+
+	     if (month.length < 2) month = '0' + month;
+	     if (day.length < 2) day = '0' + day;
+
+	     return [year, month, day].join('-');
+	} 
+	$('#lead_status_submit').click(function(){
+		var lead_status = $('#lead_status_id').val();
+		if(lead_status.length != 0){
+			var data = {'lead_status_id':lead_status,'lead_id':$('#lead_id').html()};
+			var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'changeLeadStatus')); ?>";
+			var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
+			$.ajax({
+				type:"POST",
+			 	headers: {
+			        'X-CSRF-Token': csrfToken
+			    },
+				url : callUrl,
+				data : data, 
+				async: false,
+				success:function(response) {
+          			alert('Case Status Changed');
+	          		location.reload(); 
+		        },
+	          	error: function() {
+	                alert('Error occured');
+	                return;
+	          	}
+	      	});	
+		}
+		else{alert("Please select the status.");}
+	});
+
+	$('#cic_file_button').click(function(){
+		var file_no = $('#cic_file_id').val();
+		var date = $('#cic_file_date').val();
+		if(file_no.length != 0){
+			var data = {'file_no':file_no,'date':date,'file_id':$('#file_id').html()};
+			var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'addCicDetail')); ?>";
+			var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
+			$.ajax({
+				type:"POST",
+			 	headers: {
+			        'X-CSRF-Token': csrfToken
+			    },
+				url : callUrl,
+				data : data, 
+				async: false,
+				success:function(response) {
+          			alert('Cic file Detail Updated');
+	          		location.reload(); 
+		        },
+	          	error: function() {
+	                alert('Error occured');
+	                return;
+	          	}
+	      	});
+		}
+	});
+
+	$('#document_button').click(function(){
+		var document_need = $('#document_need').val();
+		if(document_need.length != 0){
+			var data = {'document_need':document_need,'lead_id':$('#lead_id').html()};
+			var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'addClientDocument')); ?>";
+			var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
+			$.ajax({
+				type:"POST",
+			 	headers: {
+			        'X-CSRF-Token': csrfToken
+			    },
+				url : callUrl,
+				data : data, 
+				async: false,
+				success:function(response) {
+          			alert('Document list added');
+	          		location.reload(); 
+		        },
+	          	error: function() {
+	                alert('Error occured');
+	                return;
+	          	}
+	      	});	
+		}
+		else{alert("Please add document list.");}
+		
+	});
+
+	$('#document_button_delete').click(function(){
+		if (confirm("Are you sure? Once document list delete user will stop receiving notification.")) {
+ 			var data = {'lead_id':$('#lead_id').html()};
+ 			var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'delClientDocument')); ?>";
+			var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
+			$.ajax({
+				type:"POST",
+			 	headers: {
+			        'X-CSRF-Token': csrfToken
+			    },
+				url : callUrl,
+				data : data, 
+				async: false,
+				success:function(response) {
+          			alert('Document list deleted');
+	          		location.reload(); 
+		        },
+	          	error: function() {
+	                alert('Error occured');
+	                return;
+	          	}
+	      	});	
+	    }
+	    
+	})
+
+	$('#remarks_button').click(function(){
+		var remarks = $('#office_remarks_box').val();
+		if(remarks.length != 0){
+			var data = {'remarks':remarks,'lead_id':$('#lead_id').html(),'user_id':$('#user_id').val()};
+			var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'addRemarks')); ?>";
+			var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
+			$.ajax({
+				type:"POST",
+			 	headers: {
+			        'X-CSRF-Token': csrfToken
+			    },
+				url : callUrl,
+				data : data, 
+				async: false,
+				success:function(response) {
+	          		var dataObj = JSON.parse(response);
+					$('#remarks_list').empty();
+					$('#office_remarks_box').val("");
+	          		$(dataObj).each(function() {
+		             	$('#remarks_list').append(
+		             		"<span class='media media-single'><h4 class='w-100 text-gray font-weight-500'>"+formatDate(this.remarks_date)+"</h4><div class='media-body pl-15 bl-5 rounded border-success'><p>"+this.remarks+"</p><span class='text-fade'>By "+this.user.first_name+" "+this.user.last_name+"</span></div></span>"
+						)
+		            });
+		        },
+	          	error: function() {
+	                alert('Error occured');
+	                return;
+	          	}
+	      	});	
+		}
+	});
+	$('#client_remarks_button').click(function(){
+		var remarks = $('#client_remarks_box').val();
+		if(remarks.length != 0){
+			var data = {'remarks':remarks,'lead_id':$('#lead_id').html(),'user_id':$('#user_id').val()};
+			var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'addClientRemarks')); ?>";
+			var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
+			$.ajax({
+				type:"POST",
+			 	headers: {
+			        'X-CSRF-Token': csrfToken
+			    },
+				url : callUrl,
+				data : data, 
+				async: false,
+				success:function(response) {
+	          		var dataObj = JSON.parse(response);
+					$('#client_remarks_list').empty();
+					$('#client_remarks_box').val("");
+	          		$(dataObj).each(function() {
+		             	$('#client_remarks_list').append(
+		             		"<span class='media media-single'><h4 class='w-100 text-gray font-weight-500'>"+formatDate(this.remarks_date)+"</h4><div class='media-body pl-15 bl-5 rounded border-success'><p>"+this.remarks+"</p><span class='text-fade'>By "+this.user.first_name+" "+this.user.last_name+"</span></div></span>"
+						)
+		            });
+		        },
+	          	error: function() {
+	                alert('Error occured');
+	                return;
+	          	}
+	      	});	
+		}
+	});
+});
+
+</script>

@@ -26,7 +26,7 @@
               </div>
             </div>
         </div>
-        <div class="col-12 col-lg-12">
+        <div class="col-12 col-lg-9">
             <div class="box">
                 <div class="box-header with-border">                        
                     <h3 class="box-title">Lead Status</h3>
@@ -38,9 +38,9 @@
                             <thead>
                                 <tr>
                                     <th>Status</th>
-                                    <th>Department</th>
+                                    <!-- <th>Department</th>
                                     <th>Status Message</th>
-                                    <th>Next Step Message</th>
+                                    <th>Next Step Message</th> -->
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -48,9 +48,9 @@
                                 <?php foreach ($key_data['status_data'] as $status) { ?>
                                     <tr>
                                         <td><?php echo $status->lead_status; ?></td>
-                                        <td><?php echo $status->department->name; ?></td>
+                                        <!-- <td><?php echo $status->department->name; ?></td>
                                         <td><?php echo $status->status_message; ?></td>
-                                        <td><?php echo $status->next_step_message; ?></td>
+                                        <td><?php echo $status->next_step_message; ?></td> -->
                                         <td><?php echo $this->Html->link('<i class="fa fa-edit"></i>Edit',['controller' => 'Admins', 'action' => 'changeLeadStatus',$status->id],['class'=>'btn btn-rounded btn-info mb-5','escape' => false]); ?></td>	
                                     </tr>   
                                 <?php } ?>
@@ -90,21 +90,21 @@ foreach ($key_data['department'] as $val) {
                         <div class="box">
                             <div class="box-body">
                                 <div class="row">
-		                            <div class="col-md-6">
+		                            <div class="col-md-12">
 		                                <div class="form-group">
 		                                   <?php echo $this->Form->input('lead_status',array('class'=>'form-control')); ?>
 		                                </div>
 		                            </div>
-                                  	<div class="col-md-6">
+                                  	<!-- <div class="col-md-6">
                                     	<div class="form-group">
                                         	<div class="input text">
                                         		<label>Department</label>
                                        			<?php echo $this->Form->select('department_id',$department,['empty' => ' ','class'=>'form-control']); ?>
                                     		</div>
                                     	</div>
-                                  	</div>
+                                  	</div> -->
                                 </div>
-                                <div class="row">
+                                <!-- <div class="row">
                                 	<div class="col-md-6">
 	                                    <div class="form-group">
 	                                        <?php echo $this->Form->input('status_message',array('class'=>'form-control','type'=>'textarea')); ?>
@@ -115,7 +115,7 @@ foreach ($key_data['department'] as $val) {
                                            <?php echo $this->Form->input('next_step_message',array('class'=>'form-control','type'=>'textarea')); ?>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 							</div>
                         </div>
                     </div>
