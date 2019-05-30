@@ -44,8 +44,58 @@ class LeadsController extends AppController
       return($user->toArray());
    	}
 
+    public function addClient($clientData = array()){
+        $clientInfo = array();
+        $clientInfo['first_name'] = $clientData['first_name'];
+        $clientInfo['last_name'] = $clientData['last_name'];
+        $clientInfo['password'] = $this->passwordHasher($clientData['last_name']); 
+        $clientInfo['email'] = $clientData['email'];
+        $clientInfo['address'] = $clientData['address'];
+        $clientInfo['phone'] = $clientData['telephone'];
+        $clientInfo['city'] = $clientData['city'];
+        $clientInfo['province'] = $clientData['province'];
+        $clientInfo['postal_code'] = $clientData['postal_code'];
+        $clientInfo['country'] = $clientData['country'];
+        $clientInfo['role'] = 'client';
+
+        $userTable = TableRegistry::get('Users');
+        $user = $userTable->newEntity();
+        $user = $userTable->patchEntity($user, $clientInfo);
+        $info = $userTable->save($user);
+        return $info;
+    }
+
+    public function editClient($leadData = array()){
+        try{
+          
+          $UserTable = TableRegistry::get('Users');
+          $client_data = $UserTable->find('all')->where(['email'=>$leadData['email']])->toArray();
+          
+          //pr($client_data);die;
+          $clientInfo['first_name'] = $leadData['first_name'];
+          $clientInfo['last_name'] = $leadData['last_name'];
+          $clientInfo['email'] = $leadData['email'];
+          $clientInfo['address'] = $leadData['address'];
+          $clientInfo['phone'] = $leadData['telephone'];
+          $clientInfo['city'] = $leadData['city'];
+          $clientInfo['province'] = $leadData['province'];
+          $clientInfo['postal_code'] = $leadData['postal_code'];
+          $clientInfo['country'] = $leadData['country'];
+
+          $user_info = $UserTable->get($client_data[0]->id);
+          $UserTable->patchEntity($user_info, $clientInfo);
+          $UserTable->save($user_info);
+          
+        }
+        catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function addLead($leadData = array(), $status){
         try{
+            $clientData = $this->addClient($leadData);
+            $leadData['client_id'] = $clientData->id;
             $leadData['lead_status_id'] = $status;
             $leadTable = TableRegistry::get('Leads');
             $lead = $leadTable->newEntity();
@@ -60,20 +110,27 @@ class LeadsController extends AppController
 
     public function editLead($leadData = array(),$id=null){
         try{
-          $LeadTable = TableRegistry::get('Leads');
-          $detail = $LeadTable->get($id);
-          $LeadTable->patchEntity($detail, $leadData);
-          $result = $LeadTable->save($detail);
-          return $result;
+            //$this->editClient($leadData);
+            $LeadTable = TableRegistry::get('Leads');
+            $detail = $LeadTable->get($id);
+            $LeadTable->patchEntity($detail, $leadData);
+            $result = $LeadTable->save($detail);
+            return $result;
         }
         catch (Exception $e) {
             echo $e->getMessage();
         }
     }
 
-    public function getInitLeadByUserId($id = null){
+    public function getInitLeadByUserId($id = null,$access = null){
       $this->loadModel('Leads');
-      $lead = $this->Leads->find('all')->where(['agent_id' => $id,'lead_status_id IN'=>[1,2]])->contain(['Categories','SubCategories','LeadStatus']);
+      if($access == 'retain'){
+        $lead = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2],'OR' => [['retainer_id' => $id], ['agent_id' => $id]]])->order(['Leads.id'=> 'DESC'])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus']);  
+      }
+      elseif($access == 'full'){
+        $lead = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2]])->order(['Leads.id'=> 'DESC'])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus']);  
+      }
+      
       return($lead->toArray());
     }
     public function getLeadByUserId($id = null){
@@ -160,7 +217,7 @@ class LeadsController extends AppController
             $assignData = $lead->toArray();
             $assignData['processingAgent_id'] = $rawData['user_id'];
             $assignData['lead_status_id'] = 3;
-            
+            $assignData['status_changed_date'] = date('Y-m-d');
             $leadTable->patchEntity($lead, $assignData);
             $leadTable->save($lead);
         }
@@ -200,6 +257,7 @@ class LeadsController extends AppController
             $lead = $leadTable->get($rawData['lead_id']);
             $assignData = $lead->toArray();
             $assignData['lead_status_id'] = $rawData['lead_status_id'];
+            $assignData['status_changed_date'] = date('Y-m-d');
             $leadTable->patchEntity($lead, $assignData);
             $leadTable->save($lead);
           }

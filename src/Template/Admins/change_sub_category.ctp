@@ -13,7 +13,7 @@ foreach ($key_data['cat_list'] as $value) {
 			<div class="box">
 				<div class="box-header with-border">
 					<h4 class="box-title">Edit Sub Category</h4>
-					<?php echo $this->Form->create($key_data['subcat_list'], array('action' => 'changeSubCategory','controller'=>'Admins','class'=>'form-horizontal form-element')); ?>
+					<?php echo $this->Form->create($key_data['subcat_list'], array('action' => 'changeSubCategory','controller'=>'Admins','class'=>'form-horizontal form-element','novalidate')); ?>
 		                <div class="modal-body">
 		                    <div class="col-xl-12 col-lg-12">
 		                        <div class="box">
@@ -21,16 +21,20 @@ foreach ($key_data['cat_list'] as $value) {
 		                                <div class="row">
 				                            <div class="col-md-12">
 				                                <div class="form-group">
-				                                   <?php echo $this->Form->input('name',array('class'=>'form-control')); ?>
+				                                   <div class="controls">
+												   		<?php echo $this->Form->input('name',array('label'=>'Sub Category Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+													</div>
 				                                </div>
 				                            </div>
 				                        </div>
-				                         <div class="row">
+				                        <div class="row">
 		                                	<div class="col-md-12">
 		                                    	<div class="form-group">
-		                                        	<div class="input text">
-		                                        		<label>Category</label>
-		                                       			<?php echo $this->Form->select('category_id',$category,['empty' => ' ','class'=>'form-control']); ?>
+		                                        	<div class="controls">
+			                                        	<div class="input text">
+			                                        		<label>Category<span class="text-danger">*</span></label>
+			                                       			<?php echo $this->Form->select('category_id',$category,['empty' => ' ','class'=>'form-control','required']); ?>
+			                                    		</div>
 		                                    		</div>
 		                                    	</div>
 		                                  	</div>

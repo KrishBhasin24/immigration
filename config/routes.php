@@ -74,7 +74,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/addCompany', ['controller' => 'Admins', 'action' => 'addCompany']);
     $routes->connect('/dashboard', ['controller' => 'Admins', 'action' => 'dashboard']);
-    $routes->connect('/getAllStaff', ['controller' => 'Admins', 'action' => 'getAllStaff']);
+    $routes->connect('/get-all-staff', ['controller' => 'Admins', 'action' => 'getAllStaff']);
     $routes->connect('/set-permission/*', ['controller' => 'Admins', 'action' => 'setPermission']);
 
 

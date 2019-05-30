@@ -56,6 +56,10 @@ class AdminsController extends AppController
         $this->set('key_data', $key_data);
     }
 
+    public function getCountryList(){
+        $this->loadModel('Countries');
+        return $this->Countries->find('all')->order(['name'=>'ASC'])->toArray(); 
+    }
 
     public function getAllCompanies(){
         $key_data['loggedInUser']= $this->Auth->user();
@@ -65,6 +69,7 @@ class AdminsController extends AppController
         $key_data['company_count'] = count($key_data['company']);
         $key_data['branch'] = $user->getAllCompany('branch');
         $key_data['branch_count'] = count($key_data['branch']);
+        $key_data['Countries'] = $this->getCountryList();
         $this->set('key_data',$key_data);
     }
 
@@ -77,6 +82,7 @@ class AdminsController extends AppController
                 $this->loadModel('Companies');
                 $company_data = $this->Companies->get($id); 
                 $key_data['Company_data'] = $company_data;
+                $key_data['Countries'] = $this->getCountryList();
                 if ($this->request->is(['post','put'])) { 
 
                     $this->Companies->patchEntity($company_data, $this->request->data);
@@ -106,11 +112,11 @@ class AdminsController extends AppController
 
         $this->loadModel('Companies');
         $this->loadModel('Departments');
-        $companies_rqst = $this->Companies->find('all');  
-        $department_rqst = $this->Departments->find('all');  
-        $key_data['companies'] = $companies_rqst->toArray();
-        $key_data['department'] = $department_rqst->toArray();
-
+        
+        $key_data['Countries'] = $this->getCountryList();
+        $key_data['companies'] = $this->Companies->find('all')->toArray();  
+        $key_data['department'] = $this->Departments->find('all')->toArray();  
+        
         $this->set('key_data',$key_data);
     }
 
@@ -119,9 +125,18 @@ class AdminsController extends AppController
         if ($this->request->is('post')) {
             $data = $this->request->data();
             $user = new UsersController();
-            if($register = $user->addStaff($data,'staff')){
-                $this->Flash->success(__('Staff Data Added'));
+            $this->loadModel('Users');
+            $exist = $this->Users->find('all')->where(['email' => $data['email']])->toArray();
+            $exist = $exist[0]->toArray();  
+            if(count($exist) > 1 ){
+                $this->Flash->error(__('Email Id Already Exist. Please Use Unique Email Id'));
                 return $this->redirect(['controller'=>'Admins','action' => 'getAllStaff']);
+            }
+            else{
+                if($register = $user->addStaff($data,'staff')){
+                    $this->Flash->success(__('Staff Data Added'));
+                    return $this->redirect(['controller'=>'Admins','action' => 'getAllStaff']);
+                }    
             }
         }
 
@@ -134,6 +149,7 @@ class AdminsController extends AppController
         $this->loadModel('Users');
         try{
                 $key_data['userData'] = $this->Users->get($id);   
+                $key_data['Countries'] = $this->getCountryList();
                 $this->loadModel('Companies');
                 $this->loadModel('Departments');
                 $companies_rqst = $this->Companies->find('all');  
@@ -348,7 +364,7 @@ class AdminsController extends AppController
 
 
 
-    public function getAgent()
+    /*public function getAgent()
     {
         $key_data['loggedInUser'] = $this->Auth->user();
         $lead = new LeadsController();
@@ -356,7 +372,7 @@ class AdminsController extends AppController
         $key_data['agent_count'] = count($result);
         $key_data['agent_list'] = $result;
         $this->set('key_data',$key_data);
-    }
+    }*/
 
 
     public function addLead(){
@@ -371,6 +387,7 @@ class AdminsController extends AppController
 
         if ($this->request->is('post')) {
             $data = $this->request->data();
+           // pr($data);die;
             $lead = new LeadsController();
             if($added = $lead->addLead($data,1)){
                 $this->Flash->success(__('Lead Added Sucessfully'));
@@ -381,8 +398,7 @@ class AdminsController extends AppController
 
         $this->loadModel('Categories');
         $key_data['category'] = $this->Categories->find('all')->toArray(); 
-        $this->loadModel('Countries');
-        $key_data['Countries'] = $this->Countries->find('all')->order(['name'=>'ASC'])->toArray(); 
+        $key_data['Countries'] = $this->getCountryList();
         $key_data['loggedInUser'] = $this->Auth->user();
         $this->set('key_data',$key_data);   
     }
@@ -390,12 +406,22 @@ class AdminsController extends AppController
     public function getLead(){
         $key_data['loggedInUser'] = $this->Auth->user();
         $lead = new LeadsController();
-        $result = $lead->getInitLeadByUserId($key_data['loggedInUser']['id']);
-
-       // pr($result);die;
-
+        if($key_data['loggedInUser']['department']['id'] == 1 || $key_data['loggedInUser']['department']['id'] == 6 ){
+            $result = $lead->getInitLeadByUserId($key_data['loggedInUser']['id'],'retain');
+        }
+        else{
+            $result = $lead->getInitLeadByUserId($key_data['loggedInUser']['id'],'full');
+        }
         $key_data['my_lead_count'] = count($result);
         $key_data['lead_list'] = $result;
+        $this->set('key_data',$key_data); 
+    }
+
+    public function getAllLead(){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $this->loadModel('Leads');
+        $key_data['all_lead'] = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2]])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus'])->toArray();  
+        $key_data['all_lead_count'] = count($key_data['all_lead']);
         $this->set('key_data',$key_data); 
     }
 
@@ -416,8 +442,7 @@ class AdminsController extends AppController
         $this->loadModel('SubCategories');
         $key_data['subcat'] = $this->SubCategories->find('all')->toArray(); 
 
-        $this->loadModel('Countries');
-        $key_data['Countries'] = $this->Countries->find('all')->order(['name'=>'ASC'])->toArray(); 
+        $key_data['Countries'] = $this->getCountryList();
         
         $staff_list = $lead->getStaff();
         $key_data['staff_list'] = $staff_list;
@@ -427,6 +452,7 @@ class AdminsController extends AppController
             if (array_key_exists('contract_signed',$data)){
                 if($data['contract_signed'] == 1){
                     $data['lead_status_id'] = 2;
+                    $data['status_changed_date'] = date('Y-m-d');
                     $file['lead_id'] = $id;
                     $file['retainer_id'] = $data['retainer_id'];
                     $filedetail = $lead->retainLead($file); 
@@ -543,9 +569,16 @@ class AdminsController extends AppController
     public function manageCase(){
         $key_data['loggedInUser'] = $this->Auth->user();
         $this->loadModel('Leads');
-        $key_data['leadDetail'] = $this->Leads->find('all')->order(['Leads.id' => 'DESC'])->contain(['Retain','Lead','Filling','Categories','SubCategories','AccountLeads','LeadStatus'])->toArray();    
+        if($key_data['loggedInUser']['department']['id'] == 2 ){
+            $key_data['leadDetail'] = $this->Leads->find('all')->where(['Leads.processingAgent_id' => $key_data['loggedInUser']['id'],'NOT'=> ['Leads.lead_status_id IN' =>[1,2]]])->order(['Leads.id' => 'DESC'])->contain(['Retain','Lead','Filling','Categories','SubCategories','AccountLeads','LeadStatus'])->toArray();        
+        }
+        elseif($key_data['loggedInUser']['department']['id'] == 6){
+            $key_data['leadDetail'] = $this->Leads->find('all')->where(['Leads.retainer_id' => $key_data['loggedInUser']['id'],'NOT'=> ['Leads.lead_status_id IN' =>[1,2]]])->order(['Leads.id' => 'DESC'])->contain(['Retain','Lead','Filling','Categories','SubCategories','AccountLeads','LeadStatus'])->toArray();           
+        }
+        else{
+            $key_data['leadDetail'] = $this->Leads->find('all')->where(['NOT'=> ['Leads.lead_status_id IN' =>[1,2]]])->order(['Leads.id' => 'DESC'])->contain(['Retain','Lead','Filling','Categories','SubCategories','AccountLeads','LeadStatus'])->toArray();
+        }
         
-       // pr($key_data['leadDetail']);die;
         $this->set('key_data',$key_data);  
     }
 
@@ -572,6 +605,14 @@ class AdminsController extends AppController
         $key_data['leadDetail'] = $leadDetail[0];
         $key_data['balance'] = $lead->leadPaymentBalance($id);
         $this->set('key_data',$key_data);        
+    }
+
+    public function retainedCase(){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $this->loadModel('Leads');
+        $key_data['retained_lead_data'] = $this->Leads->find('all')->where(['Leads.retainer_id' => $key_data['loggedInUser']['id'],'NOT'=> ['Leads.lead_status_id' =>'1']])->order(['Leads.id' => 'DESC'])->contain(['Lead','Filling','Categories','SubCategories','AccountLeads','LeadStatus'])->toArray();
+        $key_data['retained_lead_count'] = count($key_data['retained_lead_data']);
+        $this->set('key_data',$key_data);           
     }
 
 

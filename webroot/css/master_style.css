@@ -16263,3 +16263,8 @@ span.btn.dropdown-toggle::after {
 .hidden {
     display: none !important;
 }
+
+
+.custom_date {
+    padding: 5px 11px;
+}

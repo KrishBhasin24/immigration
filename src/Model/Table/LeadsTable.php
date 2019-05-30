@@ -27,19 +27,19 @@ class LeadsTable extends Table
 
             $this->belongsTo('Lead', [
                 'foreignKey' => 'agent_id',
-                'joinType' => 'INNER',
+                'joinType' => 'LEFT',
                 'className' => 'Users'
             ]);
 
             $this->belongsTo('Retain', [
                 'foreignKey' => 'retainer_id',
-                'joinType' => 'INNER',
+                'joinType' => 'LEFT',
                 'className' => 'Users'
             ]);
 
             $this->belongsTo('Filling', [
                 'foreignKey' => 'processingAgent_id',
-                'joinType' => 'INNER',
+                'joinType' => 'LEFT',
                 'className' => 'Users'
             ]);
 

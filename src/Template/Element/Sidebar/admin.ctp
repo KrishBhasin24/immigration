@@ -29,8 +29,8 @@ foreach ($user['permissions'] as $first) {
         		<ul class="treeview-menu">
         			<li ><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Companies',['controller' => 'Admins', 'action' => 'getAllCompanies'],['escape' => false]); ?> </li>
     					<li ><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Staff',['controller' => 'Admins', 'action' => 'getAllStaff'],['escape' => false]); ?></li>
-    					<li ><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Department',['controller' => 'Admins', 'action' => 'getAllDepartment'],['escape' => false]); ?></li>
-					   <!-- <li class=""><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Manage Client',['controller' => 'Admins', 'action' => 'manageClient'],['escape' => false]); ?></li> -->
+    					<!-- <li ><?php //echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Department',['controller' => 'Admins', 'action' => 'getAllDepartment'],['escape' => false]); ?></li> -->
+					   <!-- <li class=""><?php //echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Manage Client',['controller' => 'Admins', 'action' => 'manageClient'],['escape' => false]); ?></li> -->
 					
         		</ul>
       		</li>
@@ -46,7 +46,7 @@ foreach ($user['permissions'] as $first) {
         			<li><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Manage Status',['controller' => 'Admins', 'action' => 'getLeadStatus'],['escape' => false]); ?> </li>
     					<li><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Immigration Category',['controller' => 'Admins', 'action' => 'getCategory'],['escape' => false]);?></li>
     					<li><?php echo $this->Html->link('<i class="mdi mdi-link-variant"></i><span>Links Setup</span>',['controller' => 'Admins', 'action' => 'getLink'],['escape' => false]); ?></li>
-      				<li><?php echo $this->Html->link('<i class="mdi mdi-account"></i><span>Client Setup</span>',['controller' => 'Admins', 'action' => 'getClient'],['escape' => false]); ?></li>
+      			<!-- 	<li><?php //echo $this->Html->link('<i class="mdi mdi-account"></i><span>Client Setup</span>',['controller' => 'Admins', 'action' => 'getClient'],['escape' => false]); ?></li> -->
 				    </ul>
       		</li>
       		<li class="treeview">
@@ -58,12 +58,12 @@ foreach ($user['permissions'] as $first) {
           		</span>
         		</a>
         		<ul class="treeview-menu">
-        			<li><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Agents',['controller' => 'Admins', 'action' => 'getAgent'],['escape' => false]); ?> </li>
+        		<!-- 	<li><?php //echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Agents',['controller' => 'Admins', 'action' => 'getAgent'],['escape' => false]); ?> </li> -->
     					<li><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Add New Leads',['controller' => 'Admins', 'action' => 'addLead'],['escape' => false]);?></li>
-    					<li><?php echo $this->Html->link('<i class="mdi mdi-link-variant"></i><span>Assignment of leads</span>',['controller' => 'Admins', 'action' => 'assignLead'],['escape' => false]); ?></li>
+    					<!-- <li><?php //echo $this->Html->link('<i class="mdi mdi-link-variant"></i><span>Assignment of leads</span>',['controller' => 'Admins', 'action' => 'assignLead'],['escape' => false]); ?></li> -->
       				<li><?php echo $this->Html->link('<i class="mdi mdi-account"></i><span>View Leads</span>',['controller' => 'Admins', 'action' => 'getLead'],['escape' => false]); ?></li>
-      				<li><?php echo $this->Html->link('<i class="mdi mdi-account"></i><span>Today Followup</span>',['controller' => 'Admins', 'action' => 'todayFollow'],['escape' => false]); ?></li>
-      				<li><?php echo $this->Html->link('<i class="mdi mdi-account"></i><span>Retained Cases</span>',['controller' => 'Admins', 'action' => 'retainedCase'],['escape' => false]); ?></li>
+      				<li><?php echo $this->Html->link('<i class="mdi mdi-account"></i><span>View All Leads</span>',['controller' => 'Admins', 'action' => 'getAllLead'],['escape' => false]); ?></li>
+      				
 				    </ul>
       		</li>
       		<li class="treeview">

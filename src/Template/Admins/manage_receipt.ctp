@@ -24,6 +24,7 @@
 		  		</div>
 		  		<div class="box-body">
 					<div class="flexbox bb-1 mb-10">
+						<span id="logged_user_department" style="display:none"><?php echo $key_data['loggedInUser']['department']['id'];  ?></span>
 						<div><p><span class="text-light">Lead No:</span> <h5 class="text-black mb-0"><strong ><?php echo $key_data['leadDetail']['id']; ?></strong></h5></p></div>
 						<div><p><span class="text-light">File No:</span> <h5 class="text-black mb-0"><strong><?php echo $key_data['leadDetail']['account_lead']['id']; ?></strong></h5></p></div>
 					</div>
@@ -168,7 +169,7 @@
                     <h3 class="box-title">Payment Refund</h3>
                     <?php 
                     	if($key_data['balance'] !== 0){
-                    		echo $this->Html->link('Add Refund',['controller' => 'Admins', 'action' => 'addRefund'],['data-toggle'=>'modal','data-target'=>'#refund','class'=>'btn btn-rounded btn-success mb-5 right','escape' => false]);		
+                    		echo $this->Html->link('Add Refund',['controller' => 'Admins', 'action' => 'addRefund'],['data-toggle'=>'modal','data-target'=>'#refund','id'=>'refund_btn','class'=>'btn btn-rounded btn-success mb-5 right','escape' => false]);		
                     	}
                      ?>
                 </div>
@@ -324,6 +325,23 @@
         </div>
       </div>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function() {	
+
+	var user_department = $('#logged_user_department').html();
+	//alert(user_department);
+	if(user_department == 6){
+		
+		$("#refund_btn").hide();
+		
+
+		
+	}
+});
+</script>
+
+
 
 <?= $this->Html->script('popper.min.js'); ?>
 

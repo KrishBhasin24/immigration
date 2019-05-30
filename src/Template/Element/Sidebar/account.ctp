@@ -14,7 +14,7 @@ foreach ($user['permissions'] as $first) {
     <section class="sidebar">
 	    <ul class="sidebar-menu" data-widget="tree">
 	    	<li class="header nav-small-cap"></li>
-	    	<li class=""><?php echo $this->Html->link('Dashboard',['controller' => 'Admins', 'action' => 'dashboard']); ?></li>
+	    	<li class=""><?php echo $this->Html->link('<i class="mdi mdi-view-dashboard"></i> <span>Dashboard</span>',['controller' => 'Admins', 'action' => 'dashboard'],['escape' => false]); ?></li>
 
 	    	<?php if(empty($user['permissions'])){ ?>
 				
@@ -48,7 +48,7 @@ foreach ($user['permissions'] as $first) {
 	          		</ul>
 				</li>
 			<?php } } ?>
-			<li class=""><?php echo $this->Html->link('Logout',['controller' => 'Users', 'action' => 'logout']); ?></li>
+			<li><?php echo $this->Html->link('<i class="mdi mdi-directions"></i><span>Logout</span>',['controller' => 'Users', 'action' => 'logout'],['escape' => false]); ?></li>
 		</ul>
 	</section>
 </aside>

@@ -102,7 +102,7 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 				<div class="box-header with-border">
 					
 					<?php echo $this->Form->create($key_data['lead_data'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'editLead']]); ?>
-					<?php echo $this->Form->input('agent_id',array('type'=>'hidden','value'=>$key_data['loggedInUser']['id'])); ?>
+					<?php echo $this->Form->input('client_id',array('type'=>'hidden','value'=>$key_data['lead_data']['client_id'])); ?>
 					<div class="box-body">
 						<h4 class="box-title text-info"><i class="ti-location-arrow mr-15"></i> Immigration Category</h4>
 						<hr class="my-15">
@@ -147,7 +147,7 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('email',array('class'=>'form-control','placeholder'=>'Email')); ?>
+									<?php echo $this->Form->input('email',array('class'=>'form-control','placeholder'=>'Email','disabled')); ?>
 								</div>
 							</div>
 							<div class="col-md-3">

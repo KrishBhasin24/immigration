@@ -4,7 +4,7 @@
 			<div class="box">
 				<div class="box-header with-border">
 					<h4 class="box-title">Edit Category</h4>
-					<?php echo $this->Form->create($key_data['cat_list'], array('action' => 'changeCategory','controller'=>'Admins','class'=>'form-horizontal form-element')); ?>
+					<?php echo $this->Form->create($key_data['cat_list'], array('action' => 'changeCategory','controller'=>'Admins','class'=>'form-horizontal form-element','novalidate')); ?>
 		                <div class="modal-body">
 		                    <div class="col-xl-12 col-lg-12">
 		                        <div class="box">
@@ -12,7 +12,9 @@
 		                                <div class="row">
 				                            <div class="col-md-12">
 				                                <div class="form-group">
-				                                   <?php echo $this->Form->input('name',array('class'=>'form-control')); ?>
+				                                   <div class="controls">
+												   		<?php echo $this->Form->input('name',array('label'=>'Category Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+													</div>
 				                                </div>
 				                            </div>
 				                        </div>

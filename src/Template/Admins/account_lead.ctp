@@ -38,6 +38,19 @@
                                     </tr>   
                                 <?php } ?>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Retained By</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Sub Category</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                    
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

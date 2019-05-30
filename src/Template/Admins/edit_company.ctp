@@ -3,6 +3,10 @@ foreach ($key_data['all_company_data'] as $value) {
   $parent[$value->id] = $value->name;
 }
 
+foreach ($key_data['Countries'] as $val){
+    $Countries[$val->name] = $val->name;
+}
+
 $main_parent = array(0=>'No Parent');
 $parent = $main_parent+$parent;
 
@@ -23,34 +27,33 @@ $parent = $main_parent+$parent;
 				<div class="box-header with-border">
 					<h4 class="box-title">Edit Company Detail</h4>	
 					<?php 
-					echo $this->Form->create($key_data['Company_data'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'editCompany']]); ?>
+					echo $this->Form->create($key_data['Company_data'], ['class'=> 'formValidation','novalidate','url' => ['controller'=>'Admins','action'=>'editCompany']]); ?>
 					<div class="box-body">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
-									<div class="input text">
-										<label>Parent Company</label>
-										<?php 
-	                                       	echo $this->Form->select(
-	                                          'parent_id',
-	                                          $parent,
-	                                          ['empty' => ' ','class'=>'form-control']
-	                                      	);
-
-	                                   	?>
-                                   </div>
+									<div class="controls">
+										<div class="input text">
+											<label>Parent Company<span class="text-danger">*</span></label>
+											<?php echo $this->Form->select('parent_id',$parent,['empty' => ' ','class'=>'form-control','required']);?>
+	                                   	</div>
+                               		</div>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('name',array('class'=>'form-control')); ?>
+									<div class="controls">
+								   		<?php echo $this->Form->input('name',array('label'=>'Company Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+							   		</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('telephone',array('class'=>'form-control','type'=>'text')); ?>
+									<div class="controls">
+								 		<?php echo $this->Form->input('telephone',array('label'=>'Contact Number<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','id'=>'phone','type'=>'text')); ?>
+								 	</div>
 								</div>
 							</div>
 						</div>
@@ -93,7 +96,10 @@ $parent = $main_parent+$parent;
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-								    <?php echo $this->Form->input('country',array('class'=>'form-control')); ?>
+								    <div class="input text">
+										<label>Country</label>
+										<?php echo $this->Form->select('country',$Countries,['empty' => ' ','class'=>'form-control']);?>	
+									</div>
 								</div>
 						  	</div>
 						</div>

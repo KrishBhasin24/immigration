@@ -84,7 +84,7 @@ foreach ($key_data['department'] as $val) {
                 <span aria-hidden="true">&times;</span>
                 </a>
             </div>
-            <?php echo $this->Form->create('Status', array('action' => 'changeLeadStatus','controller'=>'Admins','class'=>'form-horizontal form-element')); ?>
+            <?php echo $this->Form->create('Status', array('action' => 'changeLeadStatus','controller'=>'Admins','class'=>'form-horizontal form-element','novalidate')); ?>
                 <div class="modal-body">
                     <div class="col-xl-12 col-lg-12">
                         <div class="box">
@@ -92,7 +92,9 @@ foreach ($key_data['department'] as $val) {
                                 <div class="row">
 		                            <div class="col-md-12">
 		                                <div class="form-group">
-		                                   <?php echo $this->Form->input('lead_status',array('class'=>'form-control')); ?>
+                                            <div class="controls">
+		                                      <?php echo $this->Form->input('lead_status',array('label'=>'Lead Status<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+                                            </div>
 		                                </div>
 		                            </div>
                                   	<!-- <div class="col-md-6">

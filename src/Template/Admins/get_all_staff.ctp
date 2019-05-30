@@ -1,14 +1,24 @@
-<!-- <div class="content-header">
-    <div class="d-flex align-items-center">
-        <div class="mr-auto w-p50">
-            <h3 class="page-title">Staff</h3>
-        </div>
-    </div>
-</div> -->
+<?php //pr($key_data['department']); ?>
+
+
+<script type="text/javascript">
+  /*  $(document).ready(function() { 
+        
+        $('#search').on('keyup', function(e){
+            var command = $(this).val();
+            if(command.length > 5 ){
+                
+            }
+            
+        });
+    });  */
+</script>
+<!-- <input type="text" name="test" id="search"> -->
+
 <section class="content">       
     <div class="row">
         <!-- Head Content -->
-        <div class="col-xl-4 col-md-6 col-12">
+        <div class="col-xl-5 col-md-6 col-12">
             <div class="flexbox flex-justified text-center bg-info mb-30 pull-up">
               <div class="no-shrink py-30">
                 <span class="mdi mdi-account font-size-50"></span>
@@ -22,7 +32,8 @@
         </div>
         
 <!-- Main Content -->
-        <div class="col-12 col-lg-12">
+        
+        <div class="col-12 col-lg-9">
             <div class="box">
                 <div class="box-header with-border">                        
                     <h3 class="box-title">Employee List</h3>
@@ -69,6 +80,33 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-lg-3">
+            <div class="box">
+                <div class="box-header with-border">                        
+                    <h3 class="box-title">Department List</h3>
+                </div>
+                <div class="box-body p-15">                     
+                    <div class="table-responsive">
+                        <table id="tickets" class="table mt-0 table-hover no-wrap table-bordered" data-page-size="10">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($key_data['department'] as $dep) { ?>
+                                    <tr>
+                                        <td><?php echo $dep['id']; ?></td>
+                                        <td><?php echo $dep['name']; ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -85,6 +123,9 @@ foreach ($key_data['companies'] as $val){
 foreach ($key_data['department'] as $val) {
  $department[$val->id] = $val->name;
 }
+foreach ($key_data['Countries'] as $val){
+    $Countries[$val->name] = $val->name;
+}
  ?>
 
 
@@ -97,67 +138,63 @@ foreach ($key_data['department'] as $val) {
                 <span aria-hidden="true">&times;</span>
                 </a>
             </div>
-            <?php echo $this->Form->create('User', array('action' => 'addStaff','controller'=>'Admins','class'=>'form-horizontal form-element')); ?>
+            <?php echo $this->Form->create('User', array('url' =>'/admins/addStaff','class'=>'form-horizontal form-element','novalidate')); ?>
                 <div class="modal-body">
                     <div class="col-xl-12 col-lg-12">
                         <div class="box">
                             <div class="box-body">
                                 <div class="row">
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                        <div class="input text">
-                                        <label>Department</label>
-                                       <?php 
-                                               echo $this->Form->select(
-                                                  'department_id',
-                                                  $department,
-                                                  ['empty' => ' ','class'=>'form-control']
-                                              );
-
-                                       ?>
-                                    </div>
-                                    </div>
-                                  </div>
-                                   <div class="col-md-6">
-                                    <div class="form-group">
-                                        <div class="input text">
-                                        <label>Company</label>
-                                       <?php 
-                                            
-                                               echo $this->Form->select(
-                                                  'company_id',
-                                                  $companies,
-                                                  ['empty' => ' ','class'=>'form-control']
-                                              );
-
-                                       ?>
-                                    </div>
-                                    </div>
-                                  </div>
-                                  
-                                </div>
-                                
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                       <?php echo $this->Form->input('first_name',array('class'=>'form-control')); ?>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                        <?php echo $this->Form->input('last_name',array('class'=>'form-control','type'=>'text')); ?>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                           <?php echo $this->Form->input('email',array('class'=>'form-control','type'=>'text')); ?>
+                                            <div class="controls">
+                                                <div class="input text">
+                                                    <label>Department<span class="text-danger">*</span></label>
+                                                    <?php echo $this->Form->select('department_id',$department,['empty' => ' ','class'=>'form-control','required']);?>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <?php echo $this->Form->input('password',array('class'=>'form-control')); ?>
+                                            <div class="controls">
+                                                <div class="input text">
+                                                    <label>Company<span class="text-danger">*</span></label>
+                                                    <?php echo $this->Form->select('company_id',$companies,['empty' => ' ','class'=>'form-control','required']); ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                
+                                                <?php echo $this->Form->control('first_name',array('label'=>'First Name<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','required','autocomplete'=>'off')); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <?php echo $this->Form->control('last_name',array('label'=>'Last Name<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','type'=>'text','required')); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <?php echo $this->Form->control('email',array('label'=>'Email<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','type'=>'email','required','autocomplete'=>'off')); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <?php echo $this->Form->control('password',array('label'=>'Password<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','required','autocomplete'=>'off')); ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -165,48 +202,51 @@ foreach ($key_data['department'] as $val) {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                           <?php echo $this->Form->input('address',array('class'=>'form-control')); ?>
+                                           <?php echo $this->Form->control('address',array('class'=>'form-control')); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <?php echo $this->Form->input('city',array('class'=>'form-control')); ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <?php echo $this->Form->input('province',array('class'=>'form-control')); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                          <?php echo $this->Form->input('postal_code',array('class'=>'form-control')); ?>
+                                            <?php echo $this->Form->control('city',array('class'=>'form-control')); ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                           <?php echo $this->Form->input('phone',array('class'=>'form-control','type'=>'text')); ?>
+                                            <?php echo $this->Form->control('province',array('class'=>'form-control')); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <?php echo $this->Form->input('country',array('class'=>'form-control')); ?>
+                                          <?php echo $this->Form->control('postal_code',array('class'=>'form-control')); ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                           <?php echo $this->Form->input('in_time',array('class'=>'form-control','type'=>'text')); ?>
+                                           <?php echo $this->Form->control('phone',array('class'=>'form-control','type'=>'text')); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <?php echo $this->Form->input('out_time',array('class'=>'form-control')); ?>
+                                           <div class="input text">
+                                                <label>Country</label>
+                                                <?php echo $this->Form->select('country',$Countries,['empty' => ' ','class'=>'form-control']);?>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                           <?php echo $this->Form->control('in_time',array('class'=>'form-control','type'=>'text')); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <?php echo $this->Form->control('out_time',array('class'=>'form-control')); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -238,6 +278,8 @@ foreach ($key_data['department'] as $val) {
         </div>
       </div>
 </div>
+
+
 
 
 <?= $this->Html->script('popper.min.js'); ?>

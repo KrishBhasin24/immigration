@@ -1,5 +1,6 @@
-<?php //pr($key_data['lead_list']); ?>
-
+<?php
+//pr( $key_data['all_lead']);
+ ?>
 <section class="content">       
     <div class="row">
         <!-- Head Content -->
@@ -10,16 +11,15 @@
               </div>
 
               <div class="py-30 bg-white text-dark">
-                <div class="font-size-30 countnm"><?php echo $key_data['my_lead_count']; ?></div>
-                <span>My Total Lead</span>
+                <div class="font-size-30 countnm"><?php echo $key_data['all_lead_count']; ?></div>
+                <span>Total Lead</span>
               </div>
             </div>
         </div>
         <div class="col-12 col-lg-12">
             <div class="box">
                 <div class="box-header with-border">                        
-                    <h3 class="box-title">Lead List</h3>
-                   <?php echo $this->Html->link('Add Lead',['controller' => 'Admins', 'action' => 'addLead'],['class'=>'btn btn-rounded btn-success mb-5 right','escape' => false]); ?>
+                    <h3 class="box-title">All Lead</h3>
                 </div>
                 <div class="box-body p-15">                     
                     <div class="table-responsive">
@@ -38,7 +38,7 @@
                                 </tr>
                             </thead>
                              <tbody>
-                                <?php foreach ($key_data['lead_list'] as $lead) { ?>
+                                <?php foreach ($key_data['all_lead'] as $lead) { ?>
                                     <tr>
                                         <td><?php echo $lead->id; ?></td>
                                         <td><?php echo $lead->first_name."  ".$lead->last_name; ?></td>

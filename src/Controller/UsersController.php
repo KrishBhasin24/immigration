@@ -139,7 +139,7 @@ class UsersController extends AppController
 
     public function getAllUser($usertype){
         $this->loadModel('Users');
-        $staff = $this->Users->find('all')->where(['Users.role' => $usertype])->contain(['Departments','Companies']);
+        $staff = $this->Users->find('all')->where(['Users.role' => $usertype])->order(['Users.id' => 'DESC'])->contain(['Departments','Companies']);
         $staff_result = $staff->toArray();
         return $staff_result;
     }

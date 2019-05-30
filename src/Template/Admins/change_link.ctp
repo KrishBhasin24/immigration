@@ -10,7 +10,7 @@ $display_list = array('Client'=>'Client','Staff'=>'Staff','All'=>'All');
 			<div class="box">
 				<div class="box-header with-border">
 					<h4 class="box-title">Edit Link</h4>
-					<?php echo $this->Form->create($key_data['link_data'], array('action' => 'changeLink','controller'=>'Admins','class'=>'form-horizontal form-element')); ?>
+					<?php echo $this->Form->create($key_data['link_data'], array('action' => 'changeLink','controller'=>'Admins','class'=>'form-horizontal form-element','novalidate')); ?>
 		                <div class="modal-body">
 		                    <div class="col-xl-12 col-lg-12">
 		                        <div class="box">
@@ -18,12 +18,16 @@ $display_list = array('Client'=>'Client','Staff'=>'Staff','All'=>'All');
 		                                <div class="row">
 				                            <div class="col-md-6">
 				                                <div class="form-group">
-				                                   <?php echo $this->Form->input('name',array('class'=>'form-control')); ?>
+				                                   	<div class="controls">
+		                                                <?php echo $this->Form->input('name',array('label'=>'Link Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+		                                            </div>
 				                                </div>
 				                            </div>
 				                            <div class="col-md-6">
 			                                    <div class="form-group">
-			                                        <?php echo $this->Form->input('url',array('class'=>'form-control')); ?>
+			                                        <div class="controls">
+		                                                <?php echo $this->Form->input('url',array('label'=>'Link Url<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+		                                            </div>
 			                                    </div>
 		                                  	</div>
 		                                  	
@@ -31,10 +35,12 @@ $display_list = array('Client'=>'Client','Staff'=>'Staff','All'=>'All');
 		                                <div class="row">
 		                                	<div class="col-md-12">
 		                                    	<div class="form-group">
-		                                        	<div class="input text">
-		                                        		<label>Department</label>
-		                                       			<?php echo $this->Form->select('display_to',$display_list,['empty' => ' ','class'=>'form-control']); ?>
-		                                    		</div>
+		                                        	<div class="controls">
+		    	                                    	<div class="input text">
+		    		                                        <label>Display To<span class="text-danger">*</span></label>
+		    												<?php echo $this->Form->select('display_to',$display_list,['empty' => ' ','class'=>'form-control','required']); ?>
+		    											</div>
+		                                            </div>
 		                                    	</div>
 		                                  	</div>
 		                                </div>

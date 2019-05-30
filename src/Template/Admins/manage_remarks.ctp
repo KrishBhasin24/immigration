@@ -8,7 +8,7 @@
             <div class="d-inline-block align-items-center">
 				<nav>
 					<ol class="breadcrumb">
-						<li class=><?php echo $this->Html->link('<i class="fa fa-mail-reply"></i> Back',['controller' => 'Admins', 'action' => 'manageCase'],['class'=>'btn btn-danger','escape' => false]); ?></li>
+						<li class=><?php echo $this->Html->link('<i class="fa fa-mail-reply"></i> Back',['controller' => 'Admins', 'action' => 'retainedCase'],['class'=>'btn btn-danger','escape' => false]); ?></li>
 					</ol>
 				</nav>
 			</div>
@@ -39,6 +39,10 @@
 						<?php } ?>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-6">
+			<div class="box">
 				<div class="box-header with-border">
               		<h5 class="box-title">Add Remarks</h5>
 				</div>

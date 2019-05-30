@@ -8,6 +8,9 @@ foreach ($key_data['companies'] as $val){
 foreach ($key_data['department'] as $val) {
  $department[$val->id] = $val->name;
 }
+foreach ($key_data['Countries'] as $val){
+    $Countries[$val->name] = $val->name;
+}
  ?>
 
 <div class="content-header">
@@ -25,35 +28,26 @@ foreach ($key_data['department'] as $val) {
 					<h4 class="box-title">Edit Staff User</h4>	
 
 					<?php 
-					echo $this->Form->create($key_data['userData'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'editStaff']]); ?>
+					echo $this->Form->create($key_data['userData'], ['class'=> 'formValidation','novalidate','url' => ['controller'=>'Admins','action'=>'editStaff']]); ?>
 					<div class="box-body">
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<div class="input text">
-										<label>Department</label>
-										<?php 
-	                                       	echo $this->Form->select(
-												'department_id',
-												$department,
-												['empty' => ' ','class'=>'form-control']
-	                                      	);
-
-	                                   	?>
+									<div class="controls">
+										<div class="input text">
+											<label>Department<span class="text-danger">*</span></label>
+											<?php echo $this->Form->select('department_id',$department,['empty' => ' ','class'=>'form-control','required']);?>
+	                                   	</div>
                                    	</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<div class="input text">
-										<label>Companies</label>
-										<?php 
-	                                        echo $this->Form->select(
-												'company_id',
-												$companies,
-												['empty' => ' ','class'=>'form-control']
-	                                        );
-										?>
+									<div class="controls">
+										<div class="input text">
+											<label>Companies<span class="text-danger">*</span></label>
+											<?php echo $this->Form->select('company_id',$companies,['empty' => ' ','class'=>'form-control','required']); ?>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -61,19 +55,25 @@ foreach ($key_data['department'] as $val) {
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('first_name',array('class'=>'form-control','placeholder'=>'First name')); ?>
+									<div class="controls">
+										<?php echo $this->Form->input('first_name',array('label'=>'First Name<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','placeholder'=>'First name','required')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('last_name',array('class'=>'form-control','placeholder'=>'Last name')); ?>
+									<div class="controls">
+										<?php echo $this->Form->input('last_name',array('label'=>'Last Name<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','placeholder'=>'Last name','required')); ?>
+									</div>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('email',array('class'=>'form-control','placeholder'=>'Email')); ?>
+									<div class="controls">
+										<?php echo $this->Form->input('email',array('label'=>'Email<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','placeholder'=>'Email','required')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -109,7 +109,10 @@ foreach ($key_data['department'] as $val) {
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('country',array('class'=>'form-control','placeholder'=>'Country')); ?>
+									<div class="input text">
+										<label>Country</label>
+										<?php echo $this->Form->select('country',$Countries,['empty' => ' ','class'=>'form-control']);?>	
+									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -138,3 +141,4 @@ foreach ($key_data['department'] as $val) {
 		</div>
 	</div>
 </section>
+

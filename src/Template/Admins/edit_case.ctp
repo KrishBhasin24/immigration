@@ -1,4 +1,4 @@
-<?php //pr($key_data['loggedInUser']['id']); 
+<?php //pr($key_data['loggedInUser']); 
 use Cake\Routing\Router;
 	foreach ($key_data['leadStatus'] as $val){
 		if($val->lead_status != 'L' && $val->lead_status != 'R'){
@@ -30,9 +30,10 @@ use Cake\Routing\Router;
 		  		</div>
 		  		<div class="box-body">
 					<div class="flexbox bb-1 mb-10">
+						<span id="logged_user_department" style="display:none"><?php echo $key_data['loggedInUser']['department']['id'];  ?></span>
 						<div><p><span class="text-light">Lead No:</span> 
-							<?php echo $this->Html->link('<h5  class="text-black mb-0"><strong id="lead_id">'.$key_data['leadDetail']['id'].'</strong></h5>',['controller' => 'Admins', 'action' => 'editLead',$key_data['leadDetail']['id']],['class'=>'bb-3 border-success text-success','escape' => false]); ?>
-							<!-- <h5 id="lead_id" class="text-black mb-0"><strong ><?php //echo $key_data['leadDetail']['id']; ?></strong></h5> -->
+							<?php //echo $this->Html->link('<h5  class="text-black mb-0"><strong id="lead_id">'.$key_data['leadDetail']['id'].'</strong></h5>',['controller' => 'Admins', 'action' => 'editLead',$key_data['leadDetail']['id']],['class'=>'bb-3 border-success text-success','escape' => false]); ?>
+						 	<h5  class="text-black mb-0"><strong id="lead_id"><?php echo $key_data['leadDetail']['id']; ?></strong></h5> 
 
 						</p></div>
 						<div><p><span class="text-light">File No:</span> <h5 class="text-black mb-0"><strong id="file_id"><?php echo $key_data['leadDetail']['account_lead']['id']; ?></strong></h5></p></div>
@@ -63,7 +64,7 @@ use Cake\Routing\Router;
 								<div class="col-3 bl-1 br-1">							  
 									<div>
 										<p class="mb-0"><small>Submission Deadline</small></p> 
-										<h5 class="text-black mb-0"><strong class="text-pink"><?php echo $key_data['leadDetail']['submission_deadline']; ?></strong></h5>
+										<h5 class="text-black mb-0"><strong class="text-danger"><?php echo $key_data['leadDetail']['submission_deadline']; ?></strong></h5>
 									</div>
 								</div>
 								<div class="col-2 bl-1 ">							  
@@ -75,7 +76,7 @@ use Cake\Routing\Router;
 								<div class="col-2 bl-1 ">							  
 									<div>
 										<p class="mb-0 text-danger"><small>Balance Remains</small></p> 
-										<h5 class="mb-0 text-danger"><strong><?php echo $key_data['balance']; ?></strong></h5>
+										<h5 class="mb-0 text-danger"><strong id="balance"><?php echo $key_data['balance']; ?></strong></h5>
 									</div>
 								</div>
 							</div>
@@ -135,11 +136,20 @@ use Cake\Routing\Router;
 				<div class="box-body p-0 ">
 					<div class="card-body">
 						<?php echo $this->Form->create($key_data['leadDetail'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
-						<div class="form-group row">
-							<div class="col-12">
+						<div class="form-group row" id="lead_status_box">
+							<div class="col-8">
 								<div class="input text">
 									<label>Lead Status</label>
 									<?php echo $this->Form->select('lead_status_id',$leadStatus,['empty' => ' ','class'=>'form-control','id'=>'lead_status_id' ]);?>	
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="input text">
+									<label>Last Status Update Date</label>
+									<span class="media media-single custom_date">
+										<h4 class="w-100 text-gray font-weight-500">
+											<?php if( $key_data['leadDetail']['status_changed_date'] != null){ echo date_format($key_data['leadDetail']['status_changed_date'],"Y-m-d"); }  ?></h4>
+									</span>
 								</div>
 							</div>
 
@@ -157,7 +167,7 @@ use Cake\Routing\Router;
 		<div class="col-md-6 col-lg-6">
 			<div class="box">
 				<div class="box-body p-0 ">
-					<div class="card-body">
+					<div class="card-body" id="cic_box">
 						<?php echo $this->Form->create($key_data['leadDetail']['account_lead'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-md-6">
@@ -185,7 +195,7 @@ use Cake\Routing\Router;
 		<div class="col-md-6 col-lg-6">
 			<div class="box">
 				<div class="box-body p-0 ">
-					<div class="card-body">
+					<div class="card-body" id="doc_box">
 						<?php echo $this->Form->create($key_data['leadDetail']['lead_document'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-md-12">
@@ -300,6 +310,23 @@ use Cake\Routing\Router;
 
 $(document).ready(function() {	
 
+
+	var user_department = $('#logged_user_department').html();
+	//alert(user_department);
+	if(user_department == 6){
+		$("#lead_status_box :input").attr("disabled", true);
+		$("#lead_status_submit").remove();
+		$("#cic_file_button").remove();
+		$("#document_button").remove();
+		$("#document_button_delete").remove();
+		
+		$("#cic_box :input").attr("disabled", true);
+		$("#doc_box :input").attr("disabled", true);
+
+		
+	}
+	
+
 	function formatDate(date) {
 	     var d = new Date(date),
 	         month = '' + (d.getMonth() + 1),
@@ -312,6 +339,17 @@ $(document).ready(function() {
 	     return [year, month, day].join('-');
 	} 
 	$('#lead_status_submit').click(function(){
+		//alert(user_department);
+		if(user_department == 2 || user_department == 3){
+			var balance = $('#balance').html();
+			var optionText = $("#lead_status_id option:selected").text();
+			if( balance != 0 && optionText == 'Case Filed' ){
+				alert('Case can not be submitted due to pending balance.');
+				location.reload(); 
+				exit();
+			}
+			
+		}
 		var lead_status = $('#lead_status_id').val();
 		if(lead_status.length != 0){
 			var data = {'lead_status_id':lead_status,'lead_id':$('#lead_id').html()};
