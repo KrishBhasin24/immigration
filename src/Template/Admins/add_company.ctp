@@ -78,15 +78,15 @@ $parent = $main_parent+$parent;
       $parent,
       ['empty' => 'Select one']
   );
-  echo $this->Form->input('name');
-  echo $this->Form->input('telephone');
-  echo $this->Form->input('email', array('type' => 'text'));
-  echo $this->Form->input('website', array('type' => 'text'));
-  echo $this->Form->input('address', array('type' => 'text'));
-  echo $this->Form->input('city', array('type' => 'text'));
-  echo $this->Form->input('province', array('type' => 'text'));
-  echo $this->Form->input('postal_code', array('type' => 'text'));
-  echo $this->Form->input('country', array('type' => 'text'));
+  echo $this->Form->control('name');
+  echo $this->Form->control('telephone');
+  echo $this->Form->control('email', array('type' => 'text'));
+  echo $this->Form->control('website', array('type' => 'text'));
+  echo $this->Form->control('address', array('type' => 'text'));
+  echo $this->Form->control('city', array('type' => 'text'));
+  echo $this->Form->control('province', array('type' => 'text'));
+  echo $this->Form->control('postal_code', array('type' => 'text'));
+  echo $this->Form->control('country', array('type' => 'text'));
   
 
   echo $this->Form->submit();

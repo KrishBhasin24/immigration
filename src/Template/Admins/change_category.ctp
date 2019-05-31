@@ -13,7 +13,7 @@
 				                            <div class="col-md-12">
 				                                <div class="form-group">
 				                                   <div class="controls">
-												   		<?php echo $this->Form->input('name',array('label'=>'Category Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+												   		<?php echo $this->Form->control('name',array('label'=>'Category Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
 													</div>
 				                                </div>
 				                            </div>

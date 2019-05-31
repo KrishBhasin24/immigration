@@ -125,7 +125,7 @@ foreach ($key_data['cat_list'] as $value) {
 								  <div class="col-md-12">
 									<div class="form-group">
 										<div class="controls">
-									   		<?php echo $this->Form->input('name',array('label'=>'Category Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+									   		<?php echo $this->Form->control('name',array('label'=>'Category Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
 										</div>
 									</div>
 								  </div>
@@ -161,7 +161,7 @@ foreach ($key_data['cat_list'] as $value) {
 								  <div class="col-md-12">
 									<div class="form-group">
 										<div class="controls">
-									   		<?php echo $this->Form->input('name',array('label'=>'Sub Category Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+									   		<?php echo $this->Form->control('name',array('label'=>'Sub Category Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
 										</div>
 									</div>
 								  </div>

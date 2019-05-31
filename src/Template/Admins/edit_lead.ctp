@@ -1,6 +1,4 @@
-<?php use Cake\Routing\Router; ?>
-<?php //pr($key_data['lead_data']);
-
+<?php use Cake\Routing\Router; 
 foreach ($key_data['Countries'] as $val){
     $Countries[$val->name] = $val->name;
 }
@@ -78,9 +76,9 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 							<?php echo $this->Form->create('remarks', ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 							<div class="form-group row">
 								<div class="col-12">
-									<?php echo $this->Form->input('remarks',array('class'=>'form-control','id'=>'remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
-									<?php echo $this->Form->input('lead_id',array('id'=>'remark_lead_id','type'=>'hidden','value'=>$key_data['lead_data']['id'])); ?>
-									<?php echo $this->Form->input('user_id',array('id'=>'remark_user_id','type'=>'hidden','value'=>$key_data['lead_data']['agent_id'])); ?>
+									<?php echo $this->Form->control('remarks',array('class'=>'form-control','id'=>'remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
+									<?php echo $this->Form->control('lead_id',array('id'=>'remark_lead_id','type'=>'hidden','value'=>$key_data['lead_data']['id'])); ?>
+									<?php echo $this->Form->control('user_id',array('id'=>'remark_user_id','type'=>'hidden','value'=>$key_data['lead_data']['agent_id'])); ?>
 								</div>
 							</div>
 							<div class="form-group row mb-0">
@@ -101,24 +99,19 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 			<div class="box">
 				<div class="box-header with-border">
 					
-					<?php echo $this->Form->create($key_data['lead_data'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'editLead']]); ?>
-					<?php echo $this->Form->input('client_id',array('type'=>'hidden','value'=>$key_data['lead_data']['client_id'])); ?>
+					<?php echo $this->Form->create($key_data['lead_data'], ['class'=> 'formValidation','id'=>'edit_lead','url' => ['controller'=>'Admins','action'=>'editLead'],'novalidate']); ?>
+					<?php echo $this->Form->control('client_id',array('type'=>'hidden','value'=>$key_data['lead_data']['client_id'])); ?>
 					<div class="box-body">
 						<h4 class="box-title text-info"><i class="ti-location-arrow mr-15"></i> Immigration Category</h4>
 						<hr class="my-15">
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<div class="input text">
-										<label>Immigration Type</label>
-										<?php 
-	                                       	echo $this->Form->select(
-												'category_id',
-												$category,
-												['empty' => ' ','class'=>'form-control','id'=>'category']
-	                                      	);
-
-	                                   	?>
+									<div class="controls">
+										<div class="input text">
+											<label>Immigration Type<span class="text-danger">*</span></label>
+											<?php echo $this->Form->select('category_id',$category,['empty' => ' ','class'=>'form-control','id'=>'category','required']); ?>
+	                                   	</div>
                                    	</div>
 								</div>
 							</div>
@@ -137,24 +130,32 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 						<div class="row">
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('first_name',array('class'=>'form-control','placeholder'=>'First name')); ?>
+									<div class="controls">
+										<?php echo $this->Form->control('first_name',array('label'=>'First Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'First name')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('last_name',array('class'=>'form-control','placeholder'=>'Last name')); ?>
+									<div class="controls">
+										<?php echo $this->Form->control('last_name',array('label'=>'Last Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'Last name')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('email',array('class'=>'form-control','placeholder'=>'Email','disabled')); ?>
+									<div class="controls">
+										<?php echo $this->Form->control('email',array('label'=>'Email<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'Email','disabled')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<div class="input text">
-										<label>Date Of Birth</label>
-										<input class="form-control" type="date" name="dob" value="<?php echo $key_data['lead_data']['dob']; ?>">
+									<div class="controls">
+										<div class="input text">
+											<label>Date Of Birth<span class="text-danger">*</span></label>
+											<input class="form-control" type="date" name="dob" required value="<?php echo $key_data['lead_data']['dob']; ?>">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -162,22 +163,26 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 						<div class="row">
 							 <div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('address',array('class'=>'form-control','placeholder'=>'Address','type'=>'textarea')); ?>
+									<div class="controls">
+										<?php echo $this->Form->control('address',array('label'=>'Address<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'Address','type'=>'textarea')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('telephone',array('class'=>'form-control','placeholder'=>'Phone')); ?>
+									<div class="controls">
+										<?php echo $this->Form->control('telephone',array('label'=>'Contact Number<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'Phone','id'=>'phone')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('city',array('class'=>'form-control','placeholder'=>'City')); ?>
+									<?php echo $this->Form->control('city',array('class'=>'form-control','placeholder'=>'City')); ?>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('province',array('class'=>'form-control','placeholder'=>'Province')); ?>
+									<?php echo $this->Form->control('province',array('class'=>'form-control','placeholder'=>'Province')); ?>
 								</div>
 							</div>
 							
@@ -185,7 +190,7 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 						<div class="row">
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('postal_code',array('class'=>'form-control','placeholder'=>'PostalCode')); ?>
+									<?php echo $this->Form->control('postal_code',array('class'=>'form-control','placeholder'=>'PostalCode')); ?>
 								</div>
 							</div>
 							<div class="col-md-3">
@@ -211,19 +216,21 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('reason_of_qualify',array('class'=>'form-control','placeholder'=>'Reason Of Qualification','type'=>'textarea')); ?>
+									<?php echo $this->Form->control('reason_of_qualify',array('class'=>'form-control','placeholder'=>'Reason Of Qualification','type'=>'textarea')); ?>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('special_instruction',array('class'=>'form-control','placeholder'=>'Special Instruction','type'=>'textarea')); ?>
+									<?php echo $this->Form->control('special_instruction',array('class'=>'form-control','placeholder'=>'Special Instruction','type'=>'textarea')); ?>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<div class="input text">
-										<label>Submission Deadline</label>
-										<input class="form-control" type="date" name="submission_deadline" value="<?php echo $key_data['lead_data']['submission_deadline']; ?>">
+									<div class="controls">
+										<div class="input text">
+											<label>Submission Deadline<span class="text-danger">*</span></label>
+											<input class="form-control" required type="date" name="submission_deadline" value="<?php echo $key_data['lead_data']['submission_deadline']; ?>">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -245,44 +252,49 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<div class="c-inputs-stacked">
-										<?php
-										 	if($key_data['lead_data']['contract_signed'] == 1 )
+									<div class="controls">
+										<div class="c-inputs-stacked">
+											<?php
+											 	if($key_data['lead_data']['contract_signed'] == 1 )
 										 		{ $condition = 'disabled';}
-											else
+												else
 												{ $condition = '';}
-										 ?>
-                                        <?php  echo $this->Form->checkbox('contract_signed', ['value' => 1,'id'=>'con',$condition]); ?>
-                                        <label for="con" class="">I Have Signed Contract From Client</label>
-                                    </div>
+										 	?>
+									        <?php  echo $this->Form->checkbox('contract_signed', ['value' => 1,'id'=>'con',$condition]); ?>
+									        <label for="con" class="">I Have Signed Contract From Client</label>
+									    </div>
+									</div>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<div class="form-group">
-									<?php
-									 	if( !empty($key_data['lead_data']['amount_payable']) )
-									 		{ $condition = 'disabled';}
-										else
-											{ $condition = '';}
-									 ?>
-									<?php echo $this->Form->input('amount_payable',array('label'=>'Total Amount Payable','class'=>'form-control',$condition)); ?>
+								<div class="amt form-group">
+									<div class="controls">
+										<?php
+										 	if( !empty($key_data['lead_data']['amount_payable']) )
+										 		{ $condition = 'disabled';}
+											else
+												{ $condition = null;}
+										 ?>
+										<?php echo $this->Form->control('amount_payable',array('label'=>'Total Amount Payable','type'=>'text','class'=>'form-control','id'=>'amount_payable',$condition)); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="form-group">
-									<div class="input text">
-										<label>Retained By</label>
-										<?php echo $this->Form->select('retainer_id',$staff,['empty' => ' ','class'=>'form-control']);?>	
+								<div class="amt form-group">
+									<div class="controls">
+										<div class="input text">
+											<label>Retained By</label>
+											<?php echo $this->Form->select('retainer_id',$staff,['empty' => ' ','id'=>'retained_by','class'=>'form-control']);?>	
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer modal-footer-uniform centre">
-	                	<?php //echo $this->Html->link('<i class="fa fa-mail-reply"></i> Back',['controller' => 'Admins', 'action' => 'getLink'],['class'=>'btn btn-danger','escape' => false]); ?>
-	                    <?php echo $this->Form->button('Submit', array('type' => 'submit','class' => 'btn btn-success btn-primary btn-lg btn-centre','escape' => false)); ?>
+	                	<?php echo $this->Form->button('Submit', array('type' => 'submit','id'=>'sub_btn','class' => 'btn btn-success btn-primary btn-lg btn-centre','escape' => false)); ?>
 	                </div>
 					<?php echo $this->Form->end(); ?>
 				</div>
@@ -296,6 +308,12 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 
 $(document).ready(function() {	
 
+	var amount_payable = $('#amount_payable').val();
+
+	if(amount_payable == 0){
+		$('#amount_payable').val("");	
+	}
+
 	function formatDate(date) {
 	     var d = new Date(date),
 	         month = '' + (d.getMonth() + 1),
@@ -307,6 +325,27 @@ $(document).ready(function() {
 
 	     return [year, month, day].join('-');
 	 } 	
+
+	
+	$('#con').click(function(){
+	 	if($(this).prop("checked") == true){
+			$("#amount_payable").attr("required", true);
+			$("#retained_by").attr("required", true);
+			
+			$("#amount_payable").jqBootstrapValidation();
+			$("#retained_by").jqBootstrapValidation();
+		}
+		else if($(this).prop("checked") == false){
+			$("#amount_payable").attr("required", false);
+			$("#retained_by").attr("required", false);
+
+			$("#amount_payable").jqBootstrapValidation("destroy");
+			$(".amt").removeClass("error");
+			$(".amt .help-block").html("");
+			$("#edit_lead").not("[type=submit]").jqBootstrapValidation();
+		}
+		
+	})
 
 	$('#remarks').click(function(){
 		var remarks = $('#remarks_box').val();

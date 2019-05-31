@@ -51,9 +51,9 @@
 						<?php echo $this->Form->create('remarks', ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-12">
-								<?php echo $this->Form->input('remarks',array('class'=>'form-control','id'=>'remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
-								<?php echo $this->Form->input('lead_id',array('id'=>'remark_lead_id','type'=>'hidden','value'=>$key_data['lead_id'])); ?>
-								<?php echo $this->Form->input('user_id',array('id'=>'remark_user_id','type'=>'hidden','value'=>$key_data['loggedInUser']['id'])); ?>
+								<?php echo $this->Form->control('remarks',array('class'=>'form-control','id'=>'remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
+								<?php echo $this->Form->control('lead_id',array('id'=>'remark_lead_id','type'=>'hidden','value'=>$key_data['lead_id'])); ?>
+								<?php echo $this->Form->control('user_id',array('id'=>'remark_user_id','type'=>'hidden','value'=>$key_data['loggedInUser']['id'])); ?>
 							</div>
 						</div>
 						<div class="form-group row mb-0">

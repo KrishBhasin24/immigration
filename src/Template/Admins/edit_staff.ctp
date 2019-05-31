@@ -56,14 +56,14 @@ foreach ($key_data['Countries'] as $val){
 							<div class="col-md-6">
 								<div class="form-group">
 									<div class="controls">
-										<?php echo $this->Form->input('first_name',array('label'=>'First Name<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','placeholder'=>'First name','required')); ?>
+										<?php echo $this->Form->control('first_name',array('label'=>'First Name<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','placeholder'=>'First name','required')); ?>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<div class="controls">
-										<?php echo $this->Form->input('last_name',array('label'=>'Last Name<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','placeholder'=>'Last name','required')); ?>
+										<?php echo $this->Form->control('last_name',array('label'=>'Last Name<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','placeholder'=>'Last name','required')); ?>
 									</div>
 								</div>
 							</div>
@@ -72,37 +72,37 @@ foreach ($key_data['Countries'] as $val){
 							<div class="col-md-6">
 								<div class="form-group">
 									<div class="controls">
-										<?php echo $this->Form->input('email',array('label'=>'Email<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','placeholder'=>'Email','required')); ?>
+										<?php echo $this->Form->control('email',array('label'=>'Email<span class="text-danger">*</span>','escape'=>false,'class'=>'form-control','placeholder'=>'Email','required')); ?>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('phone',array('class'=>'form-control','placeholder'=>'Phone')); ?>
+									<?php echo $this->Form->control('phone',array('class'=>'form-control','placeholder'=>'Phone')); ?>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('address',array('class'=>'form-control','placeholder'=>'Address')); ?>
+									<?php echo $this->Form->control('address',array('class'=>'form-control','placeholder'=>'Address')); ?>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('city',array('class'=>'form-control','placeholder'=>'City')); ?>
+									<?php echo $this->Form->control('city',array('class'=>'form-control','placeholder'=>'City')); ?>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('province',array('class'=>'form-control','placeholder'=>'Province')); ?>
+									<?php echo $this->Form->control('province',array('class'=>'form-control','placeholder'=>'Province')); ?>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('postal_code',array('class'=>'form-control','placeholder'=>'PostalCode')); ?>
+									<?php echo $this->Form->control('postal_code',array('class'=>'form-control','placeholder'=>'PostalCode')); ?>
 								</div>
 							</div>
 						</div>
@@ -117,14 +117,14 @@ foreach ($key_data['Countries'] as $val){
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('in_time',array('class'=>'form-control','placeholder'=>'Intime')); ?>
+									<?php echo $this->Form->control('in_time',array('class'=>'form-control','placeholder'=>'Intime')); ?>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('out_time',array('class'=>'form-control','placeholder'=>'Outtime')); ?>
+									<?php echo $this->Form->control('out_time',array('class'=>'form-control','placeholder'=>'Outtime')); ?>
 								</div>
 							</div>
 						</div>

@@ -68,7 +68,7 @@ $display_list = array('Client'=>'Client','Staff'=>'Staff','All'=>'All');
                 <span aria-hidden="true">&times;</span>
                 </a>
             </div>
-            <?php echo $this->Form->create('Users', array('url' => '/admins/changeLink','class'=>'form-horizontal form-element','novalidate')); ?>
+            <?php echo $this->Form->create('Users', array('url' => ['controller'=>'Admins','action'=>'changeLink'],'class'=>'form-horizontal form-element','novalidate')); ?>
                 <div class="modal-body">
                     <div class="col-xl-12 col-lg-12">
                         <div class="box">

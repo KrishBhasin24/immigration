@@ -25,7 +25,7 @@ foreach ($key_data['department'] as $val) {
 				                            <div class="col-md-12">
 				                                <div class="form-group">
 				                                	<div class="controls">
-				                                   		<?php echo $this->Form->input('lead_status',array('label'=>'Lead Status<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+				                                   		<?php echo $this->Form->control('lead_status',array('label'=>'Lead Status<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
 				                               		</div>
 				                                </div>
 				                            </div>
@@ -41,12 +41,12 @@ foreach ($key_data['department'] as $val) {
 		                                <!-- <div class="row">
 		                                	<div class="col-md-6">
 			                                    <div class="form-group">
-			                                        <?php echo $this->Form->input('status_message',array('class'=>'form-control','type'=>'textarea')); ?>
+			                                        <?php echo $this->Form->control('status_message',array('class'=>'form-control','type'=>'textarea')); ?>
 			                                    </div>
 		                                  	</div>
 		                                    <div class="col-md-6">
 		                                        <div class="form-group">
-		                                           <?php echo $this->Form->input('next_step_message',array('class'=>'form-control','type'=>'textarea')); ?>
+		                                           <?php echo $this->Form->control('next_step_message',array('class'=>'form-control','type'=>'textarea')); ?>
 		                                        </div>
 		                                    </div>
 		                                </div> -->

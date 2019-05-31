@@ -171,7 +171,7 @@ use Cake\Routing\Router;
 						<?php echo $this->Form->create($key_data['leadDetail']['account_lead'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-md-6">
-								<?php echo $this->Form->input('cic_file_id',array('class'=>'form-control','type'=>'text','label'=>'Cic File No.','id'=>'cic_file_id')); ?>
+								<?php echo $this->Form->control('cic_file_id',array('class'=>'form-control','type'=>'text','label'=>'Cic File No.','id'=>'cic_file_id')); ?>
 								<?php echo $this->Form->hidden('user_id',array('class'=>'form-control','id'=>'user_id','value'=> $key_data['loggedInUser']['id'])); ?>
 							</div>
 							<div class="col-md-6">
@@ -199,7 +199,7 @@ use Cake\Routing\Router;
 						<?php echo $this->Form->create($key_data['leadDetail']['lead_document'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-md-12">
-								<?php echo $this->Form->input('document_need',array('class'=>'form-control','id'=>'document_need','type'=>'textarea','label'=>'Document Required From Client')); ?>
+								<?php echo $this->Form->control('document_need',array('class'=>'form-control','id'=>'document_need','type'=>'textarea','label'=>'Document Required From Client')); ?>
 							</div>
 						</div>
 						<div class="form-group row mb-0">
@@ -245,7 +245,7 @@ use Cake\Routing\Router;
 						<?php echo $this->Form->create('remarks', ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-12">
-								<?php echo $this->Form->input('remarks',array('class'=>'form-control','id'=>'client_remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
+								<?php echo $this->Form->control('remarks',array('class'=>'form-control','id'=>'client_remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
 							</div>
 						</div>
 						<div class="form-group row mb-0">
@@ -287,7 +287,7 @@ use Cake\Routing\Router;
 						<?php echo $this->Form->create('remarks', ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
 							<div class="col-12">
-								<?php echo $this->Form->input('remarks',array('class'=>'form-control','id'=>'office_remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
+								<?php echo $this->Form->control('remarks',array('class'=>'form-control','id'=>'office_remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
 							</div>
 						</div>
 						<div class="form-group row mb-0">

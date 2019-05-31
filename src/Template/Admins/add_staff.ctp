@@ -27,18 +27,18 @@ foreach ($post_data['department'] as $val) {
       ['empty' => 'Select one']
   );
  
-  echo $this->Form->input('first_name');
-  echo $this->Form->input('last_name');
-  echo $this->Form->input('password');
-  echo $this->Form->input('phone');
-  echo $this->Form->input('email', array('type' => 'text'));
-  echo $this->Form->input('address', array('type' => 'text'));
-  echo $this->Form->input('city', array('type' => 'text'));
-  echo $this->Form->input('province', array('type' => 'text'));
-  echo $this->Form->input('postal_code', array('type' => 'text'));
-  echo $this->Form->input('country', array('type' => 'text'));
-  echo $this->Form->input('in_time', array('type' => 'text'));
-  echo $this->Form->input('out_time', array('type' => 'text'));
+  echo $this->Form->control('first_name');
+  echo $this->Form->control('last_name');
+  echo $this->Form->control('password');
+  echo $this->Form->control('phone');
+  echo $this->Form->control('email', array('type' => 'text'));
+  echo $this->Form->control('address', array('type' => 'text'));
+  echo $this->Form->control('city', array('type' => 'text'));
+  echo $this->Form->control('province', array('type' => 'text'));
+  echo $this->Form->control('postal_code', array('type' => 'text'));
+  echo $this->Form->control('country', array('type' => 'text'));
+  echo $this->Form->control('in_time', array('type' => 'text'));
+  echo $this->Form->control('out_time', array('type' => 'text'));
   echo "Saturday";
   echo $this->Form->checkbox('saturday', ['value' => 1]);
   echo "Sunday";

@@ -28,25 +28,20 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 			<div class="box">
 				<div class="box-header with-border">
 					<h4 class="box-title">Add Lead</h4>	
-					<?php echo $this->Form->create('lead', ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'addLead']]); ?>
-					<?php echo $this->Form->input('agent_id',array('type'=>'hidden','value'=>$key_data['loggedInUser']['id'])); ?>
+					<?php echo $this->Form->create('lead', ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'addLead'],'novalidate']); ?>
+					<?php echo $this->Form->control('agent_id',array('type'=>'hidden','value'=>$key_data['loggedInUser']['id'])); ?>
 					<div class="box-body">
 						<h4 class="box-title text-info"><i class="ti-location-arrow mr-15"></i> Immigration Category</h4>
 						<hr class="my-15">
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<div class="input text">
-										<label>Immigration Type</label>
-										<?php 
-	                                       	echo $this->Form->select(
-												'category_id',
-												$category,
-												['empty' => ' ','class'=>'form-control','id'=>'category']
-	                                      	);
-
-	                                   	?>
-                                   	</div>
+									<div class="controls">
+										<div class="input text">
+											<label>Immigration Type<span class="text-danger">*</span></label>
+											<?php echo $this->Form->select('category_id',$category,['empty' => ' ','class'=>'form-control','id'=>'category','required']);?>
+	                                   	</div>
+                                   </div>
 								</div>
 							</div>
 							
@@ -64,24 +59,32 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 						<div class="row">
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('first_name',array('class'=>'form-control','placeholder'=>'First name')); ?>
+									<div class="controls">
+										<?php echo $this->Form->control('first_name',array('label'=>'First Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'First name')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('last_name',array('class'=>'form-control','placeholder'=>'Last name')); ?>
+									<div class="controls">
+										<?php echo $this->Form->control('last_name',array('label'=>'Last Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'Last name')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('email',array('class'=>'form-control','placeholder'=>'Email')); ?>
+									<div class="controls">
+										<?php echo $this->Form->control('email',array('label'=>'Email<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'Email')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<div class="input text">
-										<label>Date Of Birth</label>
-										<input class="form-control" type="date" name="dob">
+									<div class="controls">
+										<div class="input text">
+											<label>Date Of Birth<span class="text-danger">*</span></label>
+											<input class="form-control" type="date" name="dob" required>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -89,22 +92,26 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 						<div class="row">
 							 <div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('address',array('class'=>'form-control','placeholder'=>'Address','type'=>'textarea')); ?>
+									<div class="controls">
+										<?php echo $this->Form->control('address',array('label'=>'Address<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'Address','type'=>'textarea')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('telephone',array('class'=>'form-control','placeholder'=>'Phone')); ?>
+									<div class="controls">
+										<?php echo $this->Form->control('telephone',array('label'=>'Contact Number<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'Phone','id'=>'phone')); ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('city',array('class'=>'form-control','placeholder'=>'City')); ?>
+									<?php echo $this->Form->control('city',array('class'=>'form-control','placeholder'=>'City')); ?>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('province',array('class'=>'form-control','placeholder'=>'Province')); ?>
+									<?php echo $this->Form->control('province',array('class'=>'form-control','placeholder'=>'Province')); ?>
 								</div>
 							</div>
 							
@@ -112,7 +119,7 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 						<div class="row">
 							<div class="col-md-3">
 								<div class="form-group">
-									<?php echo $this->Form->input('postal_code',array('class'=>'form-control','placeholder'=>'PostalCode')); ?>
+									<?php echo $this->Form->control('postal_code',array('class'=>'form-control','placeholder'=>'PostalCode')); ?>
 								</div>
 							</div>
 							<div class="col-md-3">
@@ -138,19 +145,21 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('reason_of_qualify',array('class'=>'form-control','placeholder'=>'Reason Of Qualification','type'=>'textarea')); ?>
+									<?php echo $this->Form->control('reason_of_qualify',array('class'=>'form-control','placeholder'=>'Reason Of Qualification','type'=>'textarea')); ?>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<?php echo $this->Form->input('special_instruction',array('class'=>'form-control','placeholder'=>'Special Instruction','type'=>'textarea')); ?>
+									<?php echo $this->Form->control('special_instruction',array('class'=>'form-control','placeholder'=>'Special Instruction','type'=>'textarea')); ?>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<div class="input text">
-										<label>Submission Deadline</label>
-										<input class="form-control" type="date" name="submission_deadline">
+									<div class="controls">
+										<div class="input text">
+											<label>Submission Deadline<span class="text-danger">*</span></label>
+											<input class="form-control" required type="date" name="submission_deadline">
+										</div>
 									</div>
 								</div>
 							</div>

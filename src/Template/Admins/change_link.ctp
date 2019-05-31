@@ -19,14 +19,14 @@ $display_list = array('Client'=>'Client','Staff'=>'Staff','All'=>'All');
 				                            <div class="col-md-6">
 				                                <div class="form-group">
 				                                   	<div class="controls">
-		                                                <?php echo $this->Form->input('name',array('label'=>'Link Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+		                                                <?php echo $this->Form->control('name',array('label'=>'Link Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
 		                                            </div>
 				                                </div>
 				                            </div>
 				                            <div class="col-md-6">
 			                                    <div class="form-group">
 			                                        <div class="controls">
-		                                                <?php echo $this->Form->input('url',array('label'=>'Link Url<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+		                                                <?php echo $this->Form->control('url',array('label'=>'Link Url<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
 		                                            </div>
 			                                    </div>
 		                                  	</div>

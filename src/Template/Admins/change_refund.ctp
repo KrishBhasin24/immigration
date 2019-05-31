@@ -10,7 +10,7 @@ $payment_mode = array('Cheque'=>'Cheque','Cash'=>'Cash','Credit'=>'Credit','Debi
 			<div class="box">
 				<div class="box-header with-border">
 					<h4 class="box-title">Edit Refund</h4>
-					<?php echo $this->Form->create($key_data['refund'], array('action' => 'changeRefund','controller'=>'Admins','class'=>'form-horizontal form-element')); ?>
+					<?php echo $this->Form->create($key_data['refund'], array('action' => 'changeRefund','controller'=>'Admins','class'=>'form-horizontal form-element','novalidate')); ?>
 		                <div class="modal-body">
 		                    <div class="col-xl-12 col-lg-12">
 		                        <div class="box">
@@ -18,16 +18,20 @@ $payment_mode = array('Cheque'=>'Cheque','Cash'=>'Cash','Credit'=>'Credit','Debi
 		                                <div class="row">
 				                            <div class="col-md-6">
 				                                <div class="form-group">
-													<?php echo $this->Form->hidden('lead_id',array('class'=>'form-control','value'=> $key_data['refund']['lead_id'])); ?>
-													<?php echo $this->Form->hidden('account_lead_id',array('class'=>'form-control','value'=> $key_data['refund']['account_lead_id'])); ?>
-													<?php echo $this->Form->input('refund_payment',array('class'=>'form-control','label'=>'Amount')); ?>
+				                                	<div class="controls">
+														<?php echo $this->Form->hidden('lead_id',array('class'=>'form-control','value'=> $key_data['refund']['lead_id'])); ?>
+														<?php echo $this->Form->hidden('account_lead_id',array('class'=>'form-control','value'=> $key_data['refund']['account_lead_id'])); ?>
+														<?php echo $this->Form->control('refund_payment',array('label'=>'Refund Amount<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+													</div>
 				                                </div>
 				                            </div>
 		                                  	<div class="col-md-6">
 		                                    	<div class="form-group">
-		                                        	<div class="input text">
-				                                        <label>Payment Mode</label>
-														<?php echo $this->Form->select('payment_mode',$payment_mode,['empty' => ' ','class'=>'form-control']); ?>
+		                                    		<div class="controls">
+			                                        	<div class="input text">
+					                                        <label>Payment Mode<span class="text-danger">*</span></label>
+															<?php echo $this->Form->select('payment_mode',$payment_mode,['empty' => ' ','class'=>'form-control','required']); ?>
+														</div>
 													</div>
 		                                    	</div>
 		                                  	</div>
@@ -35,12 +39,14 @@ $payment_mode = array('Cheque'=>'Cheque','Cash'=>'Cash','Credit'=>'Credit','Debi
 		                                <div class="row">
 		                                	<div class="col-md-6">
 			                                    <div class="form-group">
-			                                    	 <?php echo $this->Form->input('authorization_number',array('class'=>'form-control')); ?>
+			                                    	 <?php echo $this->Form->control('authorization_number',array('class'=>'form-control')); ?>
 			                                    </div>
 		                                  	</div>
 		                                  	<div class="col-md-6">
 			                                    <div class="form-group">
-			                                    	 <?php echo $this->Form->input('issued_by',array('class'=>'form-control','label'=>'Issued By (Name)')); ?>
+			                                    	<div class="controls">
+			                                    	 	<?php echo $this->Form->control('issued_by',array('label'=>'Payment Refunded By<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+			                                    	</div>
 			                                    </div>
 		                                  	</div>
 		                                </div>

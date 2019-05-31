@@ -148,19 +148,19 @@ $parent = $main_parent+$parent;*/
 					<div class="col-xl-12 col-lg-12">
 					  	<div class="box">
 			            	<div class="box-body">
-			            		<?php echo $this->Form->input('parent_id',array('class'=>'form-control','type'=>'hidden','value'=>0)); ?>
+			            		<?php echo $this->Form->control('parent_id',array('class'=>'form-control','type'=>'hidden','value'=>0)); ?>
 			            		<div class="row">
 								  <div class="col-md-6">
 									<div class="form-group">
 										<div class="controls">
-									   		<?php echo $this->Form->input('name',array('label'=>'Company Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+									   		<?php echo $this->Form->control('name',array('label'=>'Company Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
 								   		</div>
 									</div>
 								  </div>
 								  <div class="col-md-6">
 									<div class="form-group">
 										<div class="controls">
-									 		<?php echo $this->Form->input('telephone',array('label'=>'Contact Number<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','id'=>'phone','type'=>'text')); ?>
+									 		<?php echo $this->Form->control('telephone',array('label'=>'Contact Number<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','id'=>'phone','type'=>'text')); ?>
 									 	</div>
 									</div>
 								  </div>
@@ -168,36 +168,36 @@ $parent = $main_parent+$parent;*/
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-										   <?php echo $this->Form->input('email',array('class'=>'form-control','type'=>'text')); ?>
+										   <?php echo $this->Form->control('email',array('class'=>'form-control','type'=>'text')); ?>
 										</div>
 								  	</div>
 								  	<div class="col-md-6">
 										<div class="form-group">
-										 	<?php echo $this->Form->input('website',array('class'=>'form-control')); ?>
+										 	<?php echo $this->Form->control('website',array('class'=>'form-control')); ?>
 										</div>
 								  	</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-										   <?php echo $this->Form->input('address',array('class'=>'form-control')); ?>
+										   <?php echo $this->Form->control('address',array('class'=>'form-control')); ?>
 										</div>
 								  	</div>
 								  	<div class="col-md-6">
 										<div class="form-group">
-										 	<?php echo $this->Form->input('city',array('class'=>'form-control')); ?>
+										 	<?php echo $this->Form->control('city',array('class'=>'form-control')); ?>
 										</div>
 								  	</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-										    <?php echo $this->Form->input('province',array('class'=>'form-control')); ?>
+										    <?php echo $this->Form->control('province',array('class'=>'form-control')); ?>
 										</div>
 								  	</div>
 								  	<div class="col-md-6">
 										<div class="form-group">
-										  <?php echo $this->Form->input('postal_code',array('class'=>'form-control')); ?>
+										  <?php echo $this->Form->control('postal_code',array('class'=>'form-control')); ?>
 										</div>
 								  	</div>
 								</div>
@@ -253,14 +253,14 @@ $parent = $main_parent+$parent;*/
 								  <div class="col-md-6">
 									<div class="form-group">
 									   <div class="controls">
-									   		<?php echo $this->Form->input('name',array('label'=>'Branch Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+									   		<?php echo $this->Form->control('name',array('label'=>'Branch Name<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
 								   		</div>
 									</div>
 								  </div>
 								  <div class="col-md-6">
 									<div class="form-group">
 									 	<div class="controls">
-									 		<?php echo $this->Form->input('telephone',array('label'=>'Contact Number<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','id'=>'phone','type'=>'text')); ?>
+									 		<?php echo $this->Form->control('telephone',array('label'=>'Contact Number<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','id'=>'phone','type'=>'text')); ?>
 									 	</div>
 									</div>
 								  </div>
@@ -268,36 +268,36 @@ $parent = $main_parent+$parent;*/
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-										   <?php echo $this->Form->input('email',array('class'=>'form-control','type'=>'text')); ?>
+										   <?php echo $this->Form->control('email',array('class'=>'form-control','type'=>'text')); ?>
 										</div>
 								  	</div>
 								  	<div class="col-md-6">
 										<div class="form-group">
-										 	<?php echo $this->Form->input('website',array('class'=>'form-control')); ?>
+										 	<?php echo $this->Form->control('website',array('class'=>'form-control')); ?>
 										</div>
 								  	</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-										   <?php echo $this->Form->input('address',array('class'=>'form-control')); ?>
+										   <?php echo $this->Form->control('address',array('class'=>'form-control')); ?>
 										</div>
 								  	</div>
 								  	<div class="col-md-6">
 										<div class="form-group">
-										 	<?php echo $this->Form->input('city',array('class'=>'form-control')); ?>
+										 	<?php echo $this->Form->control('city',array('class'=>'form-control')); ?>
 										</div>
 								  	</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-										    <?php echo $this->Form->input('province',array('class'=>'form-control')); ?>
+										    <?php echo $this->Form->control('province',array('class'=>'form-control')); ?>
 										</div>
 								  	</div>
 								  	<div class="col-md-6">
 										<div class="form-group">
-										  <?php echo $this->Form->input('postal_code',array('class'=>'form-control')); ?>
+										  <?php echo $this->Form->control('postal_code',array('class'=>'form-control')); ?>
 										</div>
 								  	</div>
 								</div>
