@@ -6,6 +6,9 @@ use Cake\Routing\Router;
 		}
 	}
 
+
+$portal_used = array('sanjay'=>'Sanjay','manjit'=>'Manjit','client'=>'Client');
+
 ?>
 <div class="content-header">
 	<div class="d-flex align-items-center">
@@ -110,7 +113,6 @@ use Cake\Routing\Router;
 										<h5 class="text-black mb-0"><strong><?php echo $key_data['leadDetail']['country']; ?></strong></h5>
 									</div>
 								</div>
-								
 							</div>
 							<div class="row bb-1 pb-10">
 								<div class="col-6">							  
@@ -170,14 +172,20 @@ use Cake\Routing\Router;
 					<div class="card-body" id="cic_box">
 						<?php echo $this->Form->create($key_data['leadDetail']['account_lead'], ['class'=> 'formValidation','url' => ['controller'=>'Admins','action'=>'newdata']]); ?>
 						<div class="form-group row">
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<?php echo $this->Form->control('cic_file_id',array('class'=>'form-control','type'=>'text','label'=>'Cic File No.','id'=>'cic_file_id')); ?>
 								<?php echo $this->Form->hidden('user_id',array('class'=>'form-control','id'=>'user_id','value'=> $key_data['loggedInUser']['id'])); ?>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="input text">
-									<label>Date of cic file no. received</label>
+									<label>Receiving Date</label>
 									<input class="form-control" type="date" name="cic_file_date" id="cic_file_date" value=<?php echo $key_data['leadDetail']['account_lead']['cic_file_date'];  ?> >
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="input text">
+									<label>Portal Used</label>
+									<?php echo $this->Form->select('portal_used',$portal_used,['empty' => ' ','class'=>'form-control','id'=>'cic_portal' ]);?>	
 								</div>
 							</div>
 						</div>
@@ -322,8 +330,6 @@ $(document).ready(function() {
 		
 		$("#cic_box :input").attr("disabled", true);
 		$("#doc_box :input").attr("disabled", true);
-
-		
 	}
 	
 
@@ -348,7 +354,6 @@ $(document).ready(function() {
 				location.reload(); 
 				exit();
 			}
-			
 		}
 		var lead_status = $('#lead_status_id').val();
 		if(lead_status.length != 0){
@@ -380,7 +385,7 @@ $(document).ready(function() {
 		var file_no = $('#cic_file_id').val();
 		var date = $('#cic_file_date').val();
 		if(file_no.length != 0){
-			var data = {'file_no':file_no,'date':date,'file_id':$('#file_id').html()};
+			var data = {'file_no':file_no,'date':date,'portal_used':$('#cic_portal').val(),'file_id':$('#file_id').html()};
 			var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'addCicDetail')); ?>";
 			var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
 			$.ajax({

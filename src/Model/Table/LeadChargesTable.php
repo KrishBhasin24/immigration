@@ -9,12 +9,11 @@ use Cake\Validation\Validator;
 //use Cake\ORM\Entity;
 //use Cake\Auth\DefaultPasswordHasher;
 
-class MenusTable extends Table
+class LeadChargesTable extends Table
 {
     public function initialize(array $config)
-    {       
-        $this->hasMany('Pages');
-    }
+    {   
+ 	}
     public function beforeSave(){
       
     }
@@ -22,6 +21,4 @@ class MenusTable extends Table
     {
 	     return $validator;
     }
-	
-	
 }

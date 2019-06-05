@@ -173,32 +173,23 @@ class AdminsController extends AppController
 
     public function setPermission($id=null){
 
-        
-
         $key_data['loggedInUser']= $this->Auth->user();
         $this->loadModel('Users');
         $user_data = $this->Users->find('all')->where(['Users.id'=>$id])->contain(['Departments','Permissions'])->first();
         $user_record = $user_data->toArray();
         $key_data['user_data'] = $user_record;
-
-        $this->loadModel('Pages');
-        $page_data = $this->Pages->find('all')->where([ $key_data['user_data']['department']['handle'] => 1]);     
-         $key_data['page_data'] = $page_data->toArray();
-
-
-
+        $condition = "Pages.".$key_data['user_data']['department']['handle'];
+        $this->loadModel('Menus');
+        $key_data['page_data'] = $this->Menus->find('all')->order(['Menus.menu_order'=> 'ASC'])->contain(['Pages'=>['conditions'=>[$condition=>1]]])->toArray();
         $permission_data = array();
         foreach ($key_data['user_data']['permissions'] as $value) {
             $permission_data[] = $value['handle'];
         }
         $key_data['permission_data'] =$permission_data; 
-
-
-
         if ($this->request->is(['post','put'])) {
             $user = new UsersController();
             if($permission = $user->userPermission($this->request->data(),$key_data['user_data']) ){
-                $this->Flash->success(__('User data has been Edited.'));
+                $this->Flash->success(__('User Permission has been Edited.'));
                 return $this->redirect(['controller'=>'Admins','action' => 'setPermission',$id]);
             }
 
@@ -604,7 +595,7 @@ class AdminsController extends AppController
 
         $key_data['leadDetail'] = $leadDetail[0];
         $key_data['balance'] = $lead->leadPaymentBalance($id);
-        $this->set('key_data',$key_data);        
+        $this->set('key_data',$key_data);         
     }
 
     public function retainedCase(){
@@ -613,6 +604,60 @@ class AdminsController extends AppController
         $key_data['retained_lead_data'] = $this->Leads->find('all')->where(['Leads.retainer_id' => $key_data['loggedInUser']['id'],'NOT'=> ['Leads.lead_status_id' =>'1']])->order(['Leads.id' => 'DESC'])->contain(['Lead','Filling','Categories','SubCategories','AccountLeads','LeadStatus'])->toArray();
         $key_data['retained_lead_count'] = count($key_data['retained_lead_data']);
         $this->set('key_data',$key_data);           
+    }
+
+    public function paymentPlan($id=null){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        //$this->loadModel('Leads');
+        $leadsTable = TableRegistry::get('Leads');
+
+        if ($this->request->is(['post','put'])) {
+            $data = $this->request->data();
+            $lead = $data['lead_id'];
+            $LeadPaymentPlansTable = TableRegistry::get('LeadPaymentPlans');
+            $lead_data = $LeadPaymentPlansTable->find('all')->where(['lead_id' => $data['lead_id']])->toArray();
+            if(!empty($lead_data)){
+                foreach ($lead_data as $value) {
+                   //pr($value);
+                    $LeadPaymentPlansTable->delete($value);
+                }
+            }
+            
+            $total = 0;
+            foreach ($data['payment'] as $key => $plan) {
+                $total = $total + $plan;
+                $detail = array('lead_id'=>$data['lead_id'],'user_id'=>$data['user_id'],'payment'=>$plan,'title' => $data['title'][$key]);
+                $payment = $LeadPaymentPlansTable->newEntity(); 
+                $LeadPaymentPlansTable->patchEntity($payment, $detail);       
+                $LeadPaymentPlansTable->save($payment);
+            }
+
+            $leads = $leadsTable->get($lead); 
+            $leads->amount_payable = $total;
+            $leadsTable->save($leads);
+           
+
+            $this->Flash->success(__('Lead Payment Plan Modified'));
+            return $this->redirect(['controller' => 'Admins', 'action' => 'paymentPlan',$lead]);
+        }
+        $lead = new LeadsController();
+        $leadDetail = $lead->getLeadById($id);
+        $key_data['leadPaymentDetail'] = $lead->getPaymentPlanByLead($id);
+        $key_data['leadDetail'] = $leadDetail[0];
+        $this->set('key_data',$key_data);              
+    }
+
+    public function manageCharges($id=null){
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $lead = new LeadsController();
+        $leadDetail = $lead->getLeadById($id);
+        $key_data['leadChargesDetail'] = $lead->getChargesByLead($id);
+
+        pr($key_data['leadChargesDetail']);die;
+
+        $key_data['leadDetail'] = $leadDetail[0];
+        $this->set('key_data',$key_data);
+
     }
 
 

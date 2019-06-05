@@ -16268,3 +16268,20 @@ span.btn.dropdown-toggle::after {
 .custom_date {
     padding: 5px 11px;
 }
+
+
+#client_remarks_list p {
+    font-size: 16px;
+}
+
+#remarks_list p {
+    font-size: 16px;
+}
+
+.number {
+    font-size: 1rem;
+    margin-top: 0.5em;
+    text-align: center;
+    letter-spacing: 2px;
+    font-weight: 400;
+}

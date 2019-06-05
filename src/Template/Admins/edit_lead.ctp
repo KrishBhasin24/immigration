@@ -271,13 +271,7 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 							<div class="col-md-6">
 								<div class="amt form-group">
 									<div class="controls">
-										<?php
-										 	if( !empty($key_data['lead_data']['amount_payable']) )
-										 		{ $condition = 'disabled';}
-											else
-												{ $condition = null;}
-										 ?>
-										<?php echo $this->Form->control('amount_payable',array('label'=>'Total Amount Payable','type'=>'text','class'=>'form-control','id'=>'amount_payable',$condition)); ?>
+										<?php echo $this->Form->control('amount_payable',array('label'=>'Total Amount Payable','type'=>'text','class'=>'form-control','id'=>'amount_payable','disabled')); ?>
 									</div>
 								</div>
 							</div>
@@ -332,14 +326,14 @@ $(document).ready(function() {
 			$("#amount_payable").attr("required", true);
 			$("#retained_by").attr("required", true);
 			
-			$("#amount_payable").jqBootstrapValidation();
+			//$("#amount_payable").jqBootstrapValidation();
 			$("#retained_by").jqBootstrapValidation();
 		}
 		else if($(this).prop("checked") == false){
 			$("#amount_payable").attr("required", false);
 			$("#retained_by").attr("required", false);
 
-			$("#amount_payable").jqBootstrapValidation("destroy");
+			//$("#amount_payable").jqBootstrapValidation("destroy");
 			$(".amt").removeClass("error");
 			$(".amt .help-block").html("");
 			$("#edit_lead").not("[type=submit]").jqBootstrapValidation();

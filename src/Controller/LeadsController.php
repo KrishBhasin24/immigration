@@ -128,7 +128,7 @@ class LeadsController extends AppController
         $lead = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2],'OR' => [['retainer_id' => $id], ['agent_id' => $id]]])->order(['Leads.id'=> 'DESC'])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus']);  
       }
       elseif($access == 'full'){
-        $lead = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2]])->order(['Leads.id'=> 'DESC'])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus']);  
+        $lead = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2]])->order(['Leads.id'=> 'DESC'])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus']);
       }
       
       return($lead->toArray());
@@ -279,6 +279,7 @@ class LeadsController extends AppController
             $assignData = $account->toArray();
             $assignData['cic_file_id'] = $rawData['file_no'];
             $assignData['cic_file_date'] = $rawData['date'];
+            $assignData['portal_used'] = $rawData['portal_used'];
             $AccountleadTable->patchEntity($account, $assignData);
             $AccountleadTable->save($account);
           }
@@ -333,6 +334,16 @@ class LeadsController extends AppController
         }
       }
       die;
+    }
+
+    public function getPaymentPlanByLead($id=null){
+        $this->loadModel('LeadPaymentPlans');
+        return $this->LeadPaymentPlans->find('all')->where(['lead_id'=>$id])->toArray();
+    }
+
+    public function getChargesByLead($id=null){
+        $this->loadModel('LeadCharges');
+        return $this->LeadCharges->find('all')->where(['lead_id'=>$id])->toArray();
     }
 
 

@@ -1,4 +1,4 @@
-<?php //pr($key_data['lead_list']); ?>
+<?php //pr($key_data['loggedInUser']['department_id']); ?>
 
 <section class="content">       
     <div class="row">
@@ -57,8 +57,12 @@
                                                 <span  class="btn btn-info dropdown-toggle" data-toggle="dropdown">Action</span>
                                                 <div class="dropdown-menu">
                                                     <?php echo $this->Html->link('Edit',['controller' => 'Admins', 'action' => 'editLead',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
+                                                    <div class="dropdown-divider"></div>
+                                                    <?php echo $this->Html->link('Manage Charges',['controller' => 'Admins', 'action' => 'manageCharges',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
+                                                    <div class="dropdown-divider"></div>
+                                                    <?php echo $this->Html->link('Payment Plan',['controller' => 'Admins', 'action' => 'paymentPlan',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
                                                     
-                                                    <?php if($lead->lead_status->lead_status == 'R'){ ?>
+                                                    <?php if($lead->lead_status->lead_status == 'R' && $key_data['loggedInUser']['department_id'] != 6  ){ ?>
                                                         <div class="dropdown-divider"></div>
                                                     <?php echo $this->Html->link('Case Assign',['controller' => 'Admins', 'action' => 'caseAssign',$lead->id],['class'=>'dropdown-item','escape' => false]);}?>
                                                 </div>
