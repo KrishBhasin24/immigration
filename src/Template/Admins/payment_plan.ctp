@@ -186,9 +186,17 @@
 
 
 			fields.appendTo('#main_form');
-			$("#main_form").jqBootstrapValidation();
+			
+			$("input,select,textarea,checkbox").not("[type=submit]").jqBootstrapValidation();
 			i++;
 		})
 	});
 
 </script>
+
+
+
+
+<?= $this->Html->script('popper.min.js'); ?>
+<?= $this->Html->script('custome.js'); ?>
+

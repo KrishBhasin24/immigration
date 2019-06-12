@@ -125,10 +125,10 @@ class LeadsController extends AppController
     public function getInitLeadByUserId($id = null,$access = null){
       $this->loadModel('Leads');
       if($access == 'retain'){
-        $lead = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2],'OR' => [['retainer_id' => $id], ['agent_id' => $id]]])->order(['Leads.id'=> 'DESC'])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus']);  
+        $lead = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2],'OR' => [['retainer_id' => $id], ['agent_id' => $id]]])->order(['Leads.id'=> 'DESC'])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus','LeadPaymentPlans']);  
       }
       elseif($access == 'full'){
-        $lead = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2]])->order(['Leads.id'=> 'DESC'])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus']);
+        $lead = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2]])->order(['Leads.id'=> 'DESC'])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus','LeadPaymentPlans']);
       }
       
       return($lead->toArray());

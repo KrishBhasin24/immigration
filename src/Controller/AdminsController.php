@@ -403,6 +403,10 @@ class AdminsController extends AppController
         else{
             $result = $lead->getInitLeadByUserId($key_data['loggedInUser']['id'],'full');
         }
+
+
+        //pr($result);die;
+
         $key_data['my_lead_count'] = count($result);
         $key_data['lead_list'] = $result;
         $this->set('key_data',$key_data); 
@@ -411,7 +415,7 @@ class AdminsController extends AppController
     public function getAllLead(){
         $key_data['loggedInUser'] = $this->Auth->user();
         $this->loadModel('Leads');
-        $key_data['all_lead'] = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2]])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus'])->toArray();  
+        $key_data['all_lead'] = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2]])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus','LeadPaymentPlans'])->toArray();  
         $key_data['all_lead_count'] = count($key_data['all_lead']);
         $this->set('key_data',$key_data); 
     }
@@ -493,9 +497,10 @@ class AdminsController extends AppController
         $this->loadModel('Leads');
         $this->loadModel('LeadPayments');
         $this->loadModel('LeadRefunds');
+        $this->loadModel('LeadCharges');
 
         $key_data['loggedInUser'] = $this->Auth->user();
-        $leadDetail = $this->Leads->find('all')->where(['Leads.id' => $id ])->order(['Leads.id'=> 'DESC'])->contain(['LeadStatus','Categories','SubCategories','AccountLeads','Retain','LeadPayments'])->toArray();       
+        $leadDetail = $this->Leads->find('all')->where(['Leads.id' => $id ])->order(['Leads.id'=> 'DESC'])->contain(['LeadStatus','Categories','SubCategories','AccountLeads','Retain','LeadPayments','LeadStatus'])->toArray();       
         $key_data['leadDetail'] = $leadDetail[0]->toArray();
 
         $key_data['leadPayment'] = $this->LeadPayments->find('all')->where(['lead_id'=>$id])->toArray();
@@ -503,6 +508,37 @@ class AdminsController extends AppController
 
         $lead = new LeadsController();
         $key_data['balance'] = $lead->leadPaymentBalance($id);
+
+        $leadCharge = $this->LeadCharges->find('all')->where(['lead_id'=>$id])->toArray();
+        if(!empty($leadCharge)){
+            $leadCharge = $leadCharge[0];
+        }
+        else{
+            $leadCharge = array('admin_charges'=>0,'gov_fee'=>0,'case_processing_fee'=>0,'misc_fee'=>0,'consultation_fee'=>0);
+        }
+
+        //pr($leadCharge);die;
+        $total = 0;
+        if($key_data['leadDetail']['lead_status']['lead_status'] == 'Case Filed'){
+            $total =  $total + $leadCharge['consultation_fee'];
+            $refundable = array('Consultation Fees'=>$leadCharge['consultation_fee']);
+            $nonRefundable = array('Government Fees'=>$leadCharge['gov_fee'],'Case Processing Fees'=>$leadCharge['case_processing_fee'],'Misc Charges'=>$leadCharge['misc_fee'],'Administration Fees'=>$leadCharge['admin_charges']);
+        }
+        else{
+            $total = $total+$leadCharge['gov_fee']+$leadCharge['case_processing_fee']+$leadCharge['misc_fee']+$leadCharge['consultation_fee'];
+            $refundable = array('Government Fees'=>$leadCharge['gov_fee'],'Case Processing Fees'=>$leadCharge['case_processing_fee'],'Misc Charges'=>$leadCharge['misc_fee'],'Consultation Fees'=>$leadCharge['consultation_fee']);
+            
+            $nonRefundable = array('Administration Fees'=>$leadCharge['admin_charges']);
+        }
+
+        $key_data['refund_total']= $total;
+        $key_data['refundable']= $refundable;
+        $key_data['nonRefundable']= $nonRefundable;
+
+        //pr($key_data);die;
+        /*pr($key_data['leadDetail']['lead_status']['lead_status']);
+        pr($leadCharge);die;*/
+
         $this->set('key_data',$key_data);  
         /*pr($key_data['leadDetail']);
         die;*/
@@ -608,9 +644,7 @@ class AdminsController extends AppController
 
     public function paymentPlan($id=null){
         $key_data['loggedInUser'] = $this->Auth->user();
-        //$this->loadModel('Leads');
-        $leadsTable = TableRegistry::get('Leads');
-
+        
         if ($this->request->is(['post','put'])) {
             $data = $this->request->data();
             $lead = $data['lead_id'];
@@ -618,26 +652,18 @@ class AdminsController extends AppController
             $lead_data = $LeadPaymentPlansTable->find('all')->where(['lead_id' => $data['lead_id']])->toArray();
             if(!empty($lead_data)){
                 foreach ($lead_data as $value) {
-                   //pr($value);
                     $LeadPaymentPlansTable->delete($value);
                 }
             }
             
-            $total = 0;
-            foreach ($data['payment'] as $key => $plan) {
-                $total = $total + $plan;
+           foreach ($data['payment'] as $key => $plan) {
                 $detail = array('lead_id'=>$data['lead_id'],'user_id'=>$data['user_id'],'payment'=>$plan,'title' => $data['title'][$key]);
                 $payment = $LeadPaymentPlansTable->newEntity(); 
                 $LeadPaymentPlansTable->patchEntity($payment, $detail);       
                 $LeadPaymentPlansTable->save($payment);
             }
 
-            $leads = $leadsTable->get($lead); 
-            $leads->amount_payable = $total;
-            $leadsTable->save($leads);
-           
-
-            $this->Flash->success(__('Lead Payment Plan Modified'));
+            $this->Flash->success(__('Payment Plan Changed'));
             return $this->redirect(['controller' => 'Admins', 'action' => 'paymentPlan',$lead]);
         }
         $lead = new LeadsController();
@@ -651,13 +677,51 @@ class AdminsController extends AppController
         $key_data['loggedInUser'] = $this->Auth->user();
         $lead = new LeadsController();
         $leadDetail = $lead->getLeadById($id);
-        $key_data['leadChargesDetail'] = $lead->getChargesByLead($id);
-
-        pr($key_data['leadChargesDetail']);die;
-
+        $leadChargesDetail = $lead->getChargesByLead($id);
+        if(!empty($leadChargesDetail)){$key_data['leadChargesDetail'] = $leadChargesDetail[0];}
+        else{$key_data['leadChargesDetail'] = null;}
+        $leadsTable = TableRegistry::get('Leads');
+        $LeadChargesTable = TableRegistry::get('LeadCharges');
+        if ($this->request->is(['post','put'])) {
+            $data = $this->request->data();
+            $lead_data = $data['lead_id'];
+            $leadCharges = $lead->getChargesByLead($data['lead_id']);
+            
+            if(!empty($leadCharges)){
+                $charge = $leadCharges[0]; 
+            }
+            else{
+                $charge = $LeadChargesTable->newEntity(); 
+            }
+            $total = $data['admin_charges']+$data['gov_fee']+$data['consultation_fee']+$data['case_processing_fee']+$data['misc_fee'];
+            $LeadChargesTable->patchEntity($charge, $data);     
+            $LeadChargesTable->save($charge);
+            
+            $leads = $leadsTable->get($lead_data); 
+            $leads->amount_payable = $total;
+            $leadsTable->save($leads);
+            $this->Flash->success(__('Lead Charges Added'));
+            return $this->redirect(['controller' => 'Admins', 'action' => 'manageCharges',$lead_data]);
+        }
         $key_data['leadDetail'] = $leadDetail[0];
         $this->set('key_data',$key_data);
 
+    }
+
+    public function leadContract($id=null){
+        $this->viewBuilder()->setlayout('print');
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $this->loadModel('Leads');
+
+        $leadInfo = $this->Leads->find('all')->where(['Leads.id'=>$id])->contain(['LeadPaymentPlans','LeadCharges','Categories','SubCategories','AccountLeads'])->toArray();
+        if(!empty($leadInfo)){
+            $key_data['leadDetail'] = $leadInfo[0];    
+        }
+        else{
+            $key_data['leadDetail'] = array();       
+        }
+        
+        $this->set('key_data',$key_data);
     }
 
 

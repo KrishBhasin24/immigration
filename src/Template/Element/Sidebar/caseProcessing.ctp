@@ -3,29 +3,30 @@
 foreach ($user['permissions'] as $first) {
      $tmp[$first['menu']['name']][] = array('page_name'=>$first['page_name'],'handle'=>$first['handle']);
 }
-
-
-
-
-//pr($user);  die;?>
-
-
+$actual_link = "$_SERVER[REQUEST_URI]";
+$link =  str_replace("/immigration/admins/", "",$actual_link);
+?>
 <aside class="main-sidebar">
     <section class="sidebar">
 	    <ul class="sidebar-menu" data-widget="tree">
 	    	<li class="header nav-small-cap"></li>
-	    	<li class=""><?php echo $this->Html->link('<i class="mdi mdi-view-dashboard"></i> <span>Dashboard</span>',['controller' => 'Admins', 'action' => 'dashboard'],['escape' => false]); ?></li>
+	    	<?php if(strpos($link, 'dashboard') !== false ){ $Dashboardclass = "active"; } else{$Dashboardclass = "";} ?>
+	    	<li class="<?php echo $Dashboardclass; ?>"><?php echo $this->Html->link('<i class="mdi mdi-view-dashboard"></i> <span>Dashboard</span>',['controller' => 'Admins', 'action' => 'dashboard'],['escape' => false]); ?></li>
 	    	<?php if(empty($user['permissions'])){ ?>
-				<li class="treeview">
+	    		<?php
+		          if(strpos($link, 'manage-case') !== false || strpos($link, 'edit-case') !== false  ){ $Caseclass = "active menu-open"; }
+		          else{$Caseclass = "";}
+		        ?>
+				<li class="treeview <?php echo $Caseclass; ?>">
 		         	<a href="#">
-		         		<i class="mdi mdi-notification-clear-all "></i>
+		         		<i class="mdi mdi-notification-clear-all"></i>
 					    <span>Case Processing</span>
 	          			<span class="pull-right-container">
 	          				<i class="fa fa-angle-right pull-right"></i>
 	          			</span>
 	        		</a>
 	        		<ul class="treeview-menu">
-	        			<li><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Manage Case',['controller' => 'Admins', 'action' => 'manageCase'],['escape' => false]); ?> </li>
+	        			<li class="<?php echo $Caseclass; ?>"><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Manage Case',['controller' => 'Admins', 'action' => 'manageCase'],['escape' => false]); ?> </li>
 					</ul>
 	      		</li>
 			<?php }else{

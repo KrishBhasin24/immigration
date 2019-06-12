@@ -18,6 +18,10 @@ class LeadsTable extends Table
             $this->belongsTo('Categories');
             $this->belongsTo('SubCategories');
             $this->hasOne('LeadPayments');
+
+            $this->hasOne('LeadCharges');
+            $this->hasMany('LeadPaymentPlans');
+
             /*$this->belongsTo('Retainer', [
                 'foreignKey' => 'retainer_id',
                 'className' => 'Users'

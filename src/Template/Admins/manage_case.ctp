@@ -46,7 +46,7 @@
                                         	<div class="btn-group mb-5">
                                                 <span  class="btn btn-info dropdown-toggle" data-toggle="dropdown">Action</span>
                                                 <div class="dropdown-menu">
-                                                    <?php echo $this->Html->link('View',['controller' => 'Admins', 'action' => 'editCase',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
+                                                    <?php echo $this->Html->link('View',['controller' => 'Admins', 'action' => 'editCase',$lead->id],['class'=>'dropdown-item text-danger','escape' => false]); ?>
                                                 </div>
                                             </div>
                                         </td> 

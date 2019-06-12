@@ -10,8 +10,9 @@
 
 			<?= $this->Html->css('bootstrap.css'); ?>
 			<?= $this->Html->css('bootstrap-extend.css'); ?>
+			<?= $this->Html->css('all-skins.css'); ?>
 			<?= $this->Html->css('master_style.css'); ?>
-			<?= $this->Html->css('_all-skins.css'); ?>
+			
 			<?= $this->Html->css('morris.css'); ?>
 			<?= $this->Html->css('datatables.min.css'); ?>
 
@@ -25,7 +26,7 @@
   	</head>
   	
   	<!-- hold-transition skin-blue sidebar-mini -->
-  	<body class="skin-blue fixed sidebar-mini sidebar-mini-expand-feature">
+  	<body class="skin-info fixed sidebar-mini sidebar-mini">
   		<div class="wrapper">
   			<?php echo $this->element('Header/header', array('user' => $key_data['loggedInUser']));  ?>
 			<?php

@@ -72,16 +72,18 @@ class UsersController extends AppController
 			if($user){
             	$this->Auth->setUser($user);
         	   if($user['role'] == 'staff' || $user['role'] == 'admin'){
+                    $this->Flash->success(__('Welcome To Immdesk Portal'));
                     return $this->redirect( [ 'controller' => 'Admins', 'action' => 'dashboard' ]);    
                }
                else{
+                $this->Flash->success(__('Welcome User'));
                 echo "I am in ";die;
                }
 
                 
             }
             else{
-            	echo "wrong data";
+                $this->Flash->error(__('Wrong Email OR Password'));
             }
        	}      
 

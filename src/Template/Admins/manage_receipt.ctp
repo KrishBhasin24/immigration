@@ -168,9 +168,12 @@
                 <div class="box-header with-border">                        
                     <h3 class="box-title">Payment Refund</h3>
                     <?php 
+                    	echo $this->Html->link('Check Refund',[],['data-toggle'=>'modal','data-target'=>'#refundBalance','id'=>'refund_balance_btn','class'=>'btn btn-rounded btn-warning ml-2 right','escape' => false]);
+
                     	if($key_data['balance'] !== 0){
-                    		echo $this->Html->link('Add Refund',['controller' => 'Admins', 'action' => 'addRefund'],['data-toggle'=>'modal','data-target'=>'#refund','id'=>'refund_btn','class'=>'btn btn-rounded btn-success mb-5 right','escape' => false]);		
+                    		echo $this->Html->link('Add Refund',['controller' => 'Admins', 'action' => 'addRefund'],['data-toggle'=>'modal','data-target'=>'#refund','id'=>'refund_btn','class'=>'btn btn-rounded btn-success right','escape' => false]);		
                     	}
+
                      ?>
                 </div>
                 <div class="box-body p-15">                     
@@ -277,7 +280,7 @@
       </div>
 </div>
 
-<div class="modal center-modal fade" id="refund" tabindex="-1">
+<div class="modal center-modal fade" id="refund" tabindex="-2">
       <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -336,6 +339,64 @@
             <?php echo $this->Form->end(); ?>
         </div>
       </div>
+</div>
+
+<div class="modal modal-right fade" tabindex="-3" id="refundBalance">
+	<div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Refundable Amount</h5>
+                <a type="button" class="close" data-dismiss="modal">
+                	<span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="">
+                <div class="col-xl-12 col-lg-12">
+                	<div class="box-body pt-15 pl-0 pr-0">                     
+	                    <div class="table-responsive">
+	                		<table id="tickets" class="table mt-0 table-hover no-wrap table-bordered" data-page-size="10">
+	                            <thead class="bg-warning">
+	                                <tr>
+	                                    <th>Title</th>
+	                                    <th>Amount</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                <?php foreach ($key_data['refundable'] as $key => $refund)  { ?>
+	                                    <tr>
+	                                  		<td><?php echo $key; ?></td>
+	                                        <td><?php echo $refund; ?></td>
+	                                    </tr>   
+	                                <?php } ?>
+	                            </tbody>
+	                        </table>
+	                	</div>
+	            	</div>
+	            	<h5 class="modal-title">Non Refundable Amount</h5>
+	            	<div class="box-body pt-15 pl-0 pr-0">                     
+	                    <div class="table-responsive">
+	                		<table id="tickets" class="table mt-0 table-hover no-wrap table-bordered" data-page-size="10">
+	                            <thead class="bg-warning">
+	                                <tr>
+	                                    <th>Title</th>
+	                                    <th>Amount</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                <?php foreach ($key_data['nonRefundable'] as $key => $refund)  { ?>
+	                                    <tr>
+	                                  		<td><?php echo $key; ?></td>
+	                                        <td><?php echo $refund; ?></td>
+	                                    </tr>   
+	                                <?php } ?>
+	                            </tbody>
+	                        </table>
+	                	</div>
+	            	</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">

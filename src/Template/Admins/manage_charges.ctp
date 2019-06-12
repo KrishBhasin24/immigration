@@ -1,6 +1,6 @@
 <?php
 	
-//	pr($key_data['leadPaymentDetail']);
+	//pr($key_data['leadChargesDetail']);
 
 
 ?>
@@ -21,56 +21,54 @@
 <section class="content">		
 	<div class="row">
 		<div class="col-lg-7 col-12">
-		<?php echo $this->Form->create('manage_charges', ['class'=> 'formValidation','novalidate','url' => ['controller'=>'Admins','action'=>'paymentPlan']]); ?>
+		<?php echo $this->Form->create($key_data['leadChargesDetail'], ['class'=> 'formValidation','novalidate','url' => ['controller'=>'Admins','action'=>'manage_charges']]); ?>
 		<?php echo $this->Form->hidden('lead_id',array('class'=>'form-control','value'=> $key_data['leadDetail']['id'])); ?>
 		<?php echo $this->Form->hidden('user_id',array('class'=>'form-control','value'=> $key_data['loggedInUser']['id'])); ?>
 		 			
 		  	<div class="box">
 		  		<div class="box-header with-border">
 			  		<h4 class="box-title pt-5">Charges Summery</h4>
-			  		<?php 
-                    	echo $this->Html->link('Add Installment',[],['data-toggle'=>'modal','id'=>'add_installment','class'=>'btn btn-rounded btn-success mb-5 right','escape' => false]);		
-                    ?>
-		  		
+			  		
 			  		<div class="box-body" id="main_form">
-						<?php if(!empty($key_data['leadPaymentDetail'])){ 
-						$i= 1;
-						foreach ($key_data['leadPaymentDetail'] as $value) { ?>
-						<div class="row" id=<?php echo "form_data".$i; ?> >
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="controls">
-										<?php echo $this->Form->hidden('id',array('class'=>'form-control','value'=> $value['id'])); ?>
-										<?php echo $this->Form->control('title[]',array('label'=>'Title','escape'=>false,'class'=>'form-control','value'=>$value['title'])); ?>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="controls">
-										<?php echo $this->Form->control('payment[]',array('label'=>'Installment','escape'=>false,'class'=>'form-control','value'=>$value['payment'],'type'=>'number')); ?>
-									</div>
-								</div>
-							</div>
-						</div>
-						<?php $i++; } } else{ ?>
-							<!-- <div class="row" id="form_data1">
+						
+							 <div class="row" id="form_data1">
 								<div class="col-md-6">
 									<div class="form-group">
 										<div class="controls">
-											<?php //echo $this->Form->control('title[]',array('label'=>'Title','escape'=>false,'class'=>'form-control')); ?>
+											<?php echo $this->Form->control('admin_charges',array('label'=>['data-toggle'=>'tooltip','text'=>'Administration Charges<span class="text-danger">*</span>','title'=>'Non Refundable'],'required','escape'=>false,'type'=>'number','class'=>'form-control')); ?>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<div class="controls">
-											<?php //echo $this->Form->control('payment[]',array('label'=>'Installment','escape'=>false,'class'=>'form-control','type'=>'number')); ?>
+											<?php echo $this->Form->control('gov_fee',array('label'=>['data-toggle'=>'tooltip','text'=>'Government Fees<span class="text-danger">*</span>','title'=>'Non Refundable If Case Filed'],'required','escape'=>false,'class'=>'form-control','type'=>'number')); ?>
 										</div>
 									</div>
 								</div>
-							</div> -->
-						<?php } ?>
+								<div class="col-md-6">
+									<div class="form-group">
+										<div class="controls">
+											<?php echo $this->Form->control('consultation_fee',array('label'=>['data-toggle'=>'tooltip','text'=>'Consultation Fees<span class="text-danger">*</span>','title'=>'Refundable'],'escape'=>false,'required','class'=>'form-control','type'=>'number')); ?>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<div class="controls">
+											<?php echo $this->Form->control('case_processing_fee',array('label'=>['data-toggle'=>'tooltip','text'=>'Case Processing Fees<span class="text-danger">*</span>','title'=>'Non Refundable If Case Filed'],'required','escape'=>false,'class'=>'form-control','type'=>'number')); ?>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<div class="controls">
+											<?php echo $this->Form->control('misc_fee',array('label'=>['data-toggle'=>'tooltip','text'=>'Misc. Charges<span class="text-danger">*</span>','title'=>'Non Refundable'],'required','escape'=>false,'class'=>'form-control','type'=>'number')); ?>
+										</div>
+									</div>
+								</div>
+							</div> 
+						
 					</div>
 					<div class="box-footer">
 						<?php echo $this->Form->button('Save', array('type' => 'submit','class' => 'btn btn-success pull-right','escape' => false)); ?>
@@ -165,9 +163,12 @@
 		</div>
 	</div>
 </section>
-
+<?= $this->Html->script('popper.min.js'); ?>
 <script type="text/javascript">
 	$(document).ready(function() {	
+
+	  	$('[data-toggle="tooltip"]').tooltip();
+
 		var i = 2;
 		$("#add_installment").click( function () {
 			var fields = $('#form_data1').clone().attr("id","form_data"+i); 

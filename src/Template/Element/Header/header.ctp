@@ -6,7 +6,11 @@
 
 
     <nav class="navbar navbar-static-top">
-    	<div></div>
+    	<div>
+			  <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+				<span class="sr-only">Toggle navigation</span>
+			  </a>
+		  </div>
 		<div class="navbar-custom-menu">
         	<ul class="nav navbar-nav">
         		<li class="dropdown user user-menu">

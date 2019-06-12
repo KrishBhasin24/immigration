@@ -1,4 +1,4 @@
-<?php //pr($key_data['loggedInUser']['department_id']); ?>
+<?php //pr($key_data['lead_list']); ?>
 
 <section class="content">       
     <div class="row">
@@ -53,18 +53,22 @@
                                          ?></td>
                                         <td><?php echo $lead->telephone; ?></td>
                                         <td> 
-                                            <div class="btn-group mb-5">
+                                            <div class="btn-group mb-5 ">
                                                 <span  class="btn btn-info dropdown-toggle" data-toggle="dropdown">Action</span>
-                                                <div class="dropdown-menu">
-                                                    <?php echo $this->Html->link('Edit',['controller' => 'Admins', 'action' => 'editLead',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
-                                                    <div class="dropdown-divider"></div>
-                                                    <?php echo $this->Html->link('Manage Charges',['controller' => 'Admins', 'action' => 'manageCharges',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
-                                                    <div class="dropdown-divider"></div>
-                                                    <?php echo $this->Html->link('Payment Plan',['controller' => 'Admins', 'action' => 'paymentPlan',$lead->id],['class'=>'dropdown-item','escape' => false]); ?>
+                                                <div class="dropdown-menu ">
+                                                    <?php echo $this->Html->link('Edit',['controller' => 'Admins', 'action' => 'editLead',$lead->id],['class'=>'dropdown-item text-danger','escape' => false]); ?>
+                                                    <div class="dropdown-divider bg-dange"></div>
+                                                    <?php echo $this->Html->link('Manage Charges',['controller' => 'Admins', 'action' => 'manageCharges',$lead->id],['class'=>'dropdown-item text-danger','escape' => false]); ?>
                                                     
-                                                    <?php if($lead->lead_status->lead_status == 'R' && $key_data['loggedInUser']['department_id'] != 6  ){ ?>
+                                                    <?php if($lead->amount_payable > 0 ){ ?>
+                                                        <div class="dropdown-divider bg-dange"></div>
+                                                        <?php echo $this->Html->link('Payment Plan',['controller' => 'Admins', 'action' => 'paymentPlan',$lead->id],['class'=>'dropdown-item text-danger','escape' => false]); ?>
+                                                    <?php } if(!empty($lead->lead_payment_plans) && $lead->lead_status->lead_status == 'R' ) {  ?>
                                                         <div class="dropdown-divider"></div>
-                                                    <?php echo $this->Html->link('Case Assign',['controller' => 'Admins', 'action' => 'caseAssign',$lead->id],['class'=>'dropdown-item','escape' => false]);}?>
+                                                        <a style="cursor: pointer;" class="dropdown-item text-danger" onClick=<?php echo 'contract('.$lead->id.')'; ?>>View Contract</a>
+                                                    <?php } if($lead->lead_status->lead_status == 'R' && $key_data['loggedInUser']['department_id'] != 6  ){ ?>
+                                                        <div class="dropdown-divider"></div>
+                                                    <?php echo $this->Html->link('Case Assign',['controller' => 'Admins', 'action' => 'caseAssign',$lead->id],['class'=>'dropdown-item text-danger','escape' => false]);}?>
                                                 </div>
                                             </div>
                                         </td> 
@@ -91,6 +95,17 @@
         </div>
     </div>
 </section>
+
+<script type="text/javascript">
+    
+        function contract(id){
+            window.open('lead_contract/'+id,'viewwin', 'width=650,height=600');    
+        }
+    
+    
+</script>
+
+
 <?= $this->Html->script('popper.min.js'); ?>
 
 <?= $this->Html->script('datatables.min.js'); ?>
