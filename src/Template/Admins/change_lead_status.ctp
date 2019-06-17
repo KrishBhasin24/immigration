@@ -55,7 +55,7 @@ foreach ($key_data['department'] as $val) {
 		                    </div>
 		                </div>
 		                <div class="modal-footer modal-footer-uniform">
-		                	<?php echo $this->Html->link('<i class="fa fa-mail-reply"></i> Back',['controller' => 'Admins', 'action' => 'getLeadStatus'],['class'=>'btn btn-danger','escape' => false]); ?>
+		                	<?php echo $this->Html->link('<i class="fa fa-mail-reply"></i> Back',['controller' => 'Admins', 'action' => 'getImmStatus'],['class'=>'btn btn-danger','escape' => false]); ?>
 		                    <?php echo $this->Form->button('Save', array('type' => 'submit','class' => 'btn btn-success btn-primary float-right','escape' => false)); ?>
 		                </div>
 		            <?php echo $this->Form->end(); ?>

@@ -127,21 +127,21 @@ class AdminsController extends AppController
             $user = new UsersController();
             $this->loadModel('Users');
             $exist = $this->Users->find('all')->where(['email' => $data['email']])->toArray();
-            $exist = $exist[0]->toArray();  
-            if(count($exist) > 1 ){
-                $this->Flash->error(__('Email Id Already Exist. Please Use Unique Email Id'));
-                return $this->redirect(['controller'=>'Admins','action' => 'getAllStaff']);
+            //echo "<pre>";pr($exist);die;
+            if($exist){
+            	$this->Flash->error(__('Email Id Already Exist. Please Use Unique Email Id'));
+                return $this->redirect(['controller'=>'Admins','action' => 'getAllStaff']);  
             }
             else{
-                if($register = $user->addStaff($data,'staff')){
+            	if($register = $user->addStaff($data,'staff')){
                     $this->Flash->success(__('Staff Data Added'));
                     return $this->redirect(['controller'=>'Admins','action' => 'getAllStaff']);
-                }    
+                }
             }
+            
+            
         }
-
-
-    }
+	}
 
     public function editStaff($id=null)
     {
@@ -214,7 +214,7 @@ class AdminsController extends AppController
     }
 
 
-    public function getLeadStatus(){
+    public function getImmStatus(){
         $key_data['loggedInUser']= $this->Auth->user();
         
         $this->loadModel('Departments');
@@ -285,7 +285,7 @@ class AdminsController extends AppController
             }
         }
 
-         $this->loadModel('Departments');
+        $this->loadModel('Departments');
         $department = $this->Departments->find('all');   
         $key_data['department'] = $department->toArray();
 

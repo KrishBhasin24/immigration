@@ -53,7 +53,7 @@
                 if(strpos($link, 'get-lead-status') !== false || strpos($link, 'change-lead-status') !== false){ $SubGeneralclass = "active"; }
                 else{$SubGeneralclass = "";}
               ?>
-        			<li class="<?php echo $SubGeneralclass;  ?>"><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Manage Status',['controller' => 'Admins', 'action' => 'getLeadStatus'],['escape' => false]); ?> </li>
+        			<li class="<?php echo $SubGeneralclass;  ?>"><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Manage Status',['controller' => 'Admins', 'action' => 'getImmStatus'],['escape' => false]); ?> </li>
               <?php
                 if(strpos($link, 'get-category') !== false || strpos($link, 'change-category') !== false || strpos($link, 'change-sub-category') !== false){ $SubCatclass = "active"; }
                 else{$SubCatclass = "";}
