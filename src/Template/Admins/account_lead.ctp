@@ -58,6 +58,8 @@
         </div>
 	</div>
 </section>
+
+
 <?= $this->Html->script('popper.min.js'); ?>
 <?= $this->Html->script('datatables.min.js'); ?>
 <?= $this->Html->script('data-table.js'); ?>

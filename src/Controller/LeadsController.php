@@ -219,7 +219,16 @@ class LeadsController extends AppController
             $assignData['lead_status_id'] = 3;
             $assignData['status_changed_date'] = date('Y-m-d');
             $leadTable->patchEntity($lead, $assignData);
-            $leadTable->save($lead);
+            $data = $leadTable->save($lead);
+
+            $data = $data->toArray();
+            $this->loadModel('Users');
+            $this->loadModel('AccountLeads');
+            $data['retainer_info']= $this->Users->get($data['processingAgent_id'])->toArray();
+            $file_info = $this->AccountLeads->find('all')->where(['lead_id'=>$data['id']])->toArray();
+            $data['file_info'] = $file_info[0]->toArray();
+            $notification = new NotificationsController();
+            $notification->case_assign($data);
         }
       }
       die;
@@ -252,6 +261,7 @@ class LeadsController extends AppController
       if($this->Auth->user()){
         if($this->request->is('ajax')){
           try{
+
             $rawData = $this->request->data();
             $leadTable = TableRegistry::get('Leads');
             $lead = $leadTable->get($rawData['lead_id']);
@@ -259,7 +269,24 @@ class LeadsController extends AppController
             $assignData['lead_status_id'] = $rawData['lead_status_id'];
             $assignData['status_changed_date'] = date('Y-m-d');
             $leadTable->patchEntity($lead, $assignData);
-            $leadTable->save($lead);
+            $detail = $leadTable->save($lead);
+            $detail = $detail->toArray();
+
+            $this->loadModel('Leads');
+            if($detail['lead_status_id'] == 4){
+              $Detail_lead = $this->Leads->find('all')->where(['Leads.id'=>$detail['id']])->contain(['Categories','SubCategories','AccountLeads'])->toArray();
+            }
+            elseif($detail['lead_status_id'] == 5){
+              $Detail_lead = $this->Leads->find('all')->where(['Leads.id'=>$detail['id']])->contain(['Categories','SubCategories','AccountLeads','Filling'])->toArray();
+            }
+            elseif($detail['lead_status_id'] == 6){
+              $Detail_lead = $this->Leads->find('all')->where(['Leads.id'=>$detail['id']])->contain(['Categories','SubCategories','AccountLeads','Retain'])->toArray();
+            }  
+            
+            $Detail_lead = $Detail_lead[0]->toArray();
+            $Detail_lead['loggedUser'] = $this->Auth->user();
+            $notification = new NotificationsController();
+            $notification->case_status($Detail_lead);
           }
           catch (Exception $e) {
             echo $e->getMessage();

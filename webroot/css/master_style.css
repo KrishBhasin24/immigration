@@ -12428,6 +12428,10 @@ button.btn.dropdown-toggle::after, .wysihtml5-toolbar .btn.dropdown-toggle::afte
 }
 .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
     border-bottom-width: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    color: #2C2C2C;
 }
 .table.no-border, .table.no-border td, .table.no-border th {
     border: 0;

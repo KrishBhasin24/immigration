@@ -344,7 +344,11 @@ class AdminsController extends AppController
             $key_data['subcat_list'] = $subcat;
         }
         if ($this->request->is(['post','put'])) { 
+
+
             $SubCatTable->patchEntity($subcat, $this->request->data);
+            //pr($this->request->data);die;
+
             if($SubCatTable->save($subcat)){
                 $this->Flash->success(__('Sub Category Added or Modified'));
                 return $this->redirect(['controller' => 'Admins', 'action' => 'getCategory']);
@@ -424,8 +428,9 @@ class AdminsController extends AppController
 
         $key_data['loggedInUser'] = $this->Auth->user();
         $lead = new LeadsController();
+        $notification = new NotificationsController();
         $result = $lead->getLeadById($id);
-
+        $notified = 0;
         $this->loadModel('Leads');
         $key_data['lead_data'] = $result[0]; 
 
@@ -446,15 +451,23 @@ class AdminsController extends AppController
             $data = $this->request->data();
             if (array_key_exists('contract_signed',$data)){
                 if($data['contract_signed'] == 1){
-                    $data['lead_status_id'] = 2;
+					$data['lead_status_id'] = 2;
                     $data['status_changed_date'] = date('Y-m-d');
                     $file['lead_id'] = $id;
                     $file['retainer_id'] = $data['retainer_id'];
-                    $filedetail = $lead->retainLead($file); 
+                    $filedetail = $lead->retainLead($file);    
+                    $notified = 1;
                 }
             }
 
             if($added = $lead->editLead($data,$id)){
+				if($notified == 1){
+                    $this->loadModel('Users');
+                    $retainer_data = $this->Users->get($data['retainer_id'])->toArray();
+                    $message_data = array_merge($data,$filedetail->toArray());
+                    $message_data['retainer_info'] = $retainer_data;
+                    $notification->retain($message_data);
+            	}
                 $this->Flash->success(__('Lead Updated Sucessfully'));
                 return $this->redirect(['controller'=>'Admins','action' => 'getLead']);
             }

@@ -37,7 +37,7 @@
     				</ul>
     		</li>
         <?php
-          if(strpos($link, 'get-lead-status') !== false || strpos($link, 'change-lead-status') !== false || strpos($link, 'get-category') !== false || strpos($link, 'change-category') !== false || strpos($link, 'change-sub-category') !== false  || strpos($link, 'get-link') !== false  || strpos($link, 'change-link') !== false   ){ $Generalclass = "active menu-open"; }
+          if(strpos($link, 'get-imm-status') !== false || strpos($link, 'change-lead-status') !== false || strpos($link, 'get-category') !== false || strpos($link, 'change-category') !== false || strpos($link, 'change-sub-category') !== false  || strpos($link, 'get-link') !== false  || strpos($link, 'change-link') !== false   ){ $Generalclass = "active menu-open"; }
           else{$Generalclass = "";}
         ?>
         <li class="treeview <?php echo $Generalclass; ?>">
@@ -50,7 +50,7 @@
         		</a>
         		<ul class="treeview-menu">
               <?php
-                if(strpos($link, 'get-lead-status') !== false || strpos($link, 'change-lead-status') !== false){ $SubGeneralclass = "active"; }
+                if(strpos($link, 'get-imm-status') !== false || strpos($link, 'change-lead-status') !== false){ $SubGeneralclass = "active"; }
                 else{$SubGeneralclass = "";}
               ?>
         			<li class="<?php echo $SubGeneralclass;  ?>"><?php echo $this->Html->link('<i class="mdi mdi-toggle-switch-off"></i>Manage Status',['controller' => 'Admins', 'action' => 'getImmStatus'],['escape' => false]); ?> </li>

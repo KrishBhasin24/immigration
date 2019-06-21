@@ -35,7 +35,7 @@ $(function () {
 
 
 	$('#viewlead').DataTable( {
-        'ordering'    : false,
+        'ordering'    : true,
         initComplete: function () {
         	this.api().columns([2, 3, 4,5,6]).every( function () {
             /*this.api().columns().every( function () {*/
@@ -60,7 +60,7 @@ $(function () {
     } );
 
     $('#caselead').DataTable( {
-    	'ordering'    : false,
+    	'ordering'    : true,
     	initComplete: function () {
         	this.api().columns([4, 5, 7]).every( function () {
             /*this.api().columns().every( function () {*/
@@ -85,10 +85,9 @@ $(function () {
     } );
 
     $('#acclead').DataTable( {
-        'ordering'    : false,
+        'ordering'    : true,
         initComplete: function () {
             this.api().columns([2, 3, 4, 5, 6]).every( function () {
-            /*this.api().columns().every( function () {*/
                 var column = this;
                 var select = $('<select><option value=""></option></select>')
                     .appendTo( $(column.footer()).empty() )
@@ -96,7 +95,6 @@ $(function () {
                         var val = $.fn.dataTable.util.escapeRegex(
                             $(this).val()
                         );
- 
                         column
                             .search( val ? '^'+val+'$' : '', true, false )
                             .draw();
@@ -110,7 +108,7 @@ $(function () {
     } );
 
     $('#retained').DataTable( {
-    	'ordering'    : false,
+    	'ordering'    : true,
     	initComplete: function () {
         	this.api().columns([4, 5, 6]).every( function () {
             /*this.api().columns().every( function () {*/

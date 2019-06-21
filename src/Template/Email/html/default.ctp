@@ -15,6 +15,7 @@
 
 $content = explode("\n", $content);
 
+echo "<span>test 123</span>\n";
 foreach ($content as $line) :
     echo '<p> ' . $line . "</p>\n";
 endforeach;

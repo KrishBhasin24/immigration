@@ -357,54 +357,66 @@ $(document).ready(function() {
 		}
 		var lead_status = $('#lead_status_id').val();
 		if(lead_status.length != 0){
-			var data = {'lead_status_id':lead_status,'lead_id':$('#lead_id').html()};
-			var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'changeLeadStatus')); ?>";
-			var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
-			$.ajax({
-				type:"POST",
-			 	headers: {
-			        'X-CSRF-Token': csrfToken
-			    },
-				url : callUrl,
-				data : data, 
-				async: false,
-				success:function(response) {
-          			alert('Case Status Changed');
-	          		location.reload(); 
-		        },
-	          	error: function() {
-	                alert('Error occured');
-	                return;
-	          	}
-	      	});	
+			if (confirm("Are you sure?")) {
+				var data = {'lead_status_id':lead_status,'lead_id':$('#lead_id').html()};
+				var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'changeLeadStatus')); ?>";
+				var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
+				$.ajax({
+					type:"POST",
+				 	headers: {
+				        'X-CSRF-Token': csrfToken
+				    },
+					url : callUrl,
+					data : data, 
+					async: false,
+					success:function(response) {
+	          			alert('Case Status Changed');
+		          		location.reload(); 
+			        },
+		          	error: function() {
+		                alert('Error occured');
+		                return;
+		          	}
+		      	});		
+			}
+			else{
+				location.reload(); 
+			}
+			
+			
 		}
 		else{alert("Please select the status.");}
 	});
 
 	$('#cic_file_button').click(function(){
-		var file_no = $('#cic_file_id').val();
-		var date = $('#cic_file_date').val();
-		if(file_no.length != 0){
-			var data = {'file_no':file_no,'date':date,'portal_used':$('#cic_portal').val(),'file_id':$('#file_id').html()};
-			var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'addCicDetail')); ?>";
-			var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
-			$.ajax({
-				type:"POST",
-			 	headers: {
-			        'X-CSRF-Token': csrfToken
-			    },
-				url : callUrl,
-				data : data, 
-				async: false,
-				success:function(response) {
-          			alert('Cic file Detail Updated');
-	          		location.reload(); 
-		        },
-	          	error: function() {
-	                alert('Error occured');
-	                return;
-	          	}
-	      	});
+		if (confirm("Are you sure?")) {
+			var file_no = $('#cic_file_id').val();
+			var date = $('#cic_file_date').val();
+			if(file_no.length != 0){
+				var data = {'file_no':file_no,'date':date,'portal_used':$('#cic_portal').val(),'file_id':$('#file_id').html()};
+				var callUrl = "<?php echo Router::url(array('controller'=>'Leads','action'=>'addCicDetail')); ?>";
+				var csrfToken = <?= json_encode($this->request->getParam('_csrfToken')) ?>;
+				$.ajax({
+					type:"POST",
+				 	headers: {
+				        'X-CSRF-Token': csrfToken
+				    },
+					url : callUrl,
+					data : data, 
+					async: false,
+					success:function(response) {
+	          			alert('Cic file Detail Updated');
+		          		location.reload(); 
+			        },
+		          	error: function() {
+		                alert('Error occured');
+		                return;
+		          	}
+		      	});
+			}
+		}
+		else{
+			location.reload(); 
 		}
 	});
 

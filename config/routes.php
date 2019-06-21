@@ -77,7 +77,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/get-all-staff', ['controller' => 'Admins', 'action' => 'getAllStaff']);
     $routes->connect('/set-permission/*', ['controller' => 'Admins', 'action' => 'setPermission']);
 
-
+    $routes->connect('/mail', ['controller' => 'Notifications', 'action' => 'mail']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

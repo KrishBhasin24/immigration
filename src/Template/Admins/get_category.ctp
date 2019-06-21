@@ -152,7 +152,7 @@ foreach ($key_data['cat_list'] as $value) {
 				<span aria-hidden="true">&times;</span>
 				</a>
 			</div>
-			<?php echo $this->Form->create('SubCategory', array('action' => 'addSubCategory','controller'=>'Admins','class'=>'form-horizontal form-element','novalidate')); ?>
+			<?php echo $this->Form->create('SubCategory', array('action' => 'changeSubCategory','controller'=>'Admins','class'=>'form-horizontal form-element','novalidate')); ?>
 		  	  	<div class="modal-body">
 					<div class="col-xl-12 col-lg-12">
 					  	<div class="box">
@@ -172,7 +172,7 @@ foreach ($key_data['cat_list'] as $value) {
 										<div class="controls">
 											<div class="input text">
 											   <label>Category<span class="text-danger">*</span></label>
-											   <?php echo $this->Form->select('catgory_id',$category,['empty' => ' ','class'=>'form-control','required']);?>
+											   <?php echo $this->Form->select('category_id',$category,['empty' => ' ','class'=>'form-control','required']);?>
 											</div>
 										</div>
 									</div>

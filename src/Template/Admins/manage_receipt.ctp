@@ -170,7 +170,7 @@
                     <?php 
                     	echo $this->Html->link('Check Refund',[],['data-toggle'=>'modal','data-target'=>'#refundBalance','id'=>'refund_balance_btn','class'=>'btn btn-rounded btn-warning ml-2 right','escape' => false]);
 
-                    	if($key_data['balance'] !== 0){
+                    	if($key_data['balance'] !== $key_data['leadDetail']['amount_payable']){
                     		echo $this->Html->link('Add Refund',['controller' => 'Admins', 'action' => 'addRefund'],['data-toggle'=>'modal','data-target'=>'#refund','id'=>'refund_btn','class'=>'btn btn-rounded btn-success right','escape' => false]);		
                     	}
 
