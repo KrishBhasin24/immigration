@@ -1,4 +1,5 @@
 <?php
+use Cake\Routing\Router; 
 //pr($key_data['leadDetail']);
  ?>
 <div class="content-header">
@@ -153,6 +154,11 @@
                                         <td> 
                                             <div class="btn-group mb-5">
                                                 <?php echo $this->Html->link('<i class="fa fa-edit"></i> Edit',['controller' => 'Admins', 'action' => 'changeReceipt',$payment['id']],['class'=>'btn btn-rounded btn-info mb-5','escape' => false]);?>
+                                                
+                                            </div>
+                                            <?php $dat = $payment['id']; ?>
+                                            <div class="btn-group mb-5">
+                                            	<a style="cursor: pointer;" class="btn btn-rounded btn-yellow mb-5" onClick=<?php echo 'print_receipt('.$dat.')'; ?>><i class="fa fa-edit"></i>Print</a>
                                             </div>
                                         </td> 
                                     </tr>   
@@ -412,6 +418,15 @@
 		
 	}
 });
+    
+	function print_receipt(id){
+		var targeturl = '<?= Router::url(["controller"=>"Admins","action"=>"/receipt_print"]); ?>';
+		window.open("http://"+document.domain+targeturl+'/'+id,'viewwin', 'width=650,height=600');
+		    
+	}
+    
+    
+
 </script>
 
 

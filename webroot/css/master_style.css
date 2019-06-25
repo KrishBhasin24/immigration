@@ -506,7 +506,7 @@ a:active, a:focus, a:hover {
     padding-top: 60px;
     min-height: 100%;
     width: 250px;
-    z-index: 810;
+    z-index: 1000;
     -webkit-transition: -webkit-transform .3s ease-in-out, width .3s ease-in-out;
     -moz-transition: -moz-transform .3s ease-in-out, width .3s ease-in-out;
     -o-transition: -o-transform .3s ease-in-out, width .3s ease-in-out;

@@ -8,7 +8,7 @@
 		<?= $this->Html->css('bootstrap.css'); ?>
 		<?= $this->Html->css('bootstrap-extend.css'); ?>
 		<?= $this->Html->css('master_style.css'); ?>
-		<?= $this->Html->css('_all-skins.css'); ?>
+		<?= $this->Html->css('all-skins.css'); ?>
 		<?= $this->Html->script('jquery-3.3.1.min.js'); ?>
 		<?= $this->Html->script('jquery-ui.min.js'); ?>
 	</head>

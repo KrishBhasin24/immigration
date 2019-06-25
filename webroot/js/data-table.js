@@ -35,7 +35,8 @@ $(function () {
 
 
 	$('#viewlead').DataTable( {
-        'ordering'    : true,
+        //'ordering'    : true,
+        "order": [[ 0, "desc" ]],
         initComplete: function () {
         	this.api().columns([2, 3, 4,5,6]).every( function () {
             /*this.api().columns().every( function () {*/
@@ -60,7 +61,7 @@ $(function () {
     } );
 
     $('#caselead').DataTable( {
-    	'ordering'    : true,
+    	"order": [[ 0, "desc" ]],
     	initComplete: function () {
         	this.api().columns([4, 5, 7]).every( function () {
             /*this.api().columns().every( function () {*/
@@ -85,7 +86,7 @@ $(function () {
     } );
 
     $('#acclead').DataTable( {
-        'ordering'    : true,
+        "order": [[ 0, "desc" ]],
         initComplete: function () {
             this.api().columns([2, 3, 4, 5, 6]).every( function () {
                 var column = this;

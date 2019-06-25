@@ -101,8 +101,6 @@
         function contract(id){
             window.open('lead_contract/'+id,'viewwin', 'width=650,height=600');    
         }
-    
-    
 </script>
 
 

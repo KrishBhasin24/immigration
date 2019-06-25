@@ -92,7 +92,7 @@ class AdminsController extends AppController
                     }
 
 
-                 }
+                }
                 
                
                 $companies_rqst = $this->Companies->find('all');    
@@ -419,7 +419,17 @@ class AdminsController extends AppController
     public function getAllLead(){
         $key_data['loggedInUser'] = $this->Auth->user();
         $this->loadModel('Leads');
-        $key_data['all_lead'] = $this->Leads->find('all')->where(['lead_status_id IN'=>[1,2]])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus','LeadPaymentPlans'])->toArray();  
+
+        if($key_data['loggedInUser']['department']['id'] == 6 ){
+            $key_data['all_lead'] = $this->Leads->find('all')->where(['retainer_id' => $key_data['loggedInUser']['id'] ])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus','LeadPaymentPlans'])->toArray(); 
+        }
+
+        else{
+            $key_data['all_lead'] = $this->Leads->find('all')->where(['retainer_id' => $key_data['loggedInUser']['id'] ])->contain(['Retain','Lead','Categories','SubCategories','LeadStatus','LeadPaymentPlans'])->toArray();     
+        }
+
+        
+        
         $key_data['all_lead_count'] = count($key_data['all_lead']);
         $this->set('key_data',$key_data); 
     }
@@ -449,6 +459,7 @@ class AdminsController extends AppController
 
         if ($this->request->is(['post','put'])) {
             $data = $this->request->data();
+            /*pr($data);die;*/
             if (array_key_exists('contract_signed',$data)){
                 if($data['contract_signed'] == 1){
 					$data['lead_status_id'] = 2;
@@ -498,10 +509,15 @@ class AdminsController extends AppController
     }
     public function accountLead(){
         $key_data['loggedInUser'] = $this->Auth->user();
-        $this->loadModel('Leads');
-        $key_data['accountLeads'] = $this->Leads->find('all')->where(['NOT'=> ['Leads.lead_status_id' =>'1']])->order(['Leads.id'=> 'DESC'])->contain(['LeadStatus','Categories','SubCategories','AccountLeads','Retain'])->toArray();
 
-        //pr($key_data['accountLeads']);die;
+       // pr($key_data['loggedInUser']['id']);die;
+        $this->loadModel('Leads');
+        if($key_data['loggedInUser']['department']['id'] == 6 ){
+            $key_data['accountLeads'] = $this->Leads->find('all')->where(['NOT'=> ['Leads.lead_status_id' =>'1'],'Leads.retainer_id'=>$key_data['loggedInUser']['id']])->order(['Leads.id'=> 'DESC'])->contain(['LeadStatus','Categories','SubCategories','AccountLeads','Retain'])->toArray();      
+        }
+        else{
+            $key_data['accountLeads'] = $this->Leads->find('all')->where(['NOT'=> ['Leads.lead_status_id' =>'1']])->order(['Leads.id'=> 'DESC'])->contain(['LeadStatus','Categories','SubCategories','AccountLeads','Retain'])->toArray();      
+        }
         $this->set('key_data',$key_data); 
     }
 
@@ -734,6 +750,14 @@ class AdminsController extends AppController
             $key_data['leadDetail'] = array();       
         }
         
+        $this->set('key_data',$key_data);
+    }
+
+    public function receiptPrint($id=null){
+        $this->viewBuilder()->setlayout('print');
+        $key_data['loggedInUser'] = $this->Auth->user();
+        $this->loadModel('LeadPayments');
+        $key_data['lead_receipt'] = $this->LeadPayments->get($id);
         $this->set('key_data',$key_data);
     }
 

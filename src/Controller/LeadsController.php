@@ -148,10 +148,16 @@ class LeadsController extends AppController
     public function retainLead($fileData = array()){
       $this->loadModel('AccountLeads');
       $AccTable = TableRegistry::get('AccountLeads');
-      $acc = $AccTable->newEntity();
-      $AccTable->patchEntity($acc, $fileData);
-      $entry = $AccTable->save($acc);
-      return($entry);
+      $file_detail = $this->AccountLeads->find('all')->where(['lead_id' => $fileData['lead_id']])->toArray();
+      if($file_detail){
+        return;
+      }
+      else{
+        $acc = $AccTable->newEntity();
+        $AccTable->patchEntity($acc, $fileData);
+        $entry = $AccTable->save($acc);
+        return($entry);     
+      }
     }
 
     public function getRemarksByLeadId($id = null){

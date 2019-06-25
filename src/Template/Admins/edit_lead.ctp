@@ -78,7 +78,7 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 								<div class="col-12">
 									<?php echo $this->Form->control('remarks',array('class'=>'form-control','id'=>'remarks_box','placeholder'=>'Please Enter Here','type'=>'textarea','label'=>false)); ?>
 									<?php echo $this->Form->control('lead_id',array('id'=>'remark_lead_id','type'=>'hidden','value'=>$key_data['lead_data']['id'])); ?>
-									<?php echo $this->Form->control('user_id',array('id'=>'remark_user_id','type'=>'hidden','value'=>$key_data['lead_data']['agent_id'])); ?>
+									<?php echo $this->Form->control('user_id',array('id'=>'remark_user_id','type'=>'hidden','value'=>$key_data['loggedInUser']['id'])); ?>
 								</div>
 							</div>
 							<div class="form-group row mb-0">
@@ -280,7 +280,13 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 									<div class="controls">
 										<div class="input text">
 											<label>Retained By</label>
-											<?php echo $this->Form->select('retainer_id',$staff,['empty' => ' ','id'=>'retained_by','class'=>'form-control']);?>	
+											<?php
+											 	if($key_data['lead_data']['contract_signed'] == 1 )
+										 		{ $condition = '';}
+												else
+												{ $condition = 'disabled';}
+										 	?>
+											<?php echo $this->Form->select('retainer_id',$staff,['empty' => ' ','id'=>'retained_by','class'=>'form-control',$condition]);?>	
 										</div>
 									</div>
 								</div>
@@ -328,6 +334,8 @@ $(document).ready(function() {
 			
 			//$("#amount_payable").jqBootstrapValidation();
 			$("#retained_by").jqBootstrapValidation();
+
+			$("#retained_by").attr("disabled", false);
 		}
 		else if($(this).prop("checked") == false){
 			$("#amount_payable").attr("required", false);
@@ -337,6 +345,7 @@ $(document).ready(function() {
 			$(".amt").removeClass("error");
 			$(".amt .help-block").html("");
 			$("#edit_lead").not("[type=submit]").jqBootstrapValidation();
+			$("#retained_by").attr("disabled", true);
 		}
 		
 	})
