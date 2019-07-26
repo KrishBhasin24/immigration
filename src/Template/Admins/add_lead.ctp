@@ -83,11 +83,12 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 									<div class="controls">
 										<div class="input text">
 											<label>Date Of Birth<span class="text-danger">*</span></label>
-											<input class="form-control" type="date" name="dob" required>
+											<input class="form-control" type="text" name="dob" id="dob" required>
 										</div>
 									</div>
 								</div>
 							</div>
+
 						</div>
 						<div class="row">
 							 <div class="col-md-3">
@@ -97,13 +98,13 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 									</div>
 								</div>
 							</div>
+
 							<div class="col-md-3">
 								<div class="form-group">
-									<div class="controls">
-										<?php echo $this->Form->control('telephone',array('label'=>'Contact Number<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'Phone','id'=>'phone')); ?>
-									</div>
+									<?php echo $this->Form->control('postal_code',array('class'=>'form-control','placeholder'=>'PostalCode')); ?>
 								</div>
 							</div>
+							
 							<div class="col-md-3">
 								<div class="form-group">
 									<?php echo $this->Form->control('city',array('class'=>'form-control','placeholder'=>'City')); ?>
@@ -117,16 +118,19 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 							
 						</div>
 						<div class="row">
-							<div class="col-md-3">
-								<div class="form-group">
-									<?php echo $this->Form->control('postal_code',array('class'=>'form-control','placeholder'=>'PostalCode')); ?>
-								</div>
-							</div>
+							
 							<div class="col-md-3">
 								<div class="form-group">
 									<div class="input text">
 										<label>Country</label>
 										<?php echo $this->Form->select('country',$Countries,['empty' => ' ','class'=>'form-control']);?>	
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<div class="controls">
+										<?php echo $this->Form->control('telephone',array('label'=>'Contact Number<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control','placeholder'=>'Phone','id'=>'phone')); ?>
 									</div>
 								</div>
 							</div>
@@ -158,7 +162,7 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 									<div class="controls">
 										<div class="input text">
 											<label>Submission Deadline<span class="text-danger">*</span></label>
-											<input class="form-control" required type="date" name="submission_deadline">
+											<input class="form-control" required id="sub_date" name="submission_deadline">
 										</div>
 									</div>
 								</div>
@@ -192,7 +196,17 @@ $source_of_lead   = array('1'=>'Internet Search','2'=>'Newspaper','3'=>'Referenc
 
 <script>
 
+
 $(document).ready(function() {	 	
+
+	 //$("#dob").datepicker();
+	 $("#dob").datepicker({  changeMonth: true, changeYear: true,yearRange: "-90:+00" });
+
+	 $("#sub_date").datepicker({changeMonth: true, changeYear: true});
+
+	 $('#dob').on('changeDate', function(ev){
+	    $(this).datepicker('hide');
+	});
 
 
 	$('#category').change(function() {

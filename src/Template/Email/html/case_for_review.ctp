@@ -116,12 +116,12 @@
 				        <td bgcolor="#ffffff" style="padding: 10px 10px 20px 30px;">
 				            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
 				                <tr>
-				                	<td style="color: #666666; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 400; line-height: 25px;">
+				                	<td style="padding:10px 10px 5px 0px;color:#666666;font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;line-height:25px">
 				                		With Best Regard
 				                	</td>
 				                </tr>
 				                <tr style="color: #666666; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 400; line-height: 1px;">
-				                  <td style="color:#666666;font-family:'Poppins',sans-serif;font-size:13px;font-weight:400;line-height:25px">
+				                  <td style="color:#666666;font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;line-height:25px">
 				                    <?php echo $value['loggedUser']['first_name']." ".$value['loggedUser']['last_name']; ?>
 				                  </td>
 			                  	</tr>

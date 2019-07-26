@@ -1,5 +1,5 @@
 <?php
-//pr( $key_data['all_lead']);
+//pr( $key_data['all_lead']);die;
  ?>
 <section class="content">       
     <div class="row">
@@ -27,9 +27,10 @@
                             <thead>
                                 <tr>
                                     <th>Lead No</th>
+                                    <th>File No</th>
+                                    <th>Lead Date</th>
                                     <th>Name</th>
                                     <th>Category</th>
-                                    <th>Sub Category</th>
                                     <th>Status</th>
                                     <th>Lead Agent</th>
                                     <th>Retained By</th>
@@ -41,9 +42,17 @@
                                 <?php foreach ($key_data['all_lead'] as $lead) { ?>
                                     <tr>
                                         <td><?php echo $lead->id; ?></td>
+                                        <td>
+                                            <?php if($lead['account_lead']){ 
+                                                echo $lead['account_lead']->id;
+                                             }else{
+                                                echo "N/A";
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?php echo date("m/d/Y", strtotime($lead['created_at'])); ?></td>
                                         <td><?php echo $lead->first_name."  ".$lead->last_name; ?></td>
-                                        <td><?php echo $lead->category->name; ?></td>
-                                        <td><?php echo $lead->sub_category->name; ?></td>
+                                        <td><?php echo $lead->category->name." / ".$lead->sub_category->name; ?></td>
                                         <td><?php echo $lead->lead_status->lead_status; ?></td>
                                         <td><?php echo $lead->lead->first_name." ".$lead->lead->last_name; ?></td>
                                         <td><?php 
@@ -53,22 +62,20 @@
                                          ?></td>
                                         <td><?php echo $lead->telephone; ?></td>
                                         <td> 
-                                            <div class="btn-group mb-5">
+                                            <div class="btn-group mb-5 ">
                                                 <span  class="btn btn-info dropdown-toggle" data-toggle="dropdown">Action</span>
-                                                <div class="dropdown-menu">
+                                                <div class="dropdown-menu ">
                                                     <?php echo $this->Html->link('Edit',['controller' => 'Admins', 'action' => 'editLead',$lead->id],['class'=>'dropdown-item text-danger','escape' => false]); ?>
-                                                     <div class="dropdown-divider bg-dange"></div>
+                                                    <div class="dropdown-divider bg-dange"></div>
                                                     <?php echo $this->Html->link('Manage Charges',['controller' => 'Admins', 'action' => 'manageCharges',$lead->id],['class'=>'dropdown-item text-danger','escape' => false]); ?>
-
+                                                    
                                                     <?php if($lead->amount_payable > 0 ){ ?>
                                                         <div class="dropdown-divider bg-dange"></div>
                                                         <?php echo $this->Html->link('Payment Plan',['controller' => 'Admins', 'action' => 'paymentPlan',$lead->id],['class'=>'dropdown-item text-danger','escape' => false]); ?>
-                                                    <?php } if(!empty($lead->lead_payment_plans) && $lead->lead_status->lead_status == 'R') {  ?>
+                                                    <?php } if(!empty($lead->lead_payment_plans) && $lead->lead_status->lead_status != 'L' ) {  ?>
                                                         <div class="dropdown-divider"></div>
                                                         <a style="cursor: pointer;" class="dropdown-item text-danger" onClick=<?php echo 'contract('.$lead->id.')'; ?>>View Contract</a>
-                                                    <?php } if($lead->lead_status->lead_status == 'R'){ ?>
-                                                        <div class="dropdown-divider"></div>
-                                                    <?php echo $this->Html->link('Case Assign',['controller' => 'Admins', 'action' => 'caseAssign',$lead->id],['class'=>'dropdown-item text-danger','escape' => false]);}?>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         </td> 
@@ -79,8 +86,9 @@
                                 <tr>
                                     <th></th>
                                     <th></th>
-                                    <th>Category</th>
-                                    <th>Sub Category</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                     <th>Status</th>
                                     <th>Lead Agent</th>
                                     <th>Retained By</th>

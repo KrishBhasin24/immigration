@@ -38,7 +38,7 @@ $(function () {
         //'ordering'    : true,
         "order": [[ 0, "desc" ]],
         initComplete: function () {
-        	this.api().columns([2, 3, 4,5,6]).every( function () {
+        	this.api().columns([5,6,7]).every( function () {
             /*this.api().columns().every( function () {*/
                 var column = this;
                 var select = $('<select><option value=""></option></select>')
@@ -60,10 +60,12 @@ $(function () {
         }
     } );
 
+   
+
     $('#caselead').DataTable( {
     	"order": [[ 0, "desc" ]],
     	initComplete: function () {
-        	this.api().columns([4, 5, 7]).every( function () {
+        	this.api().columns([2, 4, 6, 8]).every( function () {
             /*this.api().columns().every( function () {*/
                 var column = this;
                 var select = $('<select><option value=""></option></select>')
@@ -88,7 +90,7 @@ $(function () {
     $('#acclead').DataTable( {
         "order": [[ 0, "desc" ]],
         initComplete: function () {
-            this.api().columns([2, 3, 4, 5, 6]).every( function () {
+            this.api().columns([2, 4, 5]).every( function () {
                 var column = this;
                 var select = $('<select><option value=""></option></select>')
                     .appendTo( $(column.footer()).empty() )

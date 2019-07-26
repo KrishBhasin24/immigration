@@ -37,15 +37,22 @@ $payment_mode = array('Cheque'=>'Cheque','Cash'=>'Cash','Credit'=>'Credit','Debi
 		                                  	</div>
 		                                </div>
 		                                <div class="row">
-		                                	<div class="col-md-6">
+		                                	<div class="col-md-4">
 			                                    <div class="form-group">
 			                                    	 <?php echo $this->Form->control('authorization_number',array('class'=>'form-control')); ?>
 			                                    </div>
 		                                  	</div>
-		                                  	<div class="col-md-6">
+		                                  	<div class="col-md-4">
 			                                    <div class="form-group">
 			                                    	<div class="controls">
 			                                    	 	<?php echo $this->Form->control('issued_by',array('label'=>'Payment Refunded By<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+			                                    	</div>
+			                                    </div>
+		                                  	</div>
+		                                  	<div class="col-md-4">
+			                                    <div class="form-group">
+			                                    	<div class="controls">
+			                                    	 	<?php echo $this->Form->control('refund_made_at',array('label'=>'Payment Refunded Date<span class="text-danger">*</span>','escape'=>false,'required','id'=>'refund_at','type'=>'text','class'=>'form-control')); ?>
 			                                    	</div>
 			                                    </div>
 		                                  	</div>
@@ -64,3 +71,16 @@ $payment_mode = array('Cheque'=>'Cheque','Cash'=>'Cash','Credit'=>'Credit','Debi
 	    </div>
 	</div>
 </section>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {	
+		$("#refund_at").datepicker({changeMonth: true, changeYear: true, dateFormat: 'yy-mm-dd' });
+
+		 $('#refund_at').on('changeDate', function(ev){
+		    $(this).datepicker('hide');
+		});
+
+	});
+</script>

@@ -138,6 +138,7 @@ use Cake\Routing\Router;
                             <thead>
                                 <tr>
                                     <th>Receipt No.</th>
+                                    <th>Payment Date</th>
                                     <th>Receipt Date</th>
                                     <th>Amount</th>
                                     <th>Payment Mode</th>
@@ -148,18 +149,26 @@ use Cake\Routing\Router;
                                  <?php foreach ( $key_data['leadPayment'] as $payment) { ?>
                                     <tr>
                                   		<td><?php echo $payment['id']; ?></td>
+                                        <td><?php 
+                                        	if($payment['payment_made_at']){
+                                        		echo date("d-m-Y", strtotime($payment['payment_made_at']));
+                                        	}
+                                        	else{
+                                        		echo "N/A";
+                                        	}
+                                        ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($payment['payment_date'])); ?></td>
                                         <td><?php echo $payment['current_payment']; ?></td>
                                         <td><?php echo $payment['payment_mode']; ?></td>
                                         <td> 
-                                            <div class="btn-group mb-5">
-                                                <?php echo $this->Html->link('<i class="fa fa-edit"></i> Edit',['controller' => 'Admins', 'action' => 'changeReceipt',$payment['id']],['class'=>'btn btn-rounded btn-info mb-5','escape' => false]);?>
-                                                
-                                            </div>
-                                            <?php $dat = $payment['id']; ?>
-                                            <div class="btn-group mb-5">
-                                            	<a style="cursor: pointer;" class="btn btn-rounded btn-yellow mb-5" onClick=<?php echo 'print_receipt('.$dat.')'; ?>><i class="fa fa-edit"></i>Print</a>
-                                            </div>
+                                        	<div class="btn-group mb-5 ">
+                                                <span  class="btn btn-info dropdown-toggle" data-toggle="dropdown">Action</span>
+                                                <div class="dropdown-menu ">
+												    <?php echo $this->Html->link('Edit',['controller' => 'Admins', 'action' => 'changeReceipt',$payment['id']],['class'=>'dropdown-item text-danger','escape' => false]);?>
+                                            		<?php $dat = $payment['id']; ?>
+                                            		<a style="cursor: pointer;" href="" class="dropdown-item text-danger" onClick=<?php echo 'print_receipt('.$dat.')'; ?>>Print</a>
+												</div>
+											</div>
                                         </td> 
                                     </tr>   
                                 <?php } ?>
@@ -188,6 +197,7 @@ use Cake\Routing\Router;
                             <thead>
                                 <tr>
                                     <th>Receipt No.</th>
+                                    <th>Refund Date</th>
                                     <th>Receipt Date</th>
                                     <th>Amount</th>
                                     <th>Payment Mode</th>
@@ -195,15 +205,29 @@ use Cake\Routing\Router;
                                 </tr>
                             </thead>
                             <tbody>
-                                 <?php foreach ( $key_data['leadRefund'] as $payment) { ?>
+                                <?php foreach ( $key_data['leadRefund'] as $payment) { ?>
                                     <tr>
                                   		<td><?php echo $payment['id']; ?></td>
+                                  		<td><?php 
+                                        	if($payment['refund_made_at']){
+                                        		echo date("d-m-Y", strtotime($payment['refund_made_at']));
+                                        	}
+                                        	else{
+                                        		echo "N/A";
+                                        	}
+                                        ?></td>
                                         <td><?php echo date("d-m-Y", strtotime($payment['payment_date'])); ?></td>
                                         <td><?php echo $payment['refund_payment']; ?></td>
                                         <td><?php echo $payment['payment_mode']; ?></td>
                                         <td> 
-                                            <div class="btn-group mb-5">
-                                                <?php echo $this->Html->link('<i class="fa fa-edit"></i> Edit',['controller' => 'Admins', 'action' => 'changeRefund',$payment['id']],['class'=>'btn btn-rounded btn-info mb-5','escape' => false]);?>
+                                        	<div class="btn-group mb-5 ">
+                                                <span  class="btn btn-info dropdown-toggle" data-toggle="dropdown">Action</span>
+                                                <div class="dropdown-menu ">
+												    <?php echo $this->Html->link('Edit',['controller' => 'Admins', 'action' => 'changeRefund',$payment['id']],['class'=>'dropdown-item text-danger','escape' => false]);?>
+													<div class="dropdown-divider bg-dange"></div>
+                                            		<?php $ref = $payment['id']; ?>
+                                        			<a style="cursor: pointer;" href="" class="dropdown-item text-danger" onClick=<?php echo 'print_refund('.$ref.')'; ?>>Print</a>
+                                            	</div>
                                             </div>
                                         </td> 
                                     </tr>   
@@ -261,15 +285,22 @@ use Cake\Routing\Router;
                                   	</div>
                                 </div>
                                 <div class="row">
-                                	<div class="col-md-6">
+                                	<div class="col-md-4">
 	                                    <div class="form-group">
 	                                    	 <?php echo $this->Form->control('authorization_number',array('class'=>'form-control')); ?>
 	                                    </div>
                                   	</div>
-                                  	<div class="col-md-6">
+                                  	<div class="col-md-4">
 	                                    <div class="form-group">
 	                                    	<div class="controls">
 	                                    	 	<?php echo $this->Form->control('issued_by',array('label'=>'Payment Received By<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
+	                                    	</div>
+	                                    </div>
+                                  	</div>
+                                  	<div class="col-md-4">
+	                                    <div class="form-group">
+	                                    	<div class="controls">
+	                                    	 	<?php echo $this->Form->control('payment_made_at',array('label'=>'Payment Received Date<span class="text-danger">*</span>','escape'=>false,'required','id'=>'made_at','class'=>'form-control')); ?>
 	                                    	</div>
 	                                    </div>
                                   	</div>
@@ -322,19 +353,26 @@ use Cake\Routing\Router;
                                   	</div>
                                 </div>
                                 <div class="row">
-                                	<div class="col-md-6">
+                                	<div class="col-md-4">
 	                                    <div class="form-group">
 	                                    	 <?php echo $this->Form->control('authorization_number',array('class'=>'form-control')); ?>
 	                                    </div>
                                   	</div>
-                                  	<div class="col-md-6">
+                                  	<div class="col-md-4">
 	                                    <div class="form-group">
 	                                    	<div class="controls">
 	                                    	 	<?php echo $this->Form->control('issued_by',array('label'=>'Payment Refunded By<span class="text-danger">*</span>','escape'=>false,'required','class'=>'form-control')); ?>
 	                                    	</div>
 	                                    </div>
                                   	</div>
-                                </div>
+                                  	<div class="col-md-4">
+	                                    <div class="form-group">
+	                                    	<div class="controls">
+	                                    	 	<?php echo $this->Form->control('refund_made_at',array('label'=>'Payment Refund Date<span class="text-danger">*</span>','escape'=>false,'required','id'=>'refund_at','class'=>'form-control')); ?>
+	                                    	</div>
+	                                    </div>
+                                  	</div>
+								</div>
 							</div>
                         </div>
                     </div>
@@ -408,14 +446,27 @@ use Cake\Routing\Router;
 <script type="text/javascript">
 	$(document).ready(function() {	
 
+
+	$("#made_at").datepicker({changeMonth: false, changeYear: false, dateFormat: 'yy-mm-dd' });
+
+	 $('#made_at').on('changeDate', function(ev){
+	    $(this).datepicker('hide');
+	});
+
+
+	 $("#refund_at").datepicker({changeMonth: false, changeYear: false, dateFormat: 'yy-mm-dd' });
+
+	 $('#refund_at').on('changeDate', function(ev){
+	    $(this).datepicker('hide');
+	});
+
+
+
+
 	var user_department = $('#logged_user_department').html();
 	//alert(user_department);
 	if(user_department == 6){
-		
 		$("#refund_btn").hide();
-		
-
-		
 	}
 });
     
@@ -425,6 +476,10 @@ use Cake\Routing\Router;
 		    
 	}
     
+    function print_refund(id){
+    	var targeturl = '<?= Router::url(["controller"=>"Admins","action"=>"/refund_print"]); ?>';
+		window.open("http://"+document.domain+targeturl+'/'+id,'viewwin', 'width=650,height=600');
+    }
     
 
 </script>

@@ -15,9 +15,12 @@
 			
 			<?= $this->Html->css('morris.css'); ?>
 			<?= $this->Html->css('datatables.min.css'); ?>
+			<?= $this->Html->css('jquery-ui.css'); ?>
+			<?= $this->Html->script('jquery-3.3.1.min.js'); ?>
+			<?= $this->Html->script('jquery-ui.min.js'); ?>
+		
+		
 
-		<?= $this->Html->script('jquery-3.3.1.min.js'); ?>
-		<?= $this->Html->script('jquery-ui.min.js'); ?>
 		<script>
 			$.widget.bridge('uibutton', $.ui.button);
 		</script>
@@ -25,6 +28,35 @@
 			
   	</head>
   	
+<script type="text/javascript">
+	var idleTime	= 600000;
+	var timeOut     = '';
+	var getUrl = window.location;
+	var redirectURL = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+
+	function inac() {
+		$(document).bind('mousemove', resetIdle);
+		setIdle();
+		//console.log("i am here");
+	}
+	function onIdleFunction(){
+		window.location= redirectURL+"/logout";
+	}
+
+	function resetIdle(){
+		window.clearTimeout( timeOut );
+		//console.log("reset");
+		setIdle();
+	}
+
+	function setIdle(){
+		//console.log("set");
+		timeOut = window.setTimeout( "onIdleFunction()", idleTime );
+	}
+
+	window.onload = inac;
+</script>
+
   	<!-- hold-transition skin-blue sidebar-mini -->
   	<body class="skin-info fixed sidebar-mini sidebar-mini">
   		<div class="wrapper">
@@ -41,6 +73,9 @@
 				}
 				else if($key_data['loggedInUser']['department_id'] == 4 ){
 					echo $this->element('Sidebar/account', array('user' => $key_data['loggedInUser'])); 
+				}
+				else if($key_data['loggedInUser']['department_id'] == 5 ){
+					echo $this->element('Sidebar/assessment', array('user' => $key_data['loggedInUser'])); 
 				}
 				else if($key_data['loggedInUser']['department_id'] == 6 ){
 					echo $this->element('Sidebar/marketing', array('user' => $key_data['loggedInUser'])); 

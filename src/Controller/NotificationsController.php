@@ -42,55 +42,58 @@ class NotificationsController extends AppController
 
     }
 
-   public function retain($data = array()){
-		//echo "<pre>";print_r($data); die;
+   	public function retain($data = array()){
+			//echo "<pre>";print_r($data); die;
 	    $template = "retain";
 	    /*$to = "nitin@siiscanada.com";
 	    $cc = "accounts@siiscanada.com";*/
 	    $to = 'krish.k.bhasin@gmail.com';
+	    $cc = null;
 	    $subject = "Re: New Retainer";
-	    $this->mail($data,$template,$to,$subject);
+	    $this->mail($data,$template,$to,$subject,$cc);
 	    return;
     }
 
     public function case_assign($data = array()){
     	//echo "<pre>";print_r($data); die;
     	$template = "case_assign";
-	    /*$to = "nitin@siiscanada.com";
-	    $cc = "accounts@siiscanada.com";*/
-	    $to = 'krish.k.bhasin@gmail.com';
-	    $subject = "Fwd: New File Assigned";
-	    $this->mail($data,$template,$to,$subject);
+    	$to = $data['processingAgent_info']['email'];
+	    $cc = 'krish.k.bhasin@gmail.com';
+	    $subject = "New File Assigned";
+	    $this->mail($data,$template,$to,$subject,$cc);
 	    return;	
     }
 
     public function case_status($data = array()){
-    	
+    	//echo "<pre>";print_r($data); die;
     	if($data['lead_status_id'] == 4){
 			$template = "case_for_review";
-			$to = 'krish.k.bhasin@gmail.com';
-			$subject = "Fwd: File Ready For Review";
+			$to = 'casereview@siiscanada.com';
+			$cc = 'krish.k.bhasin@gmail.com';
+			$subject = "File Ready For Review";
     	} //ready for review
 		elseif ($data['lead_status_id'] == 5){
 			$template = "case_reviewed";
-			$to = 'krish.k.bhasin@gmail.com';
-			$subject = "Fwd: Case Reviewed";
+			$to = $data['filling']['email'];
+			$cc = 'krish.k.bhasin@gmail.com';
+			$subject = "Case Reviewed";
 		}  //case reviewed
 		elseif ($data['lead_status_id'] == 6){
 			$template = "case_filed";
-			$to = 'krish.k.bhasin@gmail.com';
+			$to = $data['retain']['email'];
+			$cc = 'krish.k.bhasin@gmail.com';
 			$subject = "Fwd: Case Filed";
 		}	//case filed
     	
 	    //echo "<pre>";print_r($data); die;
 
-	    $this->mail($data,$template,$to,$subject);
+	    $this->mail($data,$template,$to,$subject,$cc);
 	    return;	
 
     }
 
-    public function mail($data = array(),$template,$to,$subject,$cc = null){
-    	$headers = array();
+    public function mail($data = array(),$template,$to,$subject,$cc){
+    	/*$headers = array();
 		$headers['Organization'] = "Sender Organization";
 		$headers['MIME-Version'] = "1.0";
 		$headers['Content-type'] = "text/html";
@@ -103,13 +106,13 @@ class NotificationsController extends AppController
             ->setHeaders($headers)
             ->template($template)
             ->emailFormat('html')
-		    ->setFrom(['krish@siisgroup.com' => 'Siis Canada'])
+		    ->setFrom(['info@siisgroup.com' => 'Siis Canada'])
 		    ->setTo($to);
         if($cc != null){
             $email->setCc($cc);
         } 
         $email->setSubject($subject)
-	       ->send();
+	       ->send();*/
         return;
     }
 

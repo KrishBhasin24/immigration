@@ -27,9 +27,10 @@
                             <thead>
                                 <tr>
                                     <th>Lead No</th>
+                                    <th>File No</th>
+                                    <th>Lead Date</th>
                                     <th>Name</th>
                                     <th>Category</th>
-                                    <th>Sub Category</th>
                                     <th>Status</th>
                                     <th>Lead Agent</th>
                                     <th>Retained By</th>
@@ -41,9 +42,18 @@
                                 <?php foreach ($key_data['lead_list'] as $lead) { ?>
                                     <tr>
                                         <td><?php echo $lead->id; ?></td>
+                                        <td>
+                                            <?php if($lead['account_lead']){ 
+                                                echo $lead['account_lead']->id;
+                                             }else{
+                                                echo "N/A";
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?php echo date("m/d/Y", strtotime($lead['created_at'])); ?></td>
                                         <td><?php echo $lead->first_name."  ".$lead->last_name; ?></td>
-                                        <td><?php echo $lead->category->name; ?></td>
-                                        <td><?php echo $lead->sub_category->name; ?></td>
+                                        <td><?php echo $lead->category->name." / ".$lead->sub_category->name; ?></td>
+                                        
                                         <td><?php echo $lead->lead_status->lead_status; ?></td>
                                         <td><?php echo $lead->lead->first_name." ".$lead->lead->last_name; ?></td>
                                         <td><?php 
@@ -79,8 +89,9 @@
                                 <tr>
                                     <th></th>
                                     <th></th>
-                                    <th>Category</th>
-                                    <th>Sub Category</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                     <th>Status</th>
                                     <th>Lead Agent</th>
                                     <th>Retained By</th>

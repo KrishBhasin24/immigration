@@ -1,4 +1,4 @@
-<?php //pr($key_data['loggedInUser']); 
+<?php //pr($key_data); die; 
 use Cake\Routing\Router;
 	foreach ($key_data['leadStatus'] as $val){
 		if($val->lead_status != 'L' && $val->lead_status != 'R'){
@@ -88,7 +88,7 @@ $portal_used = array('sanjay'=>'Sanjay','manjit'=>'Manjit','client'=>'Client');
 				</div>
 		  	</div>
 	  	</div>
-	  	<div class="col-lg-6 col-12"> 			
+	  	<div class="col-lg-6 col-12">
 		  	<div class="box">
 		  		<div class="box-header with-border">
 			  		<h4 class="box-title pt-5">Personal Detail</h4>
@@ -165,8 +165,6 @@ $portal_used = array('sanjay'=>'Sanjay','manjit'=>'Manjit','client'=>'Client');
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-6 col-lg-6">
 			<div class="box">
 				<div class="box-body p-0 ">
 					<div class="card-body" id="cic_box">
@@ -196,6 +194,34 @@ $portal_used = array('sanjay'=>'Sanjay','manjit'=>'Manjit','client'=>'Client');
 							</div>
 						</div>
 						<?php echo $this->Form->end(); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-6">
+			<div class="box">
+		  		<div class="box-header with-border">
+			  		<h4 class="box-title pt-5">Specification Detail</h4>
+		  		</div>
+		  		<div class="box-body">
+					<div class="flexbox bb-1 mb-10 pb-20">
+						<div>
+							<p>
+								<span class="text-dark font-weight-bold">Reason Of Qualify:</span> 
+								
+							</p>
+							
+							<h5 class="text-black mb-0"><strong ><?php echo $key_data['leadDetail']['reason_of_qualify']; ?></strong></h5>
+						</div>
+						
+					</div>
+					<div class="flexbox bb-1 mb-10 pt-20 pb-20">
+						<div>
+							<p>
+								<span class="text-dark font-weight-bold">Special Instruction:</span> 
+							</p>
+							<h5 class="text-black mb-0"><strong ><?php echo $key_data['leadDetail']['special_instruction']; ?></strong></h5>
+						</div>
 					</div>
 				</div>
 			</div>

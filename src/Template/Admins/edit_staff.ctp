@@ -11,6 +11,8 @@ foreach ($key_data['department'] as $val) {
 foreach ($key_data['Countries'] as $val){
     $Countries[$val->name] = $val->name;
 }
+$active= array(1=>'Yes',0=>'No');
+
  ?>
 
 <div class="content-header">
@@ -125,6 +127,15 @@ foreach ($key_data['Countries'] as $val){
 							<div class="col-md-6">
 								<div class="form-group">
 									<?php echo $this->Form->control('out_time',array('class'=>'form-control','placeholder'=>'Outtime')); ?>
+								</div>
+							</div>
+						
+							<div class="col-md-6">
+								<div class="form-group">
+									<div class="input text">
+										<label>Active</label>
+										<?php echo $this->Form->select('active',$active,['class'=>'form-control']);?>	
+									</div>
 								</div>
 							</div>
 						</div>

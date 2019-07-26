@@ -16233,7 +16233,7 @@ span.btn.dropdown-toggle::after {
 }
 
 
-.email,.textarea,.tel {
+.email,.textarea,.tel,.password {
     margin-top: 0.5em;
     font-size: 1rem;
     text-align: center;
